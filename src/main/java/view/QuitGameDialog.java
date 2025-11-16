@@ -25,7 +25,10 @@ public class QuitGameDialog {
         cancel = new JButton("Cancel");
 
         quitGame.addActionListener(
-                evt -> quitGameController.execute()
+                evt -> {
+                    closeDialog();
+                    quitGameController.execute();
+                }
         );
 
         cancel.addActionListener(
