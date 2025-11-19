@@ -8,7 +8,6 @@ public abstract class Puzzle {
     private final String description;
     private boolean isSolved;
     private int attempts;
-    private string hint;
  /*   private int suceessesToPass;*/
 
     /**
@@ -48,11 +47,6 @@ public abstract class Puzzle {
 
     public abstract boolean validateSolution(String solution); // Abstract method validating whether a solution is correct or not
 
-    // Returning a string of hints for a puzzle
-    public String giveHint() {
-        return this.hint;
-    }
-
     // Marking a puzzle solved
     public void markSolved() {
         isSolved = true;
@@ -61,7 +55,7 @@ public abstract class Puzzle {
     // Recording an attempt by the player
     public boolean attemptSolve(String inputSolution) {
         attempts++;
-        if validateSolution(inputSolution) {
+        if (validateSolution(inputSolution)) {
             markSolved();
         }
         return isSolved;
