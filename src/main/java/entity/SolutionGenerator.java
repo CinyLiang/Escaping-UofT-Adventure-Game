@@ -40,6 +40,11 @@ public class SolutionGenerator {
         return new ArrayList<>(solutions);
     }
 
+    public static boolean isSolvable(List<Card> cards) {
+        int numSol = find24Solutions(cards).size();
+        return (!(numSol == 0));
+    }
+
     private static void testExpression(Set<String> solutions, String expr, int target) {
         try {
             if (Math.abs(ExpressionEvaluator.evaluate(expr) - target) < 0.0001) {
