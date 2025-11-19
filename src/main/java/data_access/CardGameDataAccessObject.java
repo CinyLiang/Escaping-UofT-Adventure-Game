@@ -13,7 +13,7 @@ import java.util.List;
 
 public class CardGameDataAccessObject implements CardGameDataAccessInterface {
     /**
-     * The DAO for card game
+     * The DAO for the Play Card Game Use Case.
      */
     private final OkHttpClient client = new OkHttpClient();
 

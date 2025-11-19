@@ -6,8 +6,8 @@ import java.util.ArrayList;
  * Output Data for the Play Card Game Use Case.
  */
 public class PlayCardGameOutputData {
-    private boolean success;
-    private ArrayList<Integer> cardVals;
+    private final boolean success;
+    private final ArrayList<Integer> cardVals;
 
     public PlayCardGameOutputData(boolean success,  ArrayList<Integer> cardVals) {
         this.success = success;

@@ -28,12 +28,11 @@ public class PlayCardGameInteractor implements PlayCardGameInputBoundary{
                 return;
             }
 
-            List<Integer> cardVals = new ArrayList<>();
-            for (
-                    Card card : cards) {
+            ArrayList<Integer> cardVals = new ArrayList<>();
+            for (Card card : cards) {
                 cardVals.add(card.getValue());
             }
-            PlayCardGameOutputData outputData = new PlayCardGameOutputData(true, (ArrayList<Integer>) cardVals);
+            PlayCardGameOutputData outputData = new PlayCardGameOutputData(true, cardVals);
             this.playerPresenter.prepareSuccessView(outputData);
         } catch (Exception e) {
             this.playerPresenter.prepareFailView("Error: " + e.getMessage());

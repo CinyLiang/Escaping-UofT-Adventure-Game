@@ -23,7 +23,7 @@ public class ExpressionEvaluator{
     // Checks whether the expression contains and only contains each of the four
     // given values once and whether the expression only contains the four
     // allowed operations
-    public boolean checkExprPrereq(String expression, List<Integer> nums){
+    public static boolean checkExprPrereq(String expression, List<Integer> nums){
         List<Integer> remainingNums = new ArrayList<>(nums);
         List<String> signs = Arrays.asList("+", "-", "*", "/", "(", ")");
 
