@@ -1,4 +1,6 @@
-package main.java.use_case.trivia_game;
+package use_case.trivia_game;
 
-public class TriviaGameInputBoundary {
+public interface TriviaGameInputBoundary {
+    void startNewQuestion();
+    void submitAnswer(TriviaGameInputData inputData);
 }

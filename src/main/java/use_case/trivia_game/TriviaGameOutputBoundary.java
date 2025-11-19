@@ -1,4 +1,6 @@
-package main.java.use_case.trivia_game;
+package use_case.trivia_game;
 
-public class TriviaGameOutputBoundary {
+public interface TriviaGameOutputBoundary {
+    void presentQuestion(TriviaGameOutputData outputData);
+    void presentResult(TriviaGameOutputData outputData);
 }
