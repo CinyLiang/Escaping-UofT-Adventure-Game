@@ -20,16 +20,20 @@ public class CardGamePresenter implements PlayCardGameOutputBoundary {
 
     @Override
     public void prepareSuccessView(PlayCardGameOutputData outputData) {
-        CardGameState cardGameState = new CardGameState();
-
-        cardGameViewModel.getState().setPassword("");
-        cardGameViewModel.getState().setPasswordError(null);
-        cardGameViewModel.firePropertyChange("password");
+        CardGameState current = cardGameViewModel.getState();
+        CardGameState newState = new CardGameState(current);
+        newState.setCardPuzzle(outputData.getCardPuzzle());
+        cardGameViewModel.setState(newState);
+        cardGameViewModel.firePropertyChange();
     }
 
     @Override
     public void prepareFailView(String errorMessage) {
-        cardGameViewModel.getState().setPasswordError(errorMessage);
-        cardGameViewModel.firePropertyChange("password");
+        CardGameState current = cardGameViewModel.getState();
+        CardGameState newState = new CardGameState(current);
+        newState.setErrorMessage(errorMessage);
+        newState.setCardPuzzle(null);
+        cardGameViewModel.setState(newState);
+        cardGameViewModel.firePropertyChange();
     }
 }

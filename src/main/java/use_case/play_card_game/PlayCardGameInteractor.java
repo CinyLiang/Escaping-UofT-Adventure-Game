@@ -27,12 +27,8 @@ public class PlayCardGameInteractor implements PlayCardGameInputBoundary{
                 this.playerPresenter.prepareFailView("Failed to draw 4 card, sorry!");
                 return;
             }
-
-            ArrayList<Integer> cardVals = new ArrayList<>();
-            for (Card card : cards) {
-                cardVals.add(card.getValue());
-            }
-            PlayCardGameOutputData outputData = new PlayCardGameOutputData(true, cardVals);
+            CardPuzzle cardPuzzle = new CardPuzzle(cards);
+            PlayCardGameOutputData outputData = new PlayCardGameOutputData(true, cardPuzzle);
             this.playerPresenter.prepareSuccessView(outputData);
         } catch (Exception e) {
             this.playerPresenter.prepareFailView("Error: " + e.getMessage());

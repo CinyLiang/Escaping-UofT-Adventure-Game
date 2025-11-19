@@ -1,5 +1,5 @@
 package interface_adapter.play_card_game;
-
+import entity.CardPuzzle;
 import interface_adapter.ViewModel;
 
 /**
@@ -8,7 +8,7 @@ import interface_adapter.ViewModel;
 public class CardGameViewModel extends ViewModel<CardGameState> {
 
     public CardGameViewModel() {
-        super("playCardGame");
+        super("Play card games");
         setState(new CardGameState());
     }
 }

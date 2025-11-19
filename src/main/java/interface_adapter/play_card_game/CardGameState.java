@@ -1,49 +1,36 @@
 package interface_adapter.play_card_game;
-
+import entity.CardPuzzle;
 import interface_adapter.ViewModel;
 
 /**
  * The State information representing the logged-in user.
  */
-public class CardGameState extends ViewModel {
-    private String username = "";
+public class CardGameState {
+    private CardPuzzle cardPuzzle;
+    private String errorMessage = "";
 
-    private String password = "";
-    private String passwordError;
-
-    public LoggedInState(CardGameState copy) {
-
-        username = copy.username;
-        password = copy.password;
-        passwordError = copy.passwordError;
+    public CardGameState () {
+        this.cardPuzzle = null;
     }
 
-    // Because of the previous copy constructor, the default constructor must be explicit.
-    public LoggedInState() {
-
+    public CardGameState (CardGameState other) {
+        this.cardPuzzle = other.getcardPuzzle();
     }
 
-    public String getUsername() {
-        return username;
+    public CardPuzzle getcardPuzzle() {
+        return this.cardPuzzle;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setCardPuzzle(CardPuzzle cardPuzzle) {
+        this.cardPuzzle =  cardPuzzle;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public String getErrorMessage() {
+        return this.errorMessage;
     }
 
-    public String getPassword() {
-        return password;
+    public void setErrorMessage(String errorMessage) {
+        this.errorMessage = errorMessage;
     }
 
-    public void setPasswordError(String passwordError) {
-        this.passwordError = passwordError;
-    }
-
-    public String getPasswordError() {
-        return passwordError;
-    }
 }

@@ -19,12 +19,11 @@ public class CardPuzzle extends Puzzle {
 
     /**
      * Creates a new card puzzle with the given id and cards.
-     * @param id the puzzle id
      * @param cards the randomly drawn cards
      */
 
-    public CardPuzzle(String id, List<Card> cards) {
-        super(id, DESCRIPTION, NAME);
+    public CardPuzzle(List<Card> cards) {
+        super("", DESCRIPTION, NAME);
         this.cards = cards;
         this.sampleSolution = this.solve();
         String inner = this.extractInner();
