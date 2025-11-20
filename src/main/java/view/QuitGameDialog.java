@@ -5,14 +5,15 @@ import javax.swing.*;
 import interface_adapter.quit_game.QuitGameController;
 
 public class QuitGameDialog {
-    private final String viewName = "quit";
+//    private static final String viewName = "quit";
     private QuitGameController quitGameController;
 
-    private final JDialog quitGameDialog = new JDialog();
+    private final JDialog dialog = new JDialog();
 
     public QuitGameDialog() {
-        QuitGameDialog quitDialog = new QuitGameDialog();
-        quitDialog.setQuitGameController(quitGameController);
+        this.setQuitGameController(quitGameController);
+
+        dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 
         final JLabel title = new JLabel("Quit Game?");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -22,27 +23,27 @@ public class QuitGameDialog {
         JButton cancel = new JButton("Cancel");
 
         quitGame.addActionListener(evt -> {
-                quitGameDialog.dispose();
+                dialog.dispose();
                 quitGameController.showSave(); // show Save Game dialog
             }
         );
 
-        cancel.addActionListener(evt -> quitGameDialog.dispose()
+        cancel.addActionListener(evt -> dialog.dispose()
         );
 
         buttons.add(quitGame);
         buttons.add(cancel);
-        quitGameDialog.add(title, BorderLayout.NORTH);
-        quitGameDialog.add(buttons, BorderLayout.SOUTH);
+        dialog.add(title, BorderLayout.NORTH);
+        dialog.add(buttons, BorderLayout.SOUTH);
     }
 
     public void show() {
-        quitGameDialog.setVisible(true);
+        dialog.setVisible(true);
     }
 
-    public String getViewName() {
-        return viewName;
-    }
+//    public String getViewName() {
+//        return viewName;
+//    }
 
     // set controllers
     public void setQuitGameController(QuitGameController quitGameController) {
@@ -50,8 +51,8 @@ public class QuitGameDialog {
 
         this.quitGameController.setShowSaveDialog(() -> {
             // This code runs when the user clicks Quit → controller.showSave()
-            SaveGameDialog dialog = new SaveGameDialog();
-            dialog.show();
+            SaveGameDialog saveDialog = new SaveGameDialog();
+            saveDialog.show();
         });
     }
 }

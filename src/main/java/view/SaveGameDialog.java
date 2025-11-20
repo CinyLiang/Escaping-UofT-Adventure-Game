@@ -1,20 +1,20 @@
 package view;
 
-import interface_adapter.quit_game.QuitGameController;
 import interface_adapter.save_progress.SaveProgressController;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class SaveGameDialog {
-    private final String viewName = "save game";
+//    private static final String viewName = "save game";
     private SaveProgressController saveProgressController;
 
-    private final JDialog saveGameDialog = new JDialog();
+    private final JDialog dialog = new JDialog();
 
     public SaveGameDialog() {
-        SaveGameDialog saveDialog = new SaveGameDialog();
-        saveDialog.setSaveGameController(saveProgressController);
+        this.setSaveGameController(saveProgressController);
+
+        dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 
         final JLabel title = new JLabel("Save game before quitting?");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -34,22 +34,22 @@ public class SaveGameDialog {
 
         buttons.add(quitAndSave);
         buttons.add(quitDontSave);
-        saveGameDialog.add(title, BorderLayout.NORTH);
-        saveGameDialog.add(buttons, BorderLayout.SOUTH);
+        dialog.add(title, BorderLayout.NORTH);
+        dialog.add(buttons, BorderLayout.SOUTH);
     }
 
     private void closeGame() {
-        saveGameDialog.dispose();
+        dialog.dispose();
         System.exit(0);
     }
 
     public void show() {
-        saveGameDialog.setVisible(true);
+        dialog.setVisible(true);
     }
 
-    public String getViewName() {
-        return viewName;
-    }
+//    public String getViewName() {
+//        return viewName;
+//    }
 
     public void setSaveGameController(SaveProgressController saveProgressController) {
         this.saveProgressController = saveProgressController;
