@@ -10,12 +10,9 @@ import interface_adapter.ViewManagerModel;
  */
 public class ValidateCardPresenter implements ValidateCardAnswerOutputBoundary {
     private final ValidateCardViewModel validateCardViewModel;
-    private final ViewManagerModel viewManagerModel;
 
-    public ValidateCardPresenter(ValidateCardViewModel validateCardViewModel,
-                                 ViewManagerModel viewManagerModel) {
+    public ValidateCardPresenter(ValidateCardViewModel validateCardViewModel) {
         this.validateCardViewModel = validateCardViewModel;
-        this.viewManagerModel = viewManagerModel;
     }
 
     @Override

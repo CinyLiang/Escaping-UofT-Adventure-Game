@@ -1,5 +1,4 @@
 package interface_adapter.play_card_game;
-import entity.CardPuzzle;
 import interface_adapter.ViewModel;
 
 /**
