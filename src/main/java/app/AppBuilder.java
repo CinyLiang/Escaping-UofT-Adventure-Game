@@ -48,7 +48,6 @@ public class AppBuilder {
         window.setSize(900, 650);
         window.setResizable(false);
         window.add(cardPanel);
-
         viewManagerModel.setState(initialViewName);
         viewManagerModel.firePropertyChange();
         window.setVisible(true);
