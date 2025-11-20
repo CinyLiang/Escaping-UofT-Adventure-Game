@@ -1,19 +1,16 @@
 package use_case.validateCardAnswer;
 
-import data_access.ValidateCardAnswerDataAccessObject;
 import entity.Card;
-import entity.CardPuzzle;
+import entity.ExpressionEvaluator;
 import entity.Player;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ValidateCardAnswerInteractor implements ValidateCardAnswerInputBoundary {
-    private final ValidateCardAnswerDataAccessObject validateDataAccess;
     private final ValidateCardAnswerOutputBoundary validatePresenter;
 
-    public ValidateCardAnswerInteractor(ValidateCardAnswerDataAccessObject validateDataAccess,
-                                        ValidateCardAnswerOutputBoundary validatePresenter) {
-        this.validateDataAccess = validateDataAccess;
+    public ValidateCardAnswerInteractor(ValidateCardAnswerOutputBoundary validatePresenter) {
         this.validatePresenter = validatePresenter;
     }
 
@@ -25,7 +22,7 @@ public class ValidateCardAnswerInteractor implements ValidateCardAnswerInputBoun
 
         ValidateCardAnswerOutputData output;
 
-        CardValidationResult validity = this.validateDataAccess.isSolution(expression, cards);
+        CardValidationResult validity = isSolution(expression, cards);
         String message = validity.getMessage();
 
         if (validity.isValid()) {
@@ -35,6 +32,25 @@ public class ValidateCardAnswerInteractor implements ValidateCardAnswerInputBoun
         } else {
             output = new ValidateCardAnswerOutputData(false, message);
             this.validatePresenter.prepareFailView(output);
+        }
+    }
+
+    public CardValidationResult isSolution(String expression,  List<Card> cards) {
+        try {
+            List<Integer> cardVals = new ArrayList<>();
+            for (Card card : cards) {
+                cardVals.add(card.getValue());
+            }
+
+            if (!ExpressionEvaluator.checkExprPrereq(expression, cardVals)) {
+                return new CardValidationResult(false, "Invalid use of card numbers and/or operators.");
+            }
+            if (ExpressionEvaluator.evaluate(expression) != 24) {
+                return new CardValidationResult(false, "Expression does not add up to 24. Please try again.");
+            }
+            return new CardValidationResult(true, "Correct Answer!! It's UofT's honour to have smart people like you!");
+        } catch (Exception e){
+            return new CardValidationResult(false, "Evaluation error: " + e.getMessage());
         }
     }
 }
