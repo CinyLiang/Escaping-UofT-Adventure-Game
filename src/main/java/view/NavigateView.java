@@ -1,6 +1,7 @@
 package view;
 
 import javax.swing.*;
+import view.QuitGameDialog;
 
 import interface_adapter.clear_history.ClearHistoryController;
 import interface_adapter.save_progress.SaveProgressController;
