@@ -1,23 +1,17 @@
 package use_case.card_game_hints;
 
-import data_access.CardHintsDataAccessObject;
 import entity.CardPuzzle;
-import java.util.*;
 
 public class CardGameHintsInteractor {
     private final CardGameHintsOutputBoundary outputBoundary;
-    private final CardHintsDataAccessObject hintDataAccess;
 
-    public CardGameHintsInteractor(CardGameHintsOutputBoundary outputBoundary,
-                                   CardHintsDataAccessObject hintDataAccess) {
+    public CardGameHintsInteractor(CardGameHintsOutputBoundary outputBoundary) {
         this.outputBoundary = outputBoundary;
-        this.hintDataAccess = hintDataAccess;
     }
 
     public void execute(CardGameHintsInputDataObject input) {
         try {
-            CardPuzzle cardPuzzle = input.getCardPuzzle();
-            String hint = this.hintDataAccess.generateHint(cardPuzzle);
+            String hint = input.getCardPuzzle().giveHint();
 
             CardGameHintsOutputDataObject outputData = new CardGameHintsOutputDataObject(hint);
             this.outputBoundary.prepareSuccessView(outputData);

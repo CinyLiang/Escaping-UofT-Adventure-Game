@@ -29,7 +29,7 @@ public class ValidateCardAnswerInteractor implements ValidateCardAnswerInputBoun
         String message = validity.getMessage();
 
         if (validity.isValid()) {
-            player.update(validateInputData.getCardPuzzle().getName());
+            player.markPuzzleSolved(validateInputData.getCardPuzzle().getName());
             output = new ValidateCardAnswerOutputData(true,  message);
             this.validatePresenter.prepareSuccessView(output);
         } else {
