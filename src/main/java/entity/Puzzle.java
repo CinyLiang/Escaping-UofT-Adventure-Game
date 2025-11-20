@@ -51,6 +51,11 @@ public abstract class Puzzle {
 
     public abstract boolean validateSolution(String solution); // Abstract method validating whether a solution is correct or not
 
+    // Returning a string of hints for a puzzle
+//    public String giveHint() {
+//        return this.hint;
+//    }
+
     // Marking a puzzle solved
     public void markSolved() {
         isSolved = true;
