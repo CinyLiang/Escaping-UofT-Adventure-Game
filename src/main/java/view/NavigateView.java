@@ -1,6 +1,7 @@
-package main.java.view;
+package view;
 
 import javax.swing.*;
+import view.QuitGameDialog;
 
 public class NavigateView extends javax.swing.JFrame {
     // QUIT GAME "POP UP"/DIALOG

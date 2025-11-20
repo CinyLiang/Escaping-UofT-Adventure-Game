@@ -2,7 +2,7 @@ package entity;
 
 import java.util.*;
 
-import main.java.entity.Location;
+import entity.Location;
 
 public class Player {
 
