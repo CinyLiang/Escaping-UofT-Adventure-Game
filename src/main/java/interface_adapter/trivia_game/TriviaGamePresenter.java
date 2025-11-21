@@ -18,6 +18,7 @@ public class TriviaGamePresenter implements TriviaGameOutputBoundary {
         state.setCorrectAnswers(outputData.getCorrectAnswers());
         state.setRequiredAnswers(outputData.getRequiredAnswers());
         state.setPuzzleSolved(outputData.isPuzzleSolved());
+        state.setAnsweredCurrentQuestion(false);
 
         viewModel.firePropertyChange();
     }
@@ -28,6 +29,7 @@ public class TriviaGamePresenter implements TriviaGameOutputBoundary {
         state.setMessage(outputData.getMessage());
         state.setCorrectAnswers(outputData.getCorrectAnswers());
         state.setPuzzleSolved(outputData.isPuzzleSolved());
+        state.setAnsweredCurrentQuestion(true);
 
         viewModel.firePropertyChange();
     }

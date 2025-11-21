@@ -109,6 +109,7 @@ public class CardGameView extends JPanel implements PropertyChangeListener {
 
         returnButton.addActionListener(e -> {
             this.returnFromCardController.setShowQuitDialog(() -> returnFromCardDialogue.show());
+            returnFromCardController.showQuit();
         });
     }
 

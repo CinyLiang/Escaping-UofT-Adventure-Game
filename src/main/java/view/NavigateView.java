@@ -5,14 +5,23 @@ import view.QuitGameDialog;
 
 import interface_adapter.clear_history.ClearHistoryController;
 import interface_adapter.save_progress.SaveProgressController;
+import interface_adapter.view_progress.ViewProgressController;
 import view.QuitGameDialog;
+
 
 import interface_adapter.quit_game.QuitGameController;
 
 public class NavigateView extends javax.swing.JFrame {
+    public NavigateView() {
+        setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
+        createSaveProgressButton();
+        createViewProgressButton();
+    }
     // CONTROLLERS
     private QuitGameController quitGameController;
     private ClearHistoryController clearHistoryController;
+    private SaveProgressController saveProgressController;
+    private ViewProgressController viewProgressController;
 
     // DIALOGS
     private QuitGameDialog quitGameDialog;
@@ -29,6 +38,20 @@ public class NavigateView extends javax.swing.JFrame {
     private void createClearHistoryButton() {
         JButton quit = new JButton("Restart");
         quit.addActionListener(evt -> clearHistoryController.showConfirm());
+    }
+
+    // SAVE PROGRESS BUTTON
+    private void createSaveProgressButton() {
+        JButton save = new JButton("Save");
+        save.addActionListener(evt -> saveProgressController.execute());
+        add(save);
+    }
+
+    // VIEW PROGRESS BUTTON
+    private void createViewProgressButton() {
+        JButton view = new JButton("View Progress");
+        view.addActionListener(evt -> viewProgressController.execute());
+        add(view);
     }
 
     // QUIT GAME CONTROLLER
@@ -50,5 +73,13 @@ public class NavigateView extends javax.swing.JFrame {
         // set up runnable
         this.confirmRestartGameDialog = new ConfirmRestartGameDialog(clearHistoryController);
         this.clearHistoryController.setShowConfirmDialog(() -> confirmRestartGameDialog.show());
+    }
+
+    public void setSaveProgressController(SaveProgressController saveProgressController) {
+        this.saveProgressController = saveProgressController;
+    }
+
+    public void setViewProgressController(ViewProgressController viewProgressController) {
+        this.viewProgressController = viewProgressController;
     }
 }

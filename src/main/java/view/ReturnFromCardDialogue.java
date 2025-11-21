@@ -25,7 +25,7 @@ public class ReturnFromCardDialogue {
 
         quitGame.addActionListener(evt -> {
             dialog.dispose();
-
+            returnFromCardController.execute();
         });
 
         cancel.addActionListener(evt -> dialog.dispose()

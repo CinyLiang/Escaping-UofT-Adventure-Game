@@ -6,6 +6,7 @@ public class TriviaGameState {
     private int correctAnswers;
     private int requiredAnswers;
     private boolean puzzleSolved;
+    private boolean answeredCurrentQuestion;
 
 
     public TriviaGameState() {
@@ -14,12 +15,14 @@ public class TriviaGameState {
         this.correctAnswers = 0;
         this.requiredAnswers = 3;
         this.puzzleSolved = false;
+        this.answeredCurrentQuestion = false;
     }
 
     public String getQuestion() { return question; }
 
     public void setQuestion(String question) {
         this.question = question;
+        this.answeredCurrentQuestion = false;
     }
 
     public String getMessage() { return message; }
@@ -41,5 +44,13 @@ public class TriviaGameState {
     public boolean isPuzzleSolved() { return puzzleSolved; }
     public void setPuzzleSolved(boolean puzzleSolved) {
         this.puzzleSolved = puzzleSolved;
+    }
+
+    public boolean hasAnsweredCurrentQuestion() {
+        return answeredCurrentQuestion;
+    }
+
+    public void setAnsweredCurrentQuestion(boolean answered) {
+        this.answeredCurrentQuestion = answered;
     }
 }
