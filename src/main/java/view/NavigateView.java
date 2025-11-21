@@ -1,6 +1,8 @@
 package view;
 
 import javax.swing.*;
+
+import interface_adapter.navigate.NavigateController;
 import view.QuitGameDialog;
 
 import interface_adapter.clear_history.ClearHistoryController;
@@ -115,8 +117,19 @@ public class NavigateView extends javax.swing.JFrame {
     }
 
     // ACTION LISTENERS
-//
-//    private void createLister(new ActionListener listener) {
-//        actionButton.addActionListener(listener);
-//    }
+    public void setNavigateController(NavigateController navigateController) {
+           this.navigateController = navigateController;
+
+           actionButton.addActionListener(evt -> {
+               String selectedAction = (String) actionDropdown.getSelectedItem();
+               if (selectedAction != null && selectedAction.startsWith("Go ")) {
+                   String direction = selectedAction.split(" ")[1]; // Extract direction
+                   navigateController.execute(direction);
+               } else {
+                   JOptionPane.showMessageDialog(
+                           null,
+                           "You stand still, unsure where to go.");
+               }
+           });
+    }
 }
