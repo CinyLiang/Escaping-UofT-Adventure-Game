@@ -24,6 +24,7 @@ public class CardGamePresenter implements PlayCardGameOutputBoundary {
         CardGameState newState = new CardGameState(current);
         newState.setCardPuzzle(outputData.getCardPuzzle());
         newState.setMessage(outputData.getMessage());
+        // no need to set hint (remains an empty string)
         cardGameViewModel.setState(newState);
         cardGameViewModel.firePropertyChange();
 
@@ -43,10 +44,4 @@ public class CardGamePresenter implements PlayCardGameOutputBoundary {
         viewManagerModel.setState(cardGameViewModel.getViewName());
         viewManagerModel.firePropertyChange();
     }
-
-//    public void initialisePuzzleView(String message, String hint) {
-//        CardGameState current = cardGameViewModel.getState();
-//        current.setMessage(message);
-//        current.setHint(hint);
-//    }
 }

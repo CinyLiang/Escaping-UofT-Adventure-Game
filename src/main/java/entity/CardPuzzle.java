@@ -8,9 +8,6 @@ import entity.Card;
  */
 public class CardPuzzle extends Puzzle {
     private final List<Card> cards;
-//    private String sampleSolution;
-//    private String hint;
-//    private String message;
     private static final String NAME = "CardPuzzle";
 
     /**
@@ -21,14 +18,6 @@ public class CardPuzzle extends Puzzle {
     public CardPuzzle(List<Card> cards) {
         super("", "Math 24 Game", NAME);
         this.cards = cards;
-//        this.sampleSolution = this.solve();
-//        String inner = this.extractInner();
-//        this.hint = "Maybe try " + inner + " first."; // OK THIS IS AN ISSUE APPARENTLY
-//        this.message = "\"Welcome to the Math24 Card Puzzle! \" +\n" + // THIS TOO
-//                "                    \"Try to connect the four card numbers below\" +\n" +
-//                "                    \"using \\\"+\\\", \\\"-\\\", \\\"*\\\", \\\"/\\\", and parentheses \" +\n" +
-//                "                    \"to get an expression that evaluates to 24!\";" +
-//                this.getCardNumberString();
     }
 
     public List<Card> getCards() {
@@ -51,31 +40,4 @@ public class CardPuzzle extends Puzzle {
 //    public String getMessage() {
 //        return this.message;
 //    }
-
-//    private String extractInner() {
-//        String sol = this.sampleSolution;
-//        int open;
-//        int close;
-//        if (sol.contains("))")) {
-//            open = sol.lastIndexOf("(");
-//            close = sol.indexOf("))");
-//        } else if (sol.contains("((")) {
-//            open = sol.indexOf(")");
-//            close = sol.indexOf("((");
-//        } else {
-//            open = sol.indexOf("(");
-//            close = sol.indexOf(")");
-//        }
-//        return sol.substring(open + 1, close);
-//    }
-
-//    public String giveHint() {
-//        return this.hint;
-//    }
-
-    @Override
-    public String solve() {
-//        return SolutionGenerator.find24Solutions(this.cards).get(0);
-        return "";
-    }
 }

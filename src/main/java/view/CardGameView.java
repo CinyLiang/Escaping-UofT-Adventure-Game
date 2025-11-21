@@ -103,6 +103,7 @@ public class CardGameView extends JPanel implements PropertyChangeListener {
         String userAnswer = answerField.getText().trim();
         // need to confirm how this is done
         ValidateCardAnswerInputData validationInputData = new ValidateCardAnswerInputData(player, userAnswer, cardPuzzle);
+        // not sure if player is necessary?
         validateButton.addActionListener(e -> {
             validateCardController.execute(validationInputData);
         });

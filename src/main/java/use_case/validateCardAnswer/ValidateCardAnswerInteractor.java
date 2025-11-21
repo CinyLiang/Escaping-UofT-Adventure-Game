@@ -27,6 +27,7 @@ public class ValidateCardAnswerInteractor implements ValidateCardAnswerInputBoun
 
         if (validity.isValid()) {
             player.markPuzzleSolved(validateInputData.getCardPuzzle().getName());
+            // consider not doing this and instead updating the nav state (not sure about the player entity here)
             output = new ValidateCardAnswerOutputData(true,  message);
             this.validatePresenter.prepareSuccessView(output);
         } else {

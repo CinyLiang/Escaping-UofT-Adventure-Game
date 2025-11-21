@@ -47,14 +47,6 @@ public abstract class Puzzle {
         return suceessesToPass;
     }*/
 
-    // Abstract methods
-    public abstract String solve(); // Abstract method generating one possible solution to the puzzle
-
-    // Returning a string of hints for a puzzle
-//    public String giveHint() {
-//        return this.hint;
-//    }
-
     // Marking a puzzle solved
     public void markSolved() {
         isSolved = true;

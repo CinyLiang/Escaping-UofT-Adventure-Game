@@ -33,11 +33,11 @@ public class CardGameHintsPresenter implements CardGameHintsOutputBoundary {
     @Override
     public void prepareFailView(String errorMessage) {
         CardGameState current = this.cardGameViewModel.getState();
-        CardGameState newState = new CardGameState(current);
+//        CardGameState newState = new CardGameState(current);
 
-        newState.setMessage(errorMessage);
+        current.setMessage(errorMessage);
 
-        this.cardGameViewModel.setState(newState);
+//        this.cardGameViewModel.setState(current);
         this.cardGameViewModel.firePropertyChange();
     }
 }
