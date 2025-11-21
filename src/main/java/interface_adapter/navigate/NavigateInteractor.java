@@ -3,9 +3,13 @@ package use_case.navigate;
 public class NavigateInteractor implements NavigateInputBoundary {
 
     private final NavigateOutputBoundary navigatePresenter;
+    private final Map<String, String> map;
+    private final Player player;
 
-    public NavigateInteractor(NavigateOutputBoundary navigatePresenter) {
+    public NavigateInteractor(NavigateOutputBoundary navigatePresenter, Map<String, String> map, Player player) {
         this.navigatePresenter = navigatePresenter;
+        this.map = gameMap;
+        this.player = player;
     }
 
     /*
