@@ -56,6 +56,8 @@ public class AppBuilder {
 
     private Player player;
 
+    private NavigateInteractor navigateInteractor;
+
     private String initialViewName = null;
 
     public AppBuilder() {
@@ -81,8 +83,8 @@ public class AppBuilder {
 
     private void addNavigateUseCase() {
         NavigatePresenter presenter = new NavigatePresenter(navigateViewModel);
-        NavigateInputBoundary interactor = new NavigateInteractor(presenter);
-        NavigateController controller = new NavigateController(interactor);
+        navigateInteractor = new NavigateInteractor(presenter, viewManagerModel);
+        NavigateController controller = new NavigateController(navigateInteractor);
         navigateView.setNavigateController(controller);
         navigateView.setNavigateViewModel(navigateViewModel);
     }
@@ -194,6 +196,9 @@ public class AppBuilder {
         addCardGameUseCase();
         addTriviaGameUseCase();
         addWinGameUseCase();
+
+        navigateInteractor.setCardGameView(cardGameView);
+        navigateInteractor.setTriviaGameView(triviaGameView);
 
         SaveProgressPresenter savePresenter = new SaveProgressPresenter();
         SaveProgressInputBoundary saveInteractor = new SaveProgressInteractor(fileDataAccess, savePresenter);

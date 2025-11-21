@@ -119,6 +119,12 @@ public class CardGameView extends JPanel implements PropertyChangeListener {
         });
     }
 
+    public void startGame() {
+        if (cardGameController != null) {
+            cardGameController.execute();
+        }
+    }
+
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         CardGameState state = cardGameViewModel.getState();

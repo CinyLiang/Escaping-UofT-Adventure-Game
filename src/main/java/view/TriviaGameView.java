@@ -94,7 +94,7 @@ public class TriviaGameView extends JPanel implements PropertyChangeListener {
         });
 
         returnButton.addActionListener(e -> {
-            viewManagerModel.setState("navigate");
+            viewManagerModel.setState("navigate_view");
             viewManagerModel.firePropertyChange();
         });
 
@@ -135,6 +135,11 @@ public class TriviaGameView extends JPanel implements PropertyChangeListener {
 
     public void setController(TriviaGameController controller) {
         this.controller = controller;
-        controller.startNewQuestion();
+    }
+
+    public void startGame() {
+        if (controller != null) {
+            controller.startNewQuestion();
+        }
     }
 }

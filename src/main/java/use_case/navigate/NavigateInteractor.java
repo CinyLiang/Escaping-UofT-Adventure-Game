@@ -1,11 +1,15 @@
 package use_case.navigate;
 
 import interface_adapter.ViewManagerModel;
+import view.CardGameView;
+import view.TriviaGameView;
 
 public class NavigateInteractor implements NavigateInputBoundary {
 
     private final NavigateOutputBoundary navigatePresenter;
     private final ViewManagerModel viewManagerModel;
+    private CardGameView cardGameView;
+    private TriviaGameView triviaGameView;
 
     public NavigateInteractor(NavigateOutputBoundary navigatePresenter, ViewManagerModel viewManagerModel) {
         this.navigatePresenter = navigatePresenter;
@@ -14,6 +18,14 @@ public class NavigateInteractor implements NavigateInputBoundary {
 
     public NavigateInteractor(NavigateOutputBoundary navigatePresenter) {
         this(navigatePresenter, null);
+    }
+
+    public void setCardGameView(CardGameView cardGameView) {
+        this.cardGameView = cardGameView;
+    }
+
+    public void setTriviaGameView(TriviaGameView triviaGameView) {
+        this.triviaGameView = triviaGameView;
     }
 
     @Override
@@ -25,11 +37,17 @@ public class NavigateInteractor implements NavigateInputBoundary {
                 case "North":
                     viewManagerModel.setState("trivia game");
                     viewManagerModel.firePropertyChange();
+                    if (triviaGameView != null) {
+                        triviaGameView.startGame();
+                    }
                     break;
 
                 case "East":
                     viewManagerModel.setState("card game");
                     viewManagerModel.firePropertyChange();
+                    if (cardGameView != null) {
+                        cardGameView.startGame();
+                    }
                     break;
 
                 case "South":
