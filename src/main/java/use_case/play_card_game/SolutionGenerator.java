@@ -1,4 +1,4 @@
-package entity;
+package use_case.play_card_game;
 
 import java.util.*;
 import java.lang.Integer;

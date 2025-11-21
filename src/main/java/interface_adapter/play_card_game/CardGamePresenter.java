@@ -23,7 +23,7 @@ public class CardGamePresenter implements PlayCardGameOutputBoundary {
         CardGameState current = cardGameViewModel.getState();
         CardGameState newState = new CardGameState(current);
         newState.setCardPuzzle(outputData.getCardPuzzle());
-        newState.setMessage(outputData.getCardPuzzle().getMessage());
+        newState.setMessage(outputData.getMessage());
         cardGameViewModel.setState(newState);
         cardGameViewModel.firePropertyChange();
 
@@ -40,8 +40,13 @@ public class CardGamePresenter implements PlayCardGameOutputBoundary {
         cardGameViewModel.setState(newState);
         cardGameViewModel.firePropertyChange();
 
-
         viewManagerModel.setState(cardGameViewModel.getViewName());
         viewManagerModel.firePropertyChange();
     }
+
+//    public void initialisePuzzleView(String message, String hint) {
+//        CardGameState current = cardGameViewModel.getState();
+//        current.setMessage(message);
+//        current.setHint(hint);
+//    }
 }
