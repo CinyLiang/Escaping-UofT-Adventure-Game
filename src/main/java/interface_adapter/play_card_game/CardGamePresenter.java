@@ -21,23 +21,27 @@ public class CardGamePresenter implements PlayCardGameOutputBoundary {
     @Override
     public void prepareSuccessView(PlayCardGameOutputData outputData) {
         CardGameState current = cardGameViewModel.getState();
-        CardGameState newState = new CardGameState(current);
-        newState.setCardPuzzle(outputData.getCardPuzzle());
-        newState.setMessage(outputData.getCardPuzzle().getMessage());
-        cardGameViewModel.setState(newState);
+//        CardGameState newState = new CardGameState(current);
+        current.setCardPuzzle(outputData.getCardPuzzle());
+        current.setMessage(outputData.getMessage());
+        // no need to set hint (remains an empty string)
+//        cardGameViewModel.setState(current);
         cardGameViewModel.firePropertyChange();
 
-        viewManagerModel.setState("Math24 Card Game");
+        viewManagerModel.setState(cardGameViewModel.getViewName());
         viewManagerModel.firePropertyChange();
     }
 
     @Override
     public void prepareFailView(String errorMessage) {
         CardGameState current = cardGameViewModel.getState();
-        CardGameState newState = new CardGameState(current);
-        newState.setMessage(errorMessage);
-        newState.setCardPuzzle(null);
-        cardGameViewModel.setState(newState);
+//        CardGameState newState = new CardGameState(current);
+        current.setMessage(errorMessage);
+        current.setCardPuzzle(null);
+//        cardGameViewModel.setState(current);
         cardGameViewModel.firePropertyChange();
+
+        viewManagerModel.setState(cardGameViewModel.getViewName());
+        viewManagerModel.firePropertyChange();
     }
 }

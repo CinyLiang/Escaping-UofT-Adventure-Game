@@ -71,32 +71,6 @@ public class TriviaPuzzle extends Puzzle {
     }
 
     /**
-     * Returns the solution to the current trivia question.
-     * This provides a hint or the actual answer.
-     * @return the correct answer to the current question
-     */
-    @Override
-    public String solve() {
-        if (correctAnswer != null) {
-            return correctAnswer;
-        }
-        return "No question loaded yet";
-    }
-
-    /**
-     * Validates whether a given solution is correct for the current question.
-     * @param solution the proposed solution to validate
-     * @return true if the solution matches the correct answer (case-insensitive)
-     */
-    @Override
-    public boolean validateSolution(String solution) {
-        if (correctAnswer == null) {
-            return false;
-        }
-        return solution.equalsIgnoreCase(correctAnswer);
-    }
-
-    /**
      * Resets the puzzle progress to zero correct answers.
      * Useful if you want to let players retry the entire puzzle.
      */

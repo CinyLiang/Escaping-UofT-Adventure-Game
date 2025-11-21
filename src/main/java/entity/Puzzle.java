@@ -47,28 +47,9 @@ public abstract class Puzzle {
         return suceessesToPass;
     }*/
 
-    // Abstract methods
-    public abstract String solve(); // Abstract method generating one possible solution to the puzzle
-
-    public abstract boolean validateSolution(String solution); // Abstract method validating whether a solution is correct or not
-
-    // Returning a string of hints for a puzzle
-//    public String giveHint() {
-//        return this.hint;
-//    }
-
     // Marking a puzzle solved
     public void markSolved() {
         isSolved = true;
-    }
-
-    // Recording an attempt by the player
-    public boolean attemptSolve(String inputSolution) {
-        attempts++;
-        if (validateSolution(inputSolution)) {
-            markSolved();
-        }
-        return isSolved;
     }
 
     public boolean isSolved() {return isSolved;}

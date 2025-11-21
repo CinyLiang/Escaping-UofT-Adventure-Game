@@ -9,7 +9,7 @@ public class ValidateCardAnswerInputData {
     /**
      * The input data for the Validate Card Answer Use Case.
      */
-    private final Player player;
+    private final Player player; // should not require player
     private final String expression;
     private final List<Card> cards;
     private final CardPuzzle cardPuzzle;

@@ -9,31 +9,35 @@ import use_case.card_game_hints.CardGameHintsOutputDataObject;
 public class CardGameHintsPresenter implements CardGameHintsOutputBoundary {
     private final CardGameViewModel cardGameViewModel;
 
-    public CardGameHintsPresenter(CardGameViewModel cardGameViewModel) {
+    private final ViewManagerModel viewManagerModel;
+
+    public CardGameHintsPresenter(CardGameViewModel cardGameViewModel, ViewManagerModel viewManagerModel) {
         this.cardGameViewModel = cardGameViewModel;
+        this.viewManagerModel = viewManagerModel;
     }
 
     @Override
     public void prepareSuccessView(CardGameHintsOutputDataObject outputData) {
         CardGameState current = this.cardGameViewModel.getState();
-        CardGameState newState = new CardGameState(current);
+//        CardGameState newState = new CardGameState(current);
 
         String hint =  outputData.getHint();
-        newState.setHint(hint);
+        current.setHint(hint);
 
-        this.cardGameViewModel.setState(newState);
+//        this.cardGameViewModel.setState(newState);
         this.cardGameViewModel.firePropertyChange();
 
+        // if now changes in view seen, firePropertyChange in viewManagerModel
     }
 
     @Override
     public void prepareFailView(String errorMessage) {
         CardGameState current = this.cardGameViewModel.getState();
-        CardGameState newState = new CardGameState(current);
+//        CardGameState newState = new CardGameState(current);
 
-        newState.setMessage(errorMessage);
+        current.setMessage(errorMessage);
 
-        this.cardGameViewModel.setState(newState);
+//        this.cardGameViewModel.setState(current);
         this.cardGameViewModel.firePropertyChange();
     }
 }

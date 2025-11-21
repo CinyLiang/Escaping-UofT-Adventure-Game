@@ -1,10 +1,9 @@
-package entity;
+package use_case.play_card_game.utilities;
 
 import java.util.*;
-import java.lang.Integer;
 import java.util.ArrayList;
 import java.util.Arrays;
-import entity.ExpressionEvaluator;
+
 import entity.Card;
 
 public class SolutionGenerator {
@@ -21,7 +20,10 @@ public class SolutionGenerator {
         List<List<Integer>> perms = generatePermutations(numbers);
 
         for (List<Integer> perm : perms) {
-            int a = perm.get(0), b = perm.get(1), c = perm.get(2), d = perm.get(3);
+            int a = perm.get(0);
+            int b = perm.get(1);
+            int c = perm.get(2);
+            int d = perm.get(3);
 
             for (String op1 : OPERATORS) {
                 for (String op2 : OPERATORS) {
@@ -42,7 +44,7 @@ public class SolutionGenerator {
 
     public static boolean isSolvable(List<Card> cards) {
         int numSol = find24Solutions(cards).size();
-        return (!(numSol == 0));
+        return numSol != 0;
     }
 
     private static void testExpression(Set<String> solutions, String expr, int target) {
@@ -50,7 +52,7 @@ public class SolutionGenerator {
             if (Math.abs(ExpressionEvaluator.evaluate(expr) - target) < 0.0001) {
                 solutions.add(expr);
             }
-        } catch (Exception e) {
+        } catch (Exception ignored) {
 
         }
     }
@@ -68,14 +70,14 @@ public class SolutionGenerator {
         } else {
             for (int j = 0; j < n; j++) {
                 int pivot = numbers.get(j);
-                List<Integer> subnum = new ArrayList<>();
-                subnum.addAll(numbers.subList(0, j));
-                subnum.addAll(numbers.subList(j+1, n));
+                List<Integer> numberSubset = new ArrayList<>();
+                numberSubset.addAll(numbers.subList(0, j));
+                numberSubset.addAll(numbers.subList(j+1, n));
 
-                List<List<Integer>> subperm = generatePermutations(subnum);
-                for (List<Integer> numlst : subperm) {
-                    numlst.add(pivot);
-                    perms.add(numlst);
+                List<List<Integer>> permSubset = generatePermutations(numberSubset);
+                for (List<Integer> numList : permSubset) {
+                    numList.add(pivot);
+                    perms.add(numList);
                 }
             }
 

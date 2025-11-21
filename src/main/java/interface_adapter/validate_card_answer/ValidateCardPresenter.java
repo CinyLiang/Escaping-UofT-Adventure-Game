@@ -19,21 +19,22 @@ public class ValidateCardPresenter implements ValidateCardAnswerOutputBoundary {
     public void prepareSuccessView(ValidateCardAnswerOutputData outputData) {
         String feedback = outputData.getMessage();
         CardGameState current = this.cardGameViewModel.getState();
-        CardGameState newState = new CardGameState(current);
-        newState.setMessage(feedback);
-        newState.setSolved();
+//        CardGameState newState = new CardGameState(current);
+        // if turns out it doesn't work well, go back to newState.
+        current.setMessage(feedback);
+        current.setSolved();
 
-        this.cardGameViewModel.setState(newState);
+//        this.cardGameViewModel.setState(current);
         this.cardGameViewModel.firePropertyChange();
     }
 
     @Override
     public void prepareFailView(ValidateCardAnswerOutputData outputData) {
         String message = outputData.getMessage();
-        CardGameState state = this.cardGameViewModel.getState();
-        CardGameState newState = new CardGameState(state);
-        newState.setMessage(message);
-        this.cardGameViewModel.setState(newState);
+        CardGameState current = this.cardGameViewModel.getState();
+//        CardGameState newState = new CardGameState(current);
+        current.setMessage(message);
+        this.cardGameViewModel.setState(current);
         this.cardGameViewModel.firePropertyChange();
     }
 }
