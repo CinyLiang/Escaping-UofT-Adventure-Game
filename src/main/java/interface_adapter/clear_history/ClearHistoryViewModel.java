@@ -38,5 +38,6 @@ public class ClearHistoryViewModel {
     }
 
     public void firePropertyChange() {
+
     }
 }

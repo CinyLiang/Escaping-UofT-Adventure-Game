@@ -84,7 +84,7 @@ public class NavigateView extends javax.swing.JFrame {
         this.saveProgressController = saveProgressController;
     }
 
-    public void setViewProgressController(ViewProgressController viewProgressController) {
+    public static void setViewProgressController(ViewProgressController viewProgressController) {
         this.viewProgressController = viewProgressController;
     }
 

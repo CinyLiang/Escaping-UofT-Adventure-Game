@@ -60,57 +60,46 @@ public class AppBuilder {
 
     public AppBuilder addView(JPanel view, String name) {
         cardPanel.add(view, name);
-
-        // first view becomes initial view
+        // First view becomes initial view
         if (initialViewName == null) {
             initialViewName = name;
         }
         return this;
     }
 
-    public AppBuilder addClearHistoryUseCase() {
-        ClearHistoryOutputBoundary outputBoundary =
-                new ClearHistoryPresenter(clearHistoryViewModel);
-        ClearHistoryInputBoundary inputBoundary =
-                new ClearHistoryInteractor(outputBoundary);
-        ClearHistoryController controller =
-                new ClearHistoryController(inputBoundary);
-        navigateView.setClearHistoryController(controller);
-        return this;
-    }
-
     // Save Progress Use Case
     public AppBuilder addSaveProgressUseCase(SaveProgressDataAccessInterface saveGateway) {
-        SaveProgressOutputBoundary presenter = new SaveProgressPresenter();
-        SaveProgressInputBoundary interactor = new SaveProgressInteractor(saveGateway, presenter);
-        SaveProgressController controller = new SaveProgressController(interactor);
-
-        NavigateView.setSaveProgressController(controller);
+        SaveProgressOutputBoundary presenter =
+                new SaveProgressPresenter();
+        SaveProgressInputBoundary interactor =
+                new SaveProgressInteractor(saveGateway, presenter);
+        SaveProgressController controller =
+                new SaveProgressController(interactor);
+        navigateView.setSaveProgressController(controller);
         return this;
     }
 
     public AppBuilder addClearHistoryUseCase() {
-
-        ClearHistoryPresenter presenter =
+        ClearHistoryOutputBoundary presenter =
                 new ClearHistoryPresenter(clearHistoryViewModel);
-        ClearHistoryInteractor interactor =
+        ClearHistoryInputBoundary interactor =
                 new ClearHistoryInteractor(presenter);
         ClearHistoryController controller =
                 new ClearHistoryController(interactor);
         navigateView.setClearHistoryController(controller);
         navigateView.setClearHistoryViewModel(clearHistoryViewModel);
-
         return this;
     }
-
-    // View Progress Use Case
+    // View Progress UseCase
     public AppBuilder addViewProgressUseCase(ViewProgressDataAccessInterface viewGateway) {
         viewProgressViewModel = new ViewProgressViewModel();
-        ViewProgressOutputBoundary presenter = new ViewProgressPresenter(viewProgressViewModel);
-        ViewProgressInputBoundary interactor = new ViewProgressInteractor(viewGateway, presenter);
-        ViewProgressController controller = new ViewProgressController(interactor);
-
-        NavigateView.setViewProgressController(controller);
+        ViewProgressOutputBoundary presenter =
+                new ViewProgressPresenter(viewProgressViewModel);
+        ViewProgressInputBoundary interactor =
+                new ViewProgressInteractor(viewGateway, presenter);
+        ViewProgressController controller =
+                new ViewProgressController(interactor);
+        navigateView.setViewProgressController(controller);
         return this;
     }
 
@@ -144,7 +133,6 @@ public class AppBuilder {
         // Show initial view
         viewManagerModel.setState(initialViewName);
         viewManagerModel.firePropertyChange();
-
         window.setVisible(true);
         return window;
     }
