@@ -17,28 +17,30 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 public class CardGameView extends JPanel implements PropertyChangeListener {
-    // Controllers
+
     private CardGameController cardGameController;
     private CardGameHintsController cardGameHintsController;
     private ValidateCardController validateCardController;
     private ReturnFromCardController returnFromCardController;
-    // Dialogue
+
     private ReturnFromCardDialogue returnFromCardDialogue;
-    // ViewModel
+
     private CardGameViewModel cardGameViewModel;
-    // Name
+
+    private Player player;
+
     private final String viewName = "card game";
-    // Labels
+
     private final JLabel promptLabel = new JLabel("Math24: Please click on the " +
             "\"New Game\" button to start a new game!");
     private final JLabel hintLabel = new JLabel("");
     private final JLabel messageLabel = new JLabel("");
-    // Buttons
+
     private final JButton startButton = new JButton("New Game");
     private final JButton hintButton = new JButton("Generate Hint");
     private final JButton validateButton = new JButton("Check My Answer");
     private final JButton returnButton = new JButton("Return");
-    // TextField
+
     private final JTextField answerField = new JTextField(20);
 
     public CardGameView(CardGameController cardGameController,
@@ -54,58 +56,61 @@ public class CardGameView extends JPanel implements PropertyChangeListener {
         this.returnFromCardController = returnFromCardController;
         this.returnFromCardDialogue = returnFromCardDialogue;
         this.cardGameViewModel = cardGameViewModel;
+        this.player = player;
 
         cardGameViewModel.addPropertyChangeListener(this);
         layoutBuilder();
-        eventHandler(player);
+        eventHandler();
     }
 
     private void layoutBuilder() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        // Prompts
-        JPanel topPanel =  new JPanel();
+        JPanel topPanel = new JPanel();
         this.promptLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         topPanel.add(this.promptLabel);
         topPanel.add(this.messageLabel);
         topPanel.add(this.hintLabel);
 
-        // Answer
         JPanel answerPanel = new JPanel();
         answerPanel.add(this.answerField);
 
-        // Buttons
-        JPanel buttonPanel =  new JPanel();
+        JPanel buttonPanel = new JPanel();
         buttonPanel.add(this.startButton);
         buttonPanel.add(this.hintButton);
         buttonPanel.add(this.validateButton);
         buttonPanel.add(this.returnButton);
 
-        // Putting together
         add(topPanel);
-        add(Box.createRigidArea(new Dimension(0, 10))); // 添加间距
+        add(Box.createRigidArea(new Dimension(0, 10)));
         add(answerPanel);
-        add(Box.createRigidArea(new Dimension(0, 10))); // 添加间距
+        add(Box.createRigidArea(new Dimension(0, 10)));
         add(buttonPanel);
     }
 
-    private void  eventHandler(Player player) {
+    private void eventHandler() {
         startButton.addActionListener(e -> {
             cardGameController.execute();
         });
 
-        CardPuzzle cardPuzzle = this.cardGameViewModel.getState().getcardPuzzle();
-        CardGameHintsInputDataObject hintInputData = new CardGameHintsInputDataObject(cardPuzzle);
         hintButton.addActionListener(e -> {
-            cardGameHintsController.execute(hintInputData);
+            CardGameState state = cardGameViewModel.getState();
+            CardPuzzle cardPuzzle = state.getcardPuzzle();
+            if (cardPuzzle != null) {
+                CardGameHintsInputDataObject hintInputData = new CardGameHintsInputDataObject(cardPuzzle);
+                cardGameHintsController.execute(hintInputData);
+            }
         });
 
-        String userAnswer = answerField.getText().trim();
-        // need to confirm how this is done
-        ValidateCardAnswerInputData validationInputData = new ValidateCardAnswerInputData(player, userAnswer, cardPuzzle);
-        // not sure if player is necessary?
         validateButton.addActionListener(e -> {
-            validateCardController.execute(validationInputData);
+            CardGameState state = cardGameViewModel.getState();
+            CardPuzzle cardPuzzle = state.getcardPuzzle();
+            if (cardPuzzle != null) {
+                String userAnswer = answerField.getText().trim();
+                ValidateCardAnswerInputData validationInputData =
+                        new ValidateCardAnswerInputData(player, userAnswer, cardPuzzle);
+                validateCardController.execute(validationInputData);
+            }
         });
 
         returnButton.addActionListener(e -> {

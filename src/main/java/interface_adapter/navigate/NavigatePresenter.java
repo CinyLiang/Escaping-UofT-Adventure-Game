@@ -3,6 +3,7 @@ package interface_adapter.navigate;
 import use_case.navigate.NavigateOutputBoundary;
 import use_case.navigate.NavigateOutputData;
 
+
 /**
  * Presenter for the Navigation use case.
  * Receives output from the Interactor and updates the ViewModel.
@@ -12,7 +13,7 @@ public class NavigatePresenter implements NavigateOutputBoundary {
     public NavigatePresenter(NavigateViewModel navigateViewModel) {
         this.navigateViewModel = navigateViewModel;
     }
-    @Override
+//    @Override
     public void present(NavigateOutputData outputData) {
 
         // Getting the current state
@@ -22,5 +23,15 @@ public class NavigatePresenter implements NavigateOutputBoundary {
         state.setDirection(outputData.getDirection());
         // Notify NavigateView to refresh UI
         navigateViewModel.firePropertyChanged();
+    }
+
+    @Override
+    public void prepareSuccessView(NavigateOutputData response) {
+
+    }
+
+    @Override
+    public void prepareFailView(String error) {
+
     }
 }

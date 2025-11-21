@@ -8,8 +8,6 @@ import interface_adapter.save_progress.SaveProgressController;
 import interface_adapter.view_progress.ViewProgressController;
 import interface_adapter.quit_game.QuitGameController;
 
-import view.QuitGameDialog;
-
 import javax.swing.*;
 import java.awt.*;
 
@@ -29,14 +27,12 @@ public class NavigateView extends JPanel {
 
     private QuitGameDialog quitDialog;
 
-    // Controllers
     private NavigateController navigateController;
     private ClearHistoryController clearHistoryController;
     private SaveProgressController saveController;
     private ViewProgressController viewProgressController;
     private QuitGameController quitGameController;
 
-    // ViewModels
     private NavigateViewModel navigateViewModel;
     private ClearHistoryViewModel clearHistoryViewModel;
 
@@ -44,8 +40,6 @@ public class NavigateView extends JPanel {
 
         this.setLayout(new BorderLayout());
         this.setBackground(Color.BLACK);
-
-        quitDialog = new QuitGameDialog();
 
         JPanel topSection = new JPanel(new BorderLayout());
         topSection.setBackground(Color.BLACK);
@@ -138,7 +132,9 @@ public class NavigateView extends JPanel {
         });
 
         quitButton.addActionListener(e -> {
-            if (quitDialog != null) quitDialog.show();
+            if (quitGameController != null) {
+                quitGameController.showQuit();
+            }
         });
 
         directionSelector.addActionListener(e -> {
@@ -160,24 +156,16 @@ public class NavigateView extends JPanel {
         this.navigateController = c;
     }
 
-    // Quit dialog
-    public void setQuitGameDialog(QuitGameDialog quitDialog) {
-        this.quitDialog = quitDialog;
-    }
-
-    // Restart controller
     public void setRestartController(ClearHistoryController controller) {
         restartButton.addActionListener(e -> controller.execute());
     }
 
-    // Progress controller
     public void setViewProgressController(ViewProgressController controller) {
-        progressButton.addActionListener(e -> controller.execute());
+        this.viewProgressController = controller;
     }
 
-    // Save controller
     public void setSaveProgressController(SaveProgressController controller) {
-        saveButton.addActionListener(e -> controller.execute());
+        this.saveController = controller;
     }
 
     public void setNavigateViewModel(NavigateViewModel vm) {
@@ -210,6 +198,6 @@ public class NavigateView extends JPanel {
 
         this.quitDialog = new QuitGameDialog(quitController, saveController);
 
-        quitButton.addActionListener(e -> quitDialog.show());
+        quitController.setShowQuitDialog(() -> quitDialog.show());
     }
 }
