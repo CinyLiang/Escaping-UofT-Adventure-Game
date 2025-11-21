@@ -8,14 +8,14 @@ import java.util.*;
 
 public class PlayCardGameInteractor implements PlayCardGameInputBoundary{
     private final CardGameDataAccessInterface cardGameDataAccessObject;
-    private final PlayCardGameOutputBoundary playerPresenter;
+    private final PlayCardGameOutputBoundary cardGamePresenter;
 
     private CardPuzzle cardPuzzle;
 
     public PlayCardGameInteractor (CardGameDataAccessObject cardGameDataAccessObject,
-        PlayCardGameOutputBoundary playerPresenter) {
+        PlayCardGameOutputBoundary cardGamePresenter) {
         this.cardGameDataAccessObject = cardGameDataAccessObject;
-        this.playerPresenter = playerPresenter;
+        this.cardGamePresenter = cardGamePresenter;
     }
 
     @Override
@@ -27,7 +27,7 @@ public class PlayCardGameInteractor implements PlayCardGameInputBoundary{
                 cards = this.cardGameDataAccessObject.drawCards(4);
             }
             if (cards == null || cards.size() != 4) {
-                this.playerPresenter.prepareFailView("Failed to draw 4 card, sorry!");
+                this.cardGamePresenter.prepareFailView("Failed to draw 4 card, sorry!");
                 return;
             }
 
@@ -38,9 +38,9 @@ public class PlayCardGameInteractor implements PlayCardGameInputBoundary{
                     "                    \"to get an expression that evaluates to 24!\"" + cardPuzzle.getCardNumberString();
 
             PlayCardGameOutputData outputData = new PlayCardGameOutputData(true, cardPuzzle, displayMessage);
-            this.playerPresenter.prepareSuccessView(outputData);
+            this.cardGamePresenter.prepareSuccessView(outputData);
         } catch (Exception e) {
-            this.playerPresenter.prepareFailView("Error: " + e.getMessage());
+            this.cardGamePresenter.prepareFailView("Error: " + e.getMessage());
         }
     }
 
