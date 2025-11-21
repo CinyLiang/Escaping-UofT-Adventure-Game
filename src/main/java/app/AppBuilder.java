@@ -89,6 +89,20 @@ public class AppBuilder {
         return this;
     }
 
+    public AppBuilder addClearHistoryUseCase() {
+
+        ClearHistoryPresenter presenter =
+                new ClearHistoryPresenter(clearHistoryViewModel);
+        ClearHistoryInteractor interactor =
+                new ClearHistoryInteractor(presenter);
+        ClearHistoryController controller =
+                new ClearHistoryController(interactor);
+        navigateView.setClearHistoryController(controller);
+        navigateView.setClearHistoryViewModel(clearHistoryViewModel);
+
+        return this;
+    }
+
     // View Progress Use Case
     public AppBuilder addViewProgressUseCase(ViewProgressDataAccessInterface viewGateway) {
         viewProgressViewModel = new ViewProgressViewModel();
