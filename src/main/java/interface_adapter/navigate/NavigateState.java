@@ -7,11 +7,29 @@ public class NavigateState{
 //    private String currentLocationName; // not sure if it's necessary
     private Set<String> puzzlesSolved; // store puzzle name or id or whatever
     private int numberOfKeys;
+    private String storyText;
+    private String direction;
+
 
     public NavigateState() {
 //        this.currentLocationName = "";
+        this.storyText = "";
+        this.direction = "";
         this.puzzlesSolved = new HashSet<>();
         this.numberOfKeys = 0;
+    }
+
+    public String getStoryText() {
+        return storyText;
+    }
+    public void setStoryText(String storyText) {
+        this.storyText = storyText;
+    }
+    public String getDirection() {
+        return direction;
+    }
+    public void setDirection(String direction) {
+        this.direction = direction;
     }
 
     public Set<String> getPuzzlesSolved() {
@@ -42,7 +60,7 @@ public class NavigateState{
         this.numberOfKeys++;
     }
 
-    public void addNumberOfKeys(int numberOfKeys) {
-        this.numberOfKeys += numberOfKeys;
+    public void addNumberOfKeys(int delta) {
+        this.numberOfKeys += delta;
     }
 }
