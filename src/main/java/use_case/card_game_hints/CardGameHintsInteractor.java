@@ -1,7 +1,7 @@
 package use_case.card_game_hints;
 
 import entity.Card;
-import use_case.play_card_game.SolutionGenerator;
+import use_case.play_card_game.utilities.SolutionGenerator;
 
 import java.util.List;
 

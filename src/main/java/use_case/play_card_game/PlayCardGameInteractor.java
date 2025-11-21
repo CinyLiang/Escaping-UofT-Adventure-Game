@@ -2,6 +2,8 @@ package use_case.play_card_game;
 
 import entity.*;
 import data_access.CardGameDataAccessObject;
+import use_case.play_card_game.utilities.SolutionGenerator;
+
 import java.util.*;
 
 public class PlayCardGameInteractor implements PlayCardGameInputBoundary{

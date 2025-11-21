@@ -1,7 +1,7 @@
 package use_case.validateCardAnswer;
 
 import entity.Card;
-import entity.ExpressionEvaluator;
+import use_case.play_card_game.utilities.ExpressionEvaluator;
 import entity.Player;
 
 import java.util.ArrayList;
