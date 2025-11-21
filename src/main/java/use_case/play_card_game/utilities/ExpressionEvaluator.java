@@ -1,4 +1,4 @@
-package entity;
+package use_case.play_card_game.utilities;
 
 import error.InvalidInputException;
 import java.lang.Integer;
