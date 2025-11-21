@@ -23,7 +23,24 @@ public class OpenTriviaAPI implements TriviaGameDataAccessInterface {
             String responseBody = response.body().string();
 
             JSONObject json = new JSONObject(responseBody);
+
+            if (!json.has("results")) {
+                System.err.println("API Error Response: " + responseBody);
+                return new String[]{
+                        "The trivia service is temporarily unavailable. Please try again in a moment.",
+                        "True"
+                };
+            }
+
             JSONArray results = json.getJSONArray("results");
+
+            if (results.length() == 0) {
+                return new String[]{
+                        "No questions available. Please try again.",
+                        "True"
+                };
+            }
+
             JSONObject questionObj = results.getJSONObject(0);
 
             String question = decodeHtmlEntities(questionObj.getString("question"));
@@ -32,8 +49,12 @@ public class OpenTriviaAPI implements TriviaGameDataAccessInterface {
             return new String[]{question, correctAnswer};
 
         } catch (Exception e) {
+            System.err.println("Error fetching trivia question: " + e.getMessage());
             e.printStackTrace();
-            return new String[]{"Error loading question", "True"};
+            return new String[]{
+                    "Unable to load question. Please try again. Click 'New Question'.",
+                    "True"
+            };
         }
     }
 
