@@ -9,6 +9,7 @@ import interface_adapter.clear_history.ClearHistoryViewModel;
 import use_case.clear_history.ClearHistoryInteractor;
 import use_case.clear_history.ClearHistoryOutputBoundary;
 import view.HomeView;
+import view.InstructionsView;
 import view.NavigateView;
 import view.ViewManager;
 
@@ -53,6 +54,7 @@ public class AppBuilder {
     // Views
     private HomeView homeView;
     private NavigateView navigateView;
+    private InstructionsView instructionsView;
 
 
     private ViewProgressViewModel viewProgressViewModel;
@@ -77,6 +79,7 @@ public class AppBuilder {
         return this;
          */
     }
+
 
     public AppBuilder addClearHistoryUseCase() {
 
@@ -124,6 +127,7 @@ public class AppBuilder {
 
         addView(homeView, HomeView.VIEW_NAME);
         addView(navigateView, NavigateView.VIEW_NAME);
+        addView(instructionsView, InstructionsView.VIEW_NAME);   // ← ADD THIS
 
         addClearHistoryUseCase();
 
