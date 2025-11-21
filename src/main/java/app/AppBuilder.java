@@ -1,45 +1,30 @@
 package app;
 
 import interface_adapter.ViewManagerModel;
-import interface_adapter.clear_history.ClearHistoryController;
-import interface_adapter.clear_history.ClearHistoryPresenter;
+import interface_adapter.clear_history.*;
 import interface_adapter.navigate.NavigateViewModel;
-import use_case.clear_history.ClearHistoryInputBoundary;
-import interface_adapter.clear_history.ClearHistoryViewModel;
-import use_case.clear_history.ClearHistoryInteractor;
-import use_case.clear_history.ClearHistoryOutputBoundary;
-import view.HomeView;
-import view.InstructionsView;
-import view.NavigateView;
-import view.ViewManager;
+import interface_adapter.quit_game.QuitGameController;
+
+import interface_adapter.save_progress.*;
+import interface_adapter.view_progress.*;
+
+import view.*;
+
+import use_case.clear_history.*;
+import use_case.save_progress.*;
+import use_case.view_progress.*;
 
 import javax.swing.*;
 import java.awt.*;
-
-// Save Progress imports
-import interface_adapter.save_progress.SaveProgressController;
-import interface_adapter.save_progress.SaveProgressPresenter;
-import use_case.save_progress.SaveProgressInputBoundary;
-import use_case.save_progress.SaveProgressInteractor;
-import use_case.save_progress.SaveProgressOutputBoundary;
-import use_case.save_progress.SaveProgressDataAccessInterface;
-
-// View Progress imports
-import interface_adapter.view_progress.ViewProgressController;
-import interface_adapter.view_progress.ViewProgressPresenter;
-import interface_adapter.view_progress.ViewProgressViewModel;
-
-import use_case.view_progress.ViewProgressInputBoundary;
-import use_case.view_progress.ViewProgressInteractor;
-import use_case.view_progress.ViewProgressOutputBoundary;
-import use_case.view_progress.ViewProgressDataAccessInterface;
 
 public class AppBuilder {
 
     private final JPanel cardPanel = new JPanel();
     private final CardLayout cardLayout = new CardLayout();
+
     private final ViewManagerModel viewManagerModel = new ViewManagerModel();
-    public final ViewManager viewManager = new ViewManager(cardPanel, cardLayout, viewManagerModel);
+    private final ViewManager viewManager =
+            new ViewManager(cardPanel, cardLayout, viewManagerModel);
 
     // ViewModels
     private NavigateViewModel navigateViewModel;
@@ -49,9 +34,7 @@ public class AppBuilder {
     // Views
     private HomeView homeView;
     private NavigateView navigateView;
-    private InstructionsView instructionsView;
 
-    // Track screen
     private String initialViewName = null;
 
     public AppBuilder() {
@@ -60,77 +43,62 @@ public class AppBuilder {
 
     public AppBuilder addView(JPanel view, String name) {
         cardPanel.add(view, name);
-
-        // first view becomes initial view
         if (initialViewName == null) {
             initialViewName = name;
         }
         return this;
     }
 
-    // Save Progress Use Case
-    public AppBuilder addSaveProgressUseCase(SaveProgressDataAccessInterface saveGateway) {
-        SaveProgressOutputBoundary presenter = new SaveProgressPresenter();
-        SaveProgressInputBoundary interactor = new SaveProgressInteractor(saveGateway, presenter);
-        SaveProgressController controller = new SaveProgressController(interactor);
-
-        navigateView.setSaveProgressController(controller);
-        return this;
-    }
-
     public AppBuilder addClearHistoryUseCase() {
-
         ClearHistoryPresenter presenter =
                 new ClearHistoryPresenter(clearHistoryViewModel);
-        ClearHistoryInteractor interactor =
+        ClearHistoryInputBoundary interactor =
                 new ClearHistoryInteractor(presenter);
         ClearHistoryController controller =
                 new ClearHistoryController(interactor);
         navigateView.setClearHistoryController(controller);
         navigateView.setClearHistoryViewModel(clearHistoryViewModel);
-
         return this;
     }
 
-    // View Progress Use Case
-    public AppBuilder addViewProgressUseCase(ViewProgressDataAccessInterface viewGateway) {
+    public AppBuilder addSaveProgressUseCase(SaveProgressDataAccessInterface gateway) {
+        SaveProgressPresenter presenter = new SaveProgressPresenter();
+        SaveProgressInputBoundary interactor = new SaveProgressInteractor(gateway, presenter);
+        SaveProgressController controller = new SaveProgressController(interactor);
+        navigateView.setSaveProgressController(controller);
+        return this;
+    }
+    public AppBuilder addViewProgressUseCase(ViewProgressDataAccessInterface gateway) {
         viewProgressViewModel = new ViewProgressViewModel();
-        ViewProgressOutputBoundary presenter = new ViewProgressPresenter(viewProgressViewModel);
-        ViewProgressInputBoundary interactor = new ViewProgressInteractor(viewGateway, presenter);
+        ViewProgressPresenter presenter = new ViewProgressPresenter(viewProgressViewModel);
+        ViewProgressInputBoundary interactor = new ViewProgressInteractor(gateway, presenter);
         ViewProgressController controller = new ViewProgressController(interactor);
-
         navigateView.setViewProgressController(controller);
         return this;
     }
 
     public JFrame build() {
-
-        // ViewModels
         navigateViewModel = new NavigateViewModel();
         clearHistoryViewModel = new ClearHistoryViewModel();
-
-        // Create Views
         homeView = new HomeView(viewManagerModel);
         navigateView = new NavigateView();
-        instructionsView = new InstructionsView();
-
-        // Register views
         addView(homeView, HomeView.VIEW_NAME);
-        addView(navigateView, NavigateView.VIEW_NAME); // TODO: navigateView extends JFrame, not JPanel. Switch navigateView to extend JPanel
-        addView(instructionsView, InstructionsView.VIEW_NAME);
-
-        // Add use cases
+        addView(navigateView, NavigateView.VIEW_NAME);
+        QuitGameController quitController = new QuitGameController();
+        SaveProgressController saveController = new SaveProgressController(null);
+        QuitGameDialog quitDialog = new QuitGameDialog(quitController, saveController);
+        SaveGameDialog saveDialog = new SaveGameDialog(saveController);
+        quitController.setShowQuitDialog(quitDialog::show);
+        quitController.setShowSaveDialog(saveDialog::show);
+        navigateView.setQuitGameController(quitController, saveController);
         addClearHistoryUseCase();
-
-        // Build window
         JFrame window = new JFrame("UofT Adventure Game");
         window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         window.setSize(900, 650);
         window.setResizable(false);
 
-        window.add(viewManager.getCardPanel());
+        window.add(cardPanel);
 
-        // Show initial view
         viewManagerModel.setState(initialViewName);
         viewManagerModel.firePropertyChange();
 
