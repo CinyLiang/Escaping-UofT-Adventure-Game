@@ -62,6 +62,33 @@ public class NavigateState{
     public void updateLocationMap(String locationName, Location location) {
         this.locationMap.put(locationName, location);
     }
+
+    // HELPER METHODS
+    // i'm moving this out of Game.java for now, we can decide later where it should go
+    private void createLocationMap() {
+        locationMap = new HashMap<>();
+        // Initialize locations and add to locationMap
+        // location 1: kings college circle (middle)
+        Location kcc = new Location("Kings College Circle", "The central lawn of the university.", "start");
+        locationMap.put("Kings College Circle", kcc);
+
+        // location 2: knox college (west)
+        Location knox = new Location("Knox College", "Theological college with a haunting interior.", "west");
+        knox.setPuzzle(unknown);
+
+        // location 3: gerstein library (east)
+        Location gerstein = new Location("Gerstein Library", "Quiet library.", "east");
+        gerstein.setPuzzle(cardGame);
+
+        // location 4: university college (north)
+        Location uc = new Location("University College", "Founding college with an ornate door.", "north");
+        uc.setPuzzle(trivia);
+
+        // location 5: convocation hall (south)
+        Location conHall = new Location("Convocation Hall", "Rotunda with three locked doors.", "south");
+        conHall.setPuzzle(threeKeys);
+        conHall.setIsLocked(false);
+    }
 }
 
 // vanessa: move locationMap here
