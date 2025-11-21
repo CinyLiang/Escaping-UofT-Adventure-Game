@@ -5,10 +5,16 @@ import interface_adapter.navigate.NavigateViewModel;
 import use_case.clear_history.ClearHistoryOutputBoundary;
 
 public class ClearHistoryPresenter implements ClearHistoryOutputBoundary {
-    private NavigateViewModel viewModel;
+    private final ClearHistoryViewModel viewModel;
 
-    public ClearHistoryPresenter(NavigateViewModel viewModel) {
+    public ClearHistoryPresenter(ClearHistoryViewModel viewModel) {
         this.viewModel = viewModel;
+    }
+    public void prepareSuccessView(String message) {
+        viewModel.setMessage(message);  // UI update
+    }
+    public void prepareFailView(String errorMessage) {
+        viewModel.setMessage(errorMessage);
     }
 
     @Override

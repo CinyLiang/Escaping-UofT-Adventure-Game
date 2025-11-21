@@ -1,6 +1,8 @@
 package view;
 
 import javax.swing.*;
+
+import interface_adapter.clear_history.ClearHistoryViewModel;
 import view.QuitGameDialog;
 
 import interface_adapter.clear_history.ClearHistoryController;
@@ -12,6 +14,8 @@ import view.QuitGameDialog;
 import interface_adapter.quit_game.QuitGameController;
 
 public class NavigateView extends javax.swing.JFrame {
+    private ClearHistoryViewModel clearHistoryViewModel;
+
     public NavigateView() {
         setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
         createSaveProgressButton();
@@ -82,5 +86,12 @@ public class NavigateView extends javax.swing.JFrame {
 
     public void setViewProgressController(ViewProgressController viewProgressController) {
         this.viewProgressController = viewProgressController;
+    }
+
+    public void setClearHistoryViewModel(ClearHistoryViewModel vm) {
+        this.clearHistoryViewModel = vm;
+        vm.addPropertyChangeListener(evt -> {
+            JOptionPane.showMessageDialog(this, vm.getMessage());
+        });
     }
 }

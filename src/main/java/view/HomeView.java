@@ -1,6 +1,7 @@
 package view;
 
 import interface_adapter.ViewManagerModel;
+import view.NavigateView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -25,12 +26,12 @@ public class HomeView extends JPanel {
         title.setForeground(Color.WHITE);
         title.setBorder(BorderFactory.createEmptyBorder(80, 0, 20, 0));
         this.add(title, BorderLayout.NORTH);
-        
+
         JPanel center = new JPanel();
         center.setBackground(Color.BLACK);
         this.add(center, BorderLayout.CENTER);
 
-        // START BUTTON (BOTTOM)
+        // START BUTTON
         JPanel bottom = new JPanel();
         bottom.setBackground(Color.BLACK);
 
@@ -41,6 +42,7 @@ public class HomeView extends JPanel {
         startButton.setForeground(Color.WHITE);
         startButton.setFocusPainted(false);
 
+        // Navigation
         startButton.addActionListener(e -> {
             viewManagerModel.setState(NavigateView.VIEW_NAME);
             viewManagerModel.firePropertyChange();
