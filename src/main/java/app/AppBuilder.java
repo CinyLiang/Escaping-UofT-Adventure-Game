@@ -5,8 +5,10 @@ import interface_adapter.clear_history.ClearHistoryController;
 import interface_adapter.clear_history.ClearHistoryPresenter;
 import interface_adapter.navigate.NavigateViewModel;
 import use_case.clear_history.ClearHistoryInputBoundary;
+import interface_adapter.clear_history.ClearHistoryViewModel;
 import use_case.clear_history.ClearHistoryInteractor;
 import use_case.clear_history.ClearHistoryOutputBoundary;
+import view.HomeView;
 import view.NavigateView;
 import view.ViewManager;
 
@@ -44,9 +46,14 @@ public class AppBuilder {
 
     // TODO: Implement DAO
 
-    // TODO: Implement Views and View Models
-    private NavigateViewModel NavigateViewModel;
-    private NavigateView NavigateView;
+    // ViewModels
+    private NavigateViewModel navigateViewModel;
+    private ClearHistoryViewModel clearHistoryViewModel;
+
+    // Views
+    private HomeView homeView;
+    private NavigateView navigateView;
+
 
     private ViewProgressViewModel viewProgressViewModel;
 
@@ -54,11 +61,9 @@ public class AppBuilder {
         cardPanel.setLayout(cardLayout);
     }
 
-    public AppBuilder addView(JPanel view, String viewName) {
-        cardPanel.add(view, viewName);
-        if (initialViewName == null) {
-            initialViewName = viewName;
-        }
+    public AppBuilder addView(JPanel view, String name) {
+        cardPanel.add(view, name);
+        private String initialViewName;
         return this;
     }
 
@@ -74,10 +79,14 @@ public class AppBuilder {
     }
 
     public AppBuilder addClearHistoryUseCase() {
-        final ClearHistoryOutputBoundary outputBoundary = new ClearHistoryPresenter(NavigateViewModel);
-        final ClearHistoryInputBoundary inputBoundary = new ClearHistoryInteractor(outputBoundary);
-        ClearHistoryController controller = new ClearHistoryController(inputBoundary);
-        NavigateView.setClearHistoryController(controller);
+
+        ClearHistoryOutputBoundary outputBoundary =
+                new ClearHistoryPresenter(clearHistoryViewModel);
+        ClearHistoryInputBoundary inputBoundary =
+                new ClearHistoryInteractor(outputBoundary);
+        ClearHistoryController controller =
+                new ClearHistoryController(inputBoundary);
+        navigateView.setClearHistoryController(controller);
         return this;
     }
 
@@ -103,14 +112,31 @@ public class AppBuilder {
     }
 
     public JFrame build() {
+        ViewManager viewManager;
+
+        // ViewModels
+        navigateViewModel = new NavigateViewModel();
+        clearHistoryViewModel = new ClearHistoryViewModel();
+
+        // Views
+        homeView = new HomeView(viewManagerModel);
+        navigateView = new NavigateView();
+
+        addView(homeView, HomeView.VIEW_NAME);
+        addView(navigateView, NavigateView.VIEW_NAME);
+
+        addClearHistoryUseCase();
+
         JFrame window = new JFrame("UofT Adventure Game");
         window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         window.setSize(900, 650);
         window.setResizable(false);
 
         window.add(cardPanel);
+
         viewManagerModel.setState(initialViewName);
         viewManagerModel.firePropertyChange();
+
         window.setVisible(true);
         return window;
     }
