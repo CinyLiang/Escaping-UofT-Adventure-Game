@@ -3,51 +3,50 @@ package view;
 import java.awt.*;
 import javax.swing.*;
 
-import interface_adapter.quit_game.QuitGameController;
 import interface_adapter.return_from_card.ReturnFromCardController;
-import interface_adapter.save_progress.SaveProgressController;
 
-public class ReturnFromCardDialogue {
+public class ReturnFromCardDialogue extends JDialog {
+
     private ReturnFromCardController returnFromCardController;
-    private final JDialog dialog = new JDialog();
 
     public ReturnFromCardDialogue(ReturnFromCardController returnFromCardController) {
-        this.setReturnFromCardControllerController(returnFromCardController);
+        this.returnFromCardController = returnFromCardController;
 
-        dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        // When the controller wants the dialog shown
+        this.returnFromCardController.setShowQuitDialog(() -> {
+            ReturnFromCardDialogue dialog = new ReturnFromCardDialogue(returnFromCardController);
+            dialog.showDialog();
+        });
 
-        final JLabel title = new JLabel("Do you confirm that you want to quit the current game??");
-        title.setAlignmentX(Component.CENTER_ALIGNMENT);
+        setTitle("Quit Current Game?");
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        setLayout(new BorderLayout());
 
-        final JPanel buttons = new JPanel();
+        JLabel title = new JLabel("Do you confirm that you want to quit the current game?");
+        title.setHorizontalAlignment(SwingConstants.CENTER);
+
+        JPanel buttons = new JPanel();
         JButton quitGame = new JButton("Quit");
         JButton cancel = new JButton("Cancel");
 
         quitGame.addActionListener(evt -> {
-            dialog.dispose();
+            dispose();
             returnFromCardController.execute();
         });
 
-        cancel.addActionListener(evt -> dialog.dispose()
-        );
+        cancel.addActionListener(evt -> dispose());
 
         buttons.add(quitGame);
         buttons.add(cancel);
-        dialog.add(title, BorderLayout.NORTH);
-        dialog.add(buttons, BorderLayout.SOUTH);
+
+        add(title, BorderLayout.NORTH);
+        add(buttons, BorderLayout.SOUTH);
+
+        pack();
+        setLocationRelativeTo(null);
     }
 
-    public void show() {
-        this.dialog.setVisible(true);
+    public void showDialog() {
+        setVisible(true);
     }
-
-    public void setReturnFromCardControllerController(ReturnFromCardController returnFromCardController) {
-        this.returnFromCardController = returnFromCardController;
-
-        this.returnFromCardController.setShowQuitDialog(() -> {
-            // This code runs when the user clicks Quit → controller.showSave()
-            ReturnFromCardDialogue returnDialog = new ReturnFromCardDialogue(returnFromCardController);
-            returnDialog.show();
-        });
-}
 }

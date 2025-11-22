@@ -5,54 +5,47 @@ import interface_adapter.save_progress.SaveProgressController;
 import javax.swing.*;
 import java.awt.*;
 
-public class SaveGameDialog {
-//    private static final String viewName = "save game";
+public class SaveGameDialog extends JDialog {
+
     private SaveProgressController saveProgressController;
 
-    private final JDialog dialog = new JDialog();
-
     public SaveGameDialog(SaveProgressController saveProgressController) {
-        this.setSaveGameController(saveProgressController);
+        this.saveProgressController = saveProgressController;
 
-        dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        setTitle("Save Game");
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        setLayout(new BorderLayout());
 
-        final JLabel title = new JLabel("Save game before quitting?");
-        title.setAlignmentX(Component.CENTER_ALIGNMENT);
+        JLabel title = new JLabel("Save game before quitting?");
+        title.setHorizontalAlignment(SwingConstants.CENTER);
 
-        final JPanel buttons = new JPanel();
-        JButton quitAndSave = new JButton("Save and quit");
-        JButton quitDontSave = new JButton("Quit without saving");
+        JPanel buttons = new JPanel();
+        JButton saveAndQuit = new JButton("Save and quit");
+        JButton quitWithoutSaving = new JButton("Quit without saving");
 
-        quitAndSave.addActionListener(evt -> {
-                saveProgressController.execute();
-                closeGame();
-            }
-        );
+        saveAndQuit.addActionListener(e -> {
+            saveProgressController.execute();
+            closeGame();
+        });
 
-        quitDontSave.addActionListener(evt -> closeGame()
-        );
+        quitWithoutSaving.addActionListener(e -> closeGame());
 
-        buttons.add(quitAndSave);
-        buttons.add(quitDontSave);
-        dialog.add(title, BorderLayout.NORTH);
-        dialog.add(buttons, BorderLayout.SOUTH);
+        buttons.add(saveAndQuit);
+        buttons.add(quitWithoutSaving);
+
+        add(title, BorderLayout.NORTH);
+        add(buttons, BorderLayout.SOUTH);
+
+        pack();
+        setLocationRelativeTo(null);
     }
 
     private void closeGame() {
-        dialog.dispose();
+        dispose();
         System.exit(0);
     }
 
-    public void show() {
-        dialog.setVisible(true);
-    }
-
-//    public String getViewName() {
-//        return viewName;
-//    }
-
-    public void setSaveGameController(SaveProgressController saveProgressController) {
-        this.saveProgressController = saveProgressController;
-        // this will be updated in case the saveProgressController needs more stuff to function.
+    public void showDialog() {
+        setVisible(true);
     }
 }
