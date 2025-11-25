@@ -8,7 +8,14 @@ public abstract class Puzzle {
     private final String description;
     private boolean isSolved;
     private int attempts;
+    //    private string hint;
     private String name;
+    /*   private int suceessesToPass;*/
+
+    /**
+     * Creates a new puzzel with the given id.
+     * @param id the puzzle id
+     */
 
     public Puzzle(String id, String description, String name/*, int successes*/) {
         this.id = id;

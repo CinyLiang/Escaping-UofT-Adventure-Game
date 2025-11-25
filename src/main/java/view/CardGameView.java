@@ -1,6 +1,7 @@
 package view;
 
 import entity.CardPuzzle;
+import entity.Player;
 import interface_adapter.play_card_game.CardGameState;
 import interface_adapter.play_card_game.CardGameViewModel;
 import interface_adapter.play_card_game.CardGameController;
@@ -81,6 +82,7 @@ public class CardGameView extends JPanel implements PropertyChangeListener {
         this.promptLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         topPanel.add(this.promptLabel);
         topPanel.add(Box.createVerticalStrut(20));
+//        this.messageLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         topPanel.add(this.messageLabel);
         topPanel.add(this.hintLabel);
 
@@ -97,14 +99,18 @@ public class CardGameView extends JPanel implements PropertyChangeListener {
 
         // Putting together
         add(topPanel);
-        add(Box.createRigidArea(new Dimension(0, 10))); // 添加间距
+        add(Box.createRigidArea(new Dimension(0, 10)));
         add(answerPanel);
-        add(Box.createRigidArea(new Dimension(0, 10))); // 添加间距
+        add(Box.createRigidArea(new Dimension(0, 10)));
         add(buttonPanel);
     }
 
     private void  eventHandler() {
-        startButton.addActionListener(e -> cardGameController.execute());
+        startButton.addActionListener(e -> {
+            cardGameController.execute();
+            CardGameState state = cardGameViewModel.getState();
+            state.setHint("");
+        });
 
         hintButton.addActionListener(e -> {
             CardGameState state = cardGameViewModel.getState();
@@ -118,8 +124,11 @@ public class CardGameView extends JPanel implements PropertyChangeListener {
         validateButton.addActionListener(e -> {
             CardGameState state = cardGameViewModel.getState();
             CardPuzzle cardPuzzle = state.getcardPuzzle();
+            state.setHint("");
+            System.out.println("(View) cards: " +  cardPuzzle.getCardNumberString());
             if (cardPuzzle != null) {
                 String userAnswer = answerField.getText().trim();
+                userAnswer = userAnswer.replaceAll("\\s+", "");;
                 ValidateCardAnswerInputData validationInputData =
                         new ValidateCardAnswerInputData(userAnswer, cardPuzzle);
                 validateCardController.execute(validationInputData);

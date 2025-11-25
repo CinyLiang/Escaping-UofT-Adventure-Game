@@ -207,7 +207,7 @@ public class AppBuilder {
         cardGameView.setCardGameController(cardController);
 
         // Hints
-        CardGameHintsOutputBoundary hintsPresenter = new CardGameHintsPresenter(cardGameViewModel);
+        CardGameHintsOutputBoundary hintsPresenter = new CardGameHintsPresenter(cardGameViewModel, viewManagerModel);
         CardGameHintsInputDataBoundary hintsInteractor = new CardGameHintsInteractor(hintsPresenter);
         CardGameHintsController hintsController = new CardGameHintsController(hintsInteractor);
         cardGameView.setCardGameHintsController(hintsController);

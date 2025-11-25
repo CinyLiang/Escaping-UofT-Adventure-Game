@@ -8,9 +8,11 @@ import use_case.card_game_hints.CardGameHintsOutputDataObject;
 
 public class CardGameHintsPresenter implements CardGameHintsOutputBoundary {
     private final CardGameViewModel cardGameViewModel;
+    private final ViewManagerModel viewManagerModel;
 
-    public CardGameHintsPresenter(CardGameViewModel cardGameViewModel) {
+    public CardGameHintsPresenter(CardGameViewModel cardGameViewModel,ViewManagerModel viewManagerModel) {
         this.cardGameViewModel = cardGameViewModel;
+        this.viewManagerModel = viewManagerModel;
     }
 
     @Override
