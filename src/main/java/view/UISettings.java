@@ -10,7 +10,12 @@ public class UISettings {
     public static final String TEXTURINA_FONT_PATH = "/Users/vanessa.hanbao/Downloads/Quintessential,Texturina/Texturina/Texturina-VariableFont_opsz,wght.ttf";
     public static final String NAVIGATE_IMAGE_PATH = "/Users/vanessa.hanbao/Downloads/mapview.jpg";
     public static final String INSTRUCTIONS_IMAGE_PATH = "/Users/vanessa.hanbao/Downloads/Gemini_Generated_Image_1lcv901lcv901lcv.png";
-    public static final String
+    public static final String CONHALL_INT_IMAGE_PATH = "/Users/vanessa.hanbao/Downloads/conhallint.jpg"
+    public static final String CONHALL_EXT_IMAGE_PATH = "/Users/vanessa.hanbao/Downloads/conhallext.png"
+    public static final String KNOX_EXT_IMAGE_PATH = "/Users/vanessa.hanbao/Downloads/knoxext.png";
+    public static final String KNOX_INT_IMAGE_PATH = "/Users/vanessa.hanbao/Downloads/KNOXINT.jpg";
+    public static final String GERSTEIN_INT_IMAGE_PATH = "/Users/vanessa.hanbao/Downloads/gersteinint.jpg";
+    public static final String GERSTEIN_EXT_IMAGE_PATH = "/Users/vanessa.hanbao/Downloads/gersteinext.jpg";
 
     public static final int WINDOW_WIDTH = 800;
     public static final int WINDOW_HEIGHT = 600;
@@ -50,6 +55,7 @@ public class UISettings {
 
     public static ImageIcon instructionsImage = new ImageIcon(INSTRUCTIONS_IMAGE_PATH);
     public static ImageIcon navigationImage = new ImageIcon(NAVIGATE_IMAGE_PATH);
+    public static ImageIcon conHallImage = new ImageIcon(CONHALL_IMAGE_PATH);
 
 
     public UISettings() throws IOException, FontFormatException {

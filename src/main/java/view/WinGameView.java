@@ -3,6 +3,7 @@ package view;
 import interface_adapter.win_game.WinGameState;
 import interface_adapter.win_game.WinGameViewModel;
 import interface_adapter.ViewManagerModel;
+import view.UISettings;
 
 import javax.swing.*;
 import java.awt.*;
