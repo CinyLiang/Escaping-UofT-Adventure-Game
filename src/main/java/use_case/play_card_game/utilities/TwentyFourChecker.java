@@ -78,11 +78,4 @@ public class TwentyFourChecker {
         if (Math.abs(y) > EPS) results.add(x / y);
         return results;
     }
-
-    // quick manual test
-    public static void main(String[] args) {
-        System.out.println(canMake24(6, 6, 6, 6));   // -> true
-        System.out.println(canMake24(1, 1, 1, 1));   // -> false
-        System.out.println(canMake24(3, 9, 6, 7));   // -> true
-    }
 }

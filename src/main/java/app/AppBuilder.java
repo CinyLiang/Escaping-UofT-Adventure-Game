@@ -202,7 +202,7 @@ public class AppBuilder {
     public AppBuilder addCardGameUseCase() {
         // Main game
         PlayCardGameOutputBoundary cardPresenter = new CardGamePresenter(cardGameViewModel, viewManagerModel);
-        PlayCardGameInputBoundary cardInteractor = new PlayCardGameInteractor(new CardGameDataAccessObject(), cardPresenter);
+        PlayCardGameInputBoundary cardInteractor = new PlayCardGameInteractor(new CardGameDataAccessObject(4), cardPresenter);
         CardGameController cardController = new CardGameController(cardInteractor);
         cardGameView.setCardGameController(cardController);
 
