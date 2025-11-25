@@ -103,7 +103,8 @@ public class HomeView extends JPanel {
 
         // 3. Game Setting
         settingsButton.addActionListener(e -> {
-            JOptionPane.showMessageDialog(this, "Settings screen feature pending...");
+            viewManagerModel.setState(SettingsView.VIEW_NAME);
+            viewManagerModel.firePropertyChange();
         });
 
         // 4. About the Game (InstructionsView)
