@@ -37,11 +37,12 @@ public class CardGameHintsInteractor implements CardGameHintsInputDataBoundary {
         solution = solution.replaceAll("\\s+", "");
 
 
-        try {
+//        try {
             int lastOpen = solution.lastIndexOf('(');
             int firstCloseAfterLastOpen = solution.indexOf(')', lastOpen);
 
-            if (lastOpen != -1 && firstCloseAfterLastOpen != -1 && firstCloseAfterLastOpen > lastOpen) {
+            // if (lastOpen != -1 && firstCloseAfterLastOpen != -1 && firstCloseAfterLastOpen > lastOpen) {
+            if (lastOpen != -1 && firstCloseAfterLastOpen != -1) {
                 String inner = solution.substring(lastOpen + 1, firstCloseAfterLastOpen);
                 return inner;
             }
@@ -52,10 +53,10 @@ public class CardGameHintsInteractor implements CardGameHintsInputDataBoundary {
 
             return solution;
 
-        } catch (Exception e) {
-            System.err.println("Fail to get hint: " + e.getMessage());
-            return "a basic operation";
-        }
+//        } catch (Exception e) {
+//            System.err.println("Fail to get hint: " + e.getMessage());
+//            return "a basic operation";
+//        }
     }
 
     public String generateHint(List<Card> cards) {

@@ -22,6 +22,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.ArrayList;
 
+import static org.mockito.Mockito.*;
+import org.mockito.Mockito;
+
 class PlayCardGameInteractorTest {
 
     @Test
@@ -126,6 +129,19 @@ class PlayCardGameInteractorTest {
     }
 
     @Test
+    void testExtractedNull() {
+        // Use the TestPlayCardGamePresenter directly with the interactor
+        List<Card> cards = null;
+        TestPlayCardGamePresenter mockPresenter = new TestPlayCardGamePresenter();
+
+        // Create data access that returns less than 4 cards
+        CardGameDataAccessObject cardGameDataAccessObject = new CardGameDataAccessObject(0);
+
+        PlayCardGameInteractor interactor = new PlayCardGameInteractor(cardGameDataAccessObject, mockPresenter);
+        assertEquals(true, interactor.extracted(cards));
+    }
+
+    @Test
     void testEmptyCardPuzzle() {
         TestPresenter presenter = new TestPresenter();
         CardGameHintsInteractor interactor = new CardGameHintsInteractor(presenter);
@@ -205,6 +221,8 @@ class PlayCardGameInteractorTest {
         System.out.println(canMake24(1, 1, 1, 1));   // -> false
         System.out.println(canMake24(3, 9, 6, 7));   // -> true
     }
+
+
 }
 
 class TestPresenter implements CardGameHintsOutputBoundary {

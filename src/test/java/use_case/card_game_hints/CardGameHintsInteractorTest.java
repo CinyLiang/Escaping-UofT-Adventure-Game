@@ -7,11 +7,13 @@ import interface_adapter.card_game_hints.CardGameHintsPresenter;
 import interface_adapter.play_card_game.CardGamePresenter;
 import interface_adapter.play_card_game.CardGameViewModel;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.doThrow;
 
 public class CardGameHintsInteractorTest {
     @Test
@@ -37,10 +39,73 @@ public class CardGameHintsInteractorTest {
         assertNotNull(presenter.lastOutputData);
     }
 
+
     @Test
     void getHintsTest() {
         CardGameHintsOutputDataObject output = new CardGameHintsOutputDataObject("Test Hint");
         assertEquals("Test Hint", output.getHint());
+    }
+
+    @Test
+    void testExtractInnerEmpty() {
+
+        TestPresenter mockPresenter = new TestPresenter();
+        CardGameHintsInteractor interactor = new CardGameHintsInteractor(mockPresenter);
+        String result = interactor.extractInner("");
+        assertEquals("a simple calculation", result);
+    }
+
+    @Test
+    void testExtractInnerNull() {
+        TestPresenter mockPresenter = new TestPresenter();
+        CardGameHintsInteractor interactor = new CardGameHintsInteractor(mockPresenter);
+        String result = interactor.extractInner(null);
+        assertEquals("a simple calculation", result);
+    }
+
+    @Test
+    void testExtractInnerStrange() {
+        TestPresenter mockPresenter = new TestPresenter();
+        CardGameHintsInteractor interactor = new CardGameHintsInteractor(mockPresenter);
+        String result = interactor.extractInner(")(");
+        assertEquals(")(", result);
+    }
+
+
+    @Test
+    void testExtractInnerLarge() {
+        TestPresenter mockPresenter = new TestPresenter();
+        CardGameHintsInteractor interactor = new CardGameHintsInteractor(mockPresenter);
+        String result = interactor.extractInner("6+7+8+9+10");
+        assertEquals("6+7+8+", result);
+    }
+
+    @Test
+    void testExceptionWhenGenerateHintFails() {
+        CardGameHintsOutputBoundary failurePresenter = new CardGameHintsOutputBoundary() {
+            @Override
+            public void prepareSuccessView(CardGameHintsOutputDataObject outputData) {
+                fail("Should not succeed when generateHint fails");
+            }
+
+            @Override
+            public void prepareFailView(String error) {
+                assertTrue(error.contains("Failed to get hint"));
+                assertTrue(error.contains("No solutions found"));
+            }
+        };
+
+        List<Card> cards = Arrays.asList(new Card(1), new Card(1), new Card(1), new Card(1));
+        CardPuzzle puzzle = new CardPuzzle(cards);
+
+        CardGameHintsInputDataObject input = new CardGameHintsInputDataObject(puzzle);
+
+        CardGameHintsInteractor interactor = new CardGameHintsInteractor(failurePresenter);
+        CardGameHintsInteractor spyInteractor = Mockito.spy(interactor);
+
+        doThrow(new RuntimeException("No solutions found")).when(spyInteractor).generateHint(cards);
+
+        spyInteractor.execute(input);
     }
 }
 
