@@ -1,20 +1,20 @@
 package view;
 
 import javax.swing.*;
-
+import javax.swing.plaf.basic.BasicScrollBarUI;
 import interface_adapter.navigate.NavigateController;
 import interface_adapter.clear_history.ClearHistoryViewModel;
-
 import interface_adapter.clear_history.ClearHistoryController;
 import interface_adapter.navigate.NavigateState;
 import interface_adapter.navigate.NavigateViewModel;
 import interface_adapter.save_progress.SaveProgressController;
 import interface_adapter.view_progress.ViewProgressController;
-
 import interface_adapter.quit_game.QuitGameController;
 import interface_adapter.win_game.WinGameController;
-
+import view.UISettings;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 
@@ -25,7 +25,6 @@ public class NavigateView extends JPanel {
 
     // MAP IMAGES + FONT
     private JLabel mainMapLabel;
-    private Font quintessential;
 
     // CONTROLLERS
     private QuitGameController quitGameController;
@@ -52,38 +51,25 @@ public class NavigateView extends JPanel {
     private JButton saveButton;
     private JButton quitButton;
 
-
     private JLabel keysLabel;
-
-    private static final String CUSTOM_FONT = "Quintessential";
 
     public NavigateView(NavigateViewModel navigateViewModel) throws IOException, FontFormatException {
         this.navigateViewModel = navigateViewModel;
 
         this.setLayout(new BorderLayout());
-        this.setBackground(Color.BLACK);
+        this.setBackground(UISettings.PARCHMENT_BACKGROUND);
 
-        //font
-        Font quintessentialBase = Font.createFont(Font.TRUETYPE_FONT, new File("/Users/vanessa.hanbao/Downloads/Quintessential/Quintessential-Regular.ttf"));
-        quintessential = quintessentialBase.deriveFont(Font.PLAIN, 24);
-
-        JPanel topSection = new JPanel();
-        topSection.setLayout(new BoxLayout(topSection, BoxLayout.Y_AXIS));
-        topSection.setBackground(Color.WHITE);
-
-        JPanel statusBar = new JPanel(new FlowLayout(FlowLayout.RIGHT, 20, 10));
-        statusBar.setOpaque(false);
-
-        // init text
         keysLabel = new JLabel("Keys: 0 / 2");
-        storyArea = new JTextArea("Welcome to Escaping UofT!\nSelect a direction to begin...");
+        storyArea = new JTextArea("You find yourself in a dimly lit room in University College. " +
+                "The air is thick with mystery, and the walls whisper secrets of the past. " +
+                "Navigate through the campus, solve puzzles, and collect keys to unlock Convocation Hall " +
+                "before time runs out. Choose your directions wisely, for each path holds its own " +
+                "challenges and surprises. Good luck, adventurer!");
 
         // set up important text
         if (navigateViewModel != null) {
             keysLabel.setText("Keys: "+ navigateViewModel.getState().getNumberOfKeys() + " / 2");
-            storyArea.setText("Welcome to Escaping UofT!\nSelect a direction to begin...");
 
-            // actually calls on change lmao. did not know that.
             navigateViewModel.addPropertyChangeListener(evt -> {
                 NavigateState s = navigateViewModel.getState();
                 storyArea.setText(s.getStoryText());
@@ -93,26 +79,26 @@ public class NavigateView extends JPanel {
             System.out.println("navigationViewModel is null");
         }
 
-        // styling
-        keysLabel.setForeground(Color.WHITE);
-        keysLabel.setFont(quintessential);
-        storyArea.setEditable(false);
-        storyArea.setLineWrap(true);
-        storyArea.setWrapStyleWord(true);
-        storyArea.setBackground(Color.WHITE);
-        storyArea.setForeground(Color.BLACK);
-        storyArea.setFont(quintessential);
+        // status bar
+        JPanel statusBar = new JPanel(new FlowLayout(FlowLayout.RIGHT, 20, 10));
+        statusBar.setBackground(UISettings.PARCHMENT_BACKGROUND);
+        statusBar.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, UISettings.ACCENT_COLOR));
 
-        // structure
+        keysLabel.setForeground(UISettings.ACCENT_COLOR);
+        keysLabel.setFont(UISettings.quintessential);
         statusBar.add(keysLabel);
-        topSection.add(statusBar, BorderLayout.NORTH);
 
-        JScrollPane storyScroll = new JScrollPane(storyArea);
-        storyScroll.setBorder(BorderFactory.createEmptyBorder(20, 20, 10, 20));
-        storyScroll.setPreferredSize(new Dimension(400, 100));
+        this.add(statusBar, BorderLayout.NORTH);
 
-        // init map
-        ImageIcon originalMap = new ImageIcon("/Users/vanessa.hanbao/Downloads/mapview.jpg");
+        // scroll pane containing center content
+        // map, story, and selector all in here
+        JPanel scrollableContent = new JPanel();
+        scrollableContent.setLayout(new BoxLayout(scrollableContent, BoxLayout.Y_AXIS));
+        scrollableContent.setBackground(UISettings.PARCHMENT_BACKGROUND);
+        scrollableContent.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20)); // Overall padding
+
+        // map image
+        ImageIcon originalMap = UISettings.navigationImage;
         int newWidth = 500;
         int newHeight = (originalMap.getIconHeight() * newWidth) / originalMap.getIconWidth();
         Image scaledMapImage = originalMap.getImage().getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH);
@@ -121,27 +107,29 @@ public class NavigateView extends JPanel {
         mainMapLabel = new JLabel(scaledMapIcon);
         mainMapLabel.setHorizontalAlignment(JLabel.CENTER);
         mainMapLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        topSection.add(mainMapLabel);
+        scrollableContent.add(mainMapLabel);
+        scrollableContent.add(Box.createVerticalStrut(25));
 
-        topSection.add(storyScroll, BorderLayout.CENTER);
+        // storyArea
+        // note: moved story text out of its own scroll pane to the main scroll pane
+        storyArea.setEditable(false);
+        storyArea.setLineWrap(true);
+        storyArea.setWrapStyleWord(true);
+        storyArea.setBackground(UISettings.PARCHMENT_BACKGROUND);
+        storyArea.setForeground(UISettings.DARK_MAP_TEXT);
+        storyArea.setFont(UISettings.texturina);
 
-        this.add(topSection, BorderLayout.NORTH);
+        scrollableContent.add(storyArea);
 
-        JPanel centerContainer = new JPanel();
-        centerContainer.setOpaque(false);
-        centerContainer.setLayout(new BoxLayout(centerContainer, BoxLayout.Y_AXIS));
-
-        centerContainer.add(Box.createVerticalGlue());
-
+        // direction floating box
         JPanel floatingBox = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 12));
         floatingBox.setOpaque(true);
-        floatingBox.setBackground(new Color(20, 20, 20, 90));
+        floatingBox.setBackground(UISettings.ACCENT_COLOR);
         floatingBox.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
 
         JLabel dirLabel = new JLabel("Choose Direction:");
         dirLabel.setForeground(Color.WHITE);
-//        dirLabel.setFont(new Font(FONT, Font.BOLD, 18));
-        dirLabel.setFont(quintessential);
+        dirLabel.setFont(UISettings.quintessential);
 
         directionSelector = new JComboBox<>(new String[]{
                 "North", "South", "East", "West"
@@ -152,13 +140,22 @@ public class NavigateView extends JPanel {
         floatingBox.add(dirLabel);
         floatingBox.add(directionSelector);
 
-        centerContainer.add(floatingBox);
-        centerContainer.add(Box.createVerticalGlue());
+        floatingBox.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        this.add(centerContainer, BorderLayout.CENTER);
+        scrollableContent.add(Box.createVerticalStrut(25)); // Spacing after text
+        scrollableContent.add(floatingBox);
 
+        // Wrap the scrollableContent panel in the main JScrollPane
+        JScrollPane mainScrollPane = new JScrollPane(scrollableContent);
+        mainScrollPane.setBorder(BorderFactory.createEmptyBorder());
+        mainScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        mainScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+
+        this.add(mainScrollPane, BorderLayout.CENTER);
+
+        // BOTTOM PANE: game control buttons
         JPanel bottomPanel = new JPanel(new GridLayout(1, 4, 20, 0));
-        bottomPanel.setBackground(Color.BLACK);
+        bottomPanel.setBackground(UISettings.ACCENT_COLOR);
 
         restartButton = makeButton("Restart");
         progressButton = makeButton("Progress");
@@ -172,6 +169,7 @@ public class NavigateView extends JPanel {
 
         this.add(bottomPanel, BorderLayout.SOUTH);
 
+        // action listeners (button + dropdown logic)
         restartButton.addActionListener(e -> {
             if (clearHistoryController != null) {
                 clearHistoryController.showConfirm();
@@ -210,10 +208,32 @@ public class NavigateView extends JPanel {
 
     private JButton makeButton(String text) {
         JButton b = new JButton(text);
-        b.setBackground(new Color(70, 70, 70));
-        b.setForeground(Color.WHITE);
-//        b.setFont(new Font(FONT, Font.BOLD, 16));
-        b.setFont(quintessential);
+        b.setBackground(UISettings.PARCHMENT_BACKGROUND);
+        b.setForeground(UISettings.ACCENT_COLOR);
+        b.setFont(UISettings.quintessential.deriveFont(Font.PLAIN, 18)); // Reduced font size for buttons
+        b.setFocusPainted(false);
+        b.setOpaque(true);
+
+        //border
+        b.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(UISettings.ACCENT_COLOR, 2),
+                BorderFactory.createEmptyBorder(5, 10, 5, 10)
+        ));
+
+        // hover effect
+        b.addMouseListener(new MouseAdapter() {
+            public void mouseEntered(MouseEvent evt) {
+                b.setBackground(UISettings.HOVER_COLOR);
+                b.setForeground(UISettings.DARK_MAP_TEXT);
+                b.repaint();
+            }
+
+            public void mouseExited(MouseEvent evt) {
+                b.setBackground(UISettings.PARCHMENT_BACKGROUND);
+                b.setForeground(UISettings.ACCENT_COLOR);
+                b.repaint();
+            }
+        });
         return b;
     }
 
@@ -255,7 +275,7 @@ public class NavigateView extends JPanel {
 
     // ACTION LISTENERS
     public void setNavigateController(NavigateController navigateController) {
-           this.navigateController = navigateController;
+        this.navigateController = navigateController;
     }
 
     public void setClearHistoryViewModel(ClearHistoryViewModel vm) {
