@@ -27,6 +27,8 @@ class TriviaGameInteractorTest {
         assertTrue(mockPresenter.questionPresented);
         assertNotNull(mockPresenter.lastOutputData);
         assertEquals("Test Question?", mockPresenter.lastOutputData.getQuestion());
+        assertEquals("Answer the question:", mockPresenter.lastOutputData.getMessage());
+        assertFalse(mockPresenter.lastOutputData.isPuzzleSolved());
     }
 
     @Test
@@ -36,8 +38,10 @@ class TriviaGameInteractorTest {
         interactor.submitAnswer(inputData);
 
         assertTrue(mockPresenter.resultPresented);
+        assertTrue(mockPresenter.lastOutputData.wasCorrect());
         assertEquals(1, mockPresenter.lastOutputData.getCorrectAnswers());
         assertEquals("Correct!", mockPresenter.lastOutputData.getMessage());
+        assertFalse(mockPresenter.lastOutputData.isPuzzleSolved());
     }
 
     @Test
@@ -48,7 +52,8 @@ class TriviaGameInteractorTest {
 
         assertTrue(mockPresenter.resultPresented);
         assertFalse(mockPresenter.lastOutputData.wasCorrect());
-        assertEquals(1, mockPresenter.lastOutputData.getCorrectAnswers());
+        assertEquals(0, mockPresenter.lastOutputData.getCorrectAnswers());
+        assertEquals("Incorrect. Try another question.", mockPresenter.lastOutputData.getMessage());
     }
 
     @Test
@@ -60,13 +65,41 @@ class TriviaGameInteractorTest {
         }
 
         assertTrue(mockPresenter.lastOutputData.isPuzzleSolved());
+        assertEquals("Puzzle Complete! You earned a key!", mockPresenter.lastOutputData.getMessage());
         assertEquals(3, mockPresenter.lastOutputData.getCorrectAnswers());
+    }
+
+    @Test
+    void testProgressTracking() {
+        interactor.startNewQuestion();
+        TriviaGameInputData correct = new TriviaGameInputData("True");
+        interactor.submitAnswer(correct);
+        assertEquals(1, puzzle.getCorrectAnswers());
+
+        interactor.startNewQuestion();
+        interactor.submitAnswer(correct);
+        assertEquals(2, puzzle.getCorrectAnswers());
     }
 
     @Test
     void testRequiredAnswersCount() {
         interactor.startNewQuestion();
         assertEquals(3, mockPresenter.lastOutputData.getRequiredAnswers());
+    }
+
+    @Test
+    void testCaseInsensitiveAnswers() {
+        interactor.startNewQuestion();
+        TriviaGameInputData inputData = new TriviaGameInputData("true");
+        interactor.submitAnswer(inputData);
+
+        assertTrue(mockPresenter.lastOutputData.wasCorrect());
+    }
+
+    @Test
+    void testExitPuzzle() {
+        interactor.exitPuzzle();
+        assertTrue(mockPresenter.exitCalled);
     }
 
     private static class MockTriviaDataAccess implements TriviaGameDataAccessInterface {
