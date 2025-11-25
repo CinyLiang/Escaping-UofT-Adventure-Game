@@ -9,7 +9,6 @@ public class Player {
     private final Set<String> puzzlesSolved;
 
     public Player(Location startLocation) {
-//        this.name = name;
         this.currentLocation = startLocation;
         this.keysCollected = 0;
         this.puzzlesSolved = new HashSet<>();
@@ -33,5 +32,10 @@ public class Player {
 
     public int getKeysCollected() {
         return keysCollected;
+    }
+
+    // added for testing
+    public void addKey() {
+        this.keysCollected++;
     }
 }
