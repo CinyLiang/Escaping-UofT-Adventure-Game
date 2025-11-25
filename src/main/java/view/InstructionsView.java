@@ -48,6 +48,11 @@ public class InstructionsView extends JPanel {
         gbc.gridy++;
         this.add(title, gbc);
 
+        // make a scroll pane to keep everythign in view
+        JPanel mainPanel = new JPanel();
+        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+        mainPanel.setBackground(parchmentBackground);
+
         // image
         ImageIcon originalImage = new ImageIcon("/Users/vanessa.hanbao/Downloads/Gemini_Generated_Image_1lcv901lcv901lcv.png");
         int newWidth = 400;
@@ -55,19 +60,11 @@ public class InstructionsView extends JPanel {
         Image scaledImage = originalImage.getImage().getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH);
         ImageIcon scaledIcon = new ImageIcon(scaledImage);
 
-//        imageLabel = new JLabel(scaledIcon);
-//        imageLabel.setHorizontalAlignment(JLabel.CENTER);
-//        imageLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-//        this.add(imageLabel);
-
-
         imageLabel = new JLabel(scaledIcon);
-        imageLabel.setHorizontalAlignment(JLabel.CENTER);
+        imageLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        gbc.gridy++;
-        gbc.fill = GridBagConstraints.NONE;
-        gbc.anchor = GridBagConstraints.CENTER;
-        this.add(imageLabel, gbc);
+        mainPanel.add(imageLabel);
+        mainPanel.add(Box.createVerticalStrut(20));
 
         // instructions
         JTextArea text = new JTextArea(
@@ -86,17 +83,35 @@ public class InstructionsView extends JPanel {
         text.setWrapStyleWord(true);
         text.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(accentColor, 3),
-                BorderFactory.createEmptyBorder(20, 20, 20, 20)
+                BorderFactory.createEmptyBorder(20, 15, 20, 15)
         ));
 
-        JScrollPane scrollPane = new JScrollPane(text);
-        scrollPane.setPreferredSize(new Dimension(500, 300));
-        scrollPane.setBorder(BorderFactory.createEmptyBorder());
+        JPanel textWrapper = new JPanel(new BorderLayout());
+        textWrapper.setBackground(parchmentBackground);
+        textWrapper.add(text, BorderLayout.CENTER);
+
+        mainPanel.add(textWrapper);
+        JScrollPane mainScrollPane = new JScrollPane(mainPanel);
+        mainScrollPane.setBorder(BorderFactory.createEmptyBorder());
+
+        // prevent horizontal scroll bar from appearing
+        mainScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        mainScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 
         gbc.gridy++;
         gbc.weighty = 0.5;
         gbc.fill = GridBagConstraints.BOTH;
-        this.add(scrollPane, gbc);
+        mainPanel.add(text);
+
+        // wrap mainPanel into JScrollPane
+        mainScrollPane.setBorder(BorderFactory.createEmptyBorder());
+        mainScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+
+        // main scroll pane to primary view
+        gbc.gridy++;
+        gbc.weighty = 1.0;
+        gbc.fill = GridBagConstraints.BOTH;
+        this.add(mainScrollPane, gbc);
 
         gbc.weighty = 0;
         gbc.fill = GridBagConstraints.NONE;
