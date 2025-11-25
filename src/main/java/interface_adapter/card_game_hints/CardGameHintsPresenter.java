@@ -21,7 +21,7 @@ public class CardGameHintsPresenter implements CardGameHintsOutputBoundary {
         CardGameState current = this.cardGameViewModel.getState();
 //        CardGameState newState = new CardGameState(current);
 
-        String hint =  outputData.getHint();
+        String hint = outputData.getHint();
         current.setHint(hint);
 
 //        this.cardGameViewModel.setState(newState);

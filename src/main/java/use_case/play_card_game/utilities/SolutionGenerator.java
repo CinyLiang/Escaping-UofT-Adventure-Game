@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import entity.Card;
+import use_case.validateCardAnswer.utilities.ExpressionEvaluator;
 
 public class SolutionGenerator {
     private static final List<String> OPERATORS = Arrays.asList("+", "-", "*", "/");
@@ -29,11 +30,17 @@ public class SolutionGenerator {
                 for (String op2 : OPERATORS) {
                     for (String op3 : OPERATORS) {
                         // Test the 5 most common expression patterns for 24 game
-                        testExpression(solutions, "((" + a + op1 + b + ")" + op2 + c + ")" + op3 + d, 24);
-                        testExpression(solutions, "(" + a + op1 + "(" + b + op2 + c + "))" + op3 + d, 24);
-                        testExpression(solutions, "(" + a + op1 + b + ")" + op2 + "(" + c + op3 + d + ")", 24);
-                        testExpression(solutions, a + op1 + "((" + b + op2 + c + ")" + op3 + d + ")", 24);
-                        testExpression(solutions, a + op1 + "(" + b + op2 + "(" + c + op3 + d + "))", 24);
+                        String exp1 = "((" + a + op1 + b + ")" + op2 + c + ")" + op3 + d;
+                        String exp2 = "(" + a + op1 + "(" + b + op2 + c + "))" + op3 + d;
+                        String exp3 = "(" + a + op1 + b + ")" + op2 + "(" + c + op3 + d + ")";
+                        String exp4 = a + op1 + "((" + b + op2 + c + ")" + op3 + d + ")";
+                        String exp5 = a + op1 + "(" + b + op2 + "(" + c + op3 + d + "))";
+                        List<String> exps = Arrays.asList(exp1, exp2, exp3, exp4, exp5);
+                        for (String exp : exps) {
+                            if (testExpression(exp, 24)) {
+                                solutions.add(exp);
+                            }
+                        }
                     }
                 }
             }
@@ -47,13 +54,11 @@ public class SolutionGenerator {
         return numSol != 0;
     }
 
-    private static void testExpression(Set<String> solutions, String expr, int target) {
+    private static boolean testExpression(String expr, int target) {
         try {
-            if (Math.abs(ExpressionEvaluator.evaluate(expr) - target) < 0.0001) {
-                solutions.add(expr);
-            }
+            return Math.abs(ExpressionEvaluator.evaluate(expr) - target) < 0.0001;
         } catch (Exception ignored) {
-
+            return false;
         }
     }
 
@@ -84,4 +89,16 @@ public class SolutionGenerator {
             return perms;
         }
     }
+
+
+//    public static void main(String[] args) {
+//        Set<String> solutions = new HashSet<>();
+//        boolean yn = SolutionGenerator.testExpression("(5+3)*(6-3)", 24);
+//        System.out.println(yn);
+//    }
+//
+//    public static void main(String[] args) {
+//        System.out.println(ExpressionEvaluator.evaluate("(5+3)*(6-3)"));
+//    }
 }
+

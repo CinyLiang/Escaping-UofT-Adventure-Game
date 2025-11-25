@@ -1,5 +1,6 @@
 package interface_adapter.card_game_hints;
 
+import use_case.card_game_hints.CardGameHintsInputDataBoundary;
 import use_case.card_game_hints.CardGameHintsInputDataObject;
 import use_case.card_game_hints.CardGameHintsInteractor;
 
@@ -7,9 +8,9 @@ import use_case.card_game_hints.CardGameHintsInteractor;
  * Controller for the Give Hints Use Case.
  */
 public class CardGameHintsController {
-    private final CardGameHintsInteractor cardGameHintsInteractor;
+    private final CardGameHintsInputDataBoundary cardGameHintsInteractor;
 
-    public CardGameHintsController(CardGameHintsInteractor cardGameHintsInteractor) {
+    public CardGameHintsController(CardGameHintsInputDataBoundary cardGameHintsInteractor) {
         this.cardGameHintsInteractor = cardGameHintsInteractor;
     }
 

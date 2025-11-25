@@ -1,7 +1,6 @@
 package view;
 
 import entity.CardPuzzle;
-import entity.Player;
 import interface_adapter.play_card_game.CardGameState;
 import interface_adapter.play_card_game.CardGameViewModel;
 import interface_adapter.play_card_game.CardGameController;
@@ -41,23 +40,36 @@ public class CardGameView extends JPanel implements PropertyChangeListener {
     // TextField
     private final JTextField answerField = new JTextField(20);
 
-    public CardGameView(CardGameController cardGameController,
-                        CardGameHintsController cardGameHintsController,
-                        ValidateCardController validateCardController,
-                        ReturnFromCardController returnFromCardController,
-                        ReturnFromCardDialogue returnFromCardDialogue,
-                        CardGameViewModel cardGameViewModel,
-                        Player player) {
-        this.cardGameController = cardGameController;
-        this.cardGameHintsController = cardGameHintsController;
-        this.validateCardController = validateCardController;
-        this.returnFromCardController = returnFromCardController;
-        this.returnFromCardDialogue = returnFromCardDialogue;
+    public CardGameView(CardGameViewModel cardGameViewModel) {
         this.cardGameViewModel = cardGameViewModel;
-
         cardGameViewModel.addPropertyChangeListener(this);
+
         layoutBuilder();
-        eventHandler(player);
+        eventHandler();
+    }
+
+    public void setCardGameController(CardGameController cardGameController) {
+        this.cardGameController = cardGameController;
+    }
+
+    public void setCardGameHintsController(CardGameHintsController cardGameHintsController) {
+        this.cardGameHintsController = cardGameHintsController;
+    }
+
+    public void setValidateCardController(ValidateCardController validateCardController) {
+        this.validateCardController = validateCardController;
+    }
+
+    public void setReturnFromCardController(ReturnFromCardController returnFromCardController) {
+        this.returnFromCardController = returnFromCardController;
+    }
+
+    public void setReturnFromCardDialogue(ReturnFromCardDialogue returnFromCardDialogue) {
+        this.returnFromCardDialogue = returnFromCardDialogue;
+    }
+
+    public void setCardGameViewModel(CardGameViewModel cardGameViewModel) {
+        this.cardGameViewModel = cardGameViewModel;
     }
 
     private void layoutBuilder() {
@@ -65,8 +77,11 @@ public class CardGameView extends JPanel implements PropertyChangeListener {
 
         // Prompts
         JPanel topPanel =  new JPanel();
+        topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.Y_AXIS));
         this.promptLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         topPanel.add(this.promptLabel);
+        topPanel.add(Box.createVerticalStrut(20));
+//        this.messageLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         topPanel.add(this.messageLabel);
         topPanel.add(this.hintLabel);
 
@@ -83,29 +98,40 @@ public class CardGameView extends JPanel implements PropertyChangeListener {
 
         // Putting together
         add(topPanel);
-        add(Box.createRigidArea(new Dimension(0, 10))); // 添加间距
+        add(Box.createRigidArea(new Dimension(0, 10)));
         add(answerPanel);
-        add(Box.createRigidArea(new Dimension(0, 10))); // 添加间距
+        add(Box.createRigidArea(new Dimension(0, 10)));
         add(buttonPanel);
     }
 
-    private void  eventHandler(Player player) {
+    private void  eventHandler() {
         startButton.addActionListener(e -> {
             cardGameController.execute();
+            CardGameState state = cardGameViewModel.getState();
+            state.setHint("");
         });
 
-        CardPuzzle cardPuzzle = this.cardGameViewModel.getState().getcardPuzzle();
-        CardGameHintsInputDataObject hintInputData = new CardGameHintsInputDataObject(cardPuzzle);
         hintButton.addActionListener(e -> {
-            cardGameHintsController.execute(hintInputData);
+            CardGameState state = cardGameViewModel.getState();
+            CardPuzzle cardPuzzle = state.getcardPuzzle();
+            if (cardPuzzle != null) {
+                CardGameHintsInputDataObject hintInputData = new CardGameHintsInputDataObject(cardPuzzle);
+                cardGameHintsController.execute(hintInputData);
+            }
         });
 
-        String userAnswer = answerField.getText().trim();
-        // need to confirm how this is done
-        ValidateCardAnswerInputData validationInputData = new ValidateCardAnswerInputData(player, userAnswer, cardPuzzle);
-        // not sure if player is necessary?
         validateButton.addActionListener(e -> {
-            validateCardController.execute(validationInputData);
+            CardGameState state = cardGameViewModel.getState();
+            CardPuzzle cardPuzzle = state.getcardPuzzle();
+            state.setHint("");
+            System.out.println("(View) cards: " +  cardPuzzle.getCardNumberString());
+            if (cardPuzzle != null) {
+                String userAnswer = answerField.getText().trim();
+                userAnswer = userAnswer.replaceAll("\\s+", "");;
+                ValidateCardAnswerInputData validationInputData =
+                        new ValidateCardAnswerInputData(userAnswer, cardPuzzle);
+                validateCardController.execute(validationInputData);
+            }
         });
 
         returnButton.addActionListener(e -> {
@@ -117,7 +143,8 @@ public class CardGameView extends JPanel implements PropertyChangeListener {
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         CardGameState state = cardGameViewModel.getState();
-        messageLabel.setText(state.getMessage());
-        hintLabel.setText(state.getHint());
+
+        messageLabel.setText("<html>" + state.getMessage().replace("\n", "<br>") + "</html>");
+        hintLabel.setText("<html>" + state.getHint().replace("\n", "<br>") + "</html>");
     }
 }

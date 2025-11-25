@@ -8,9 +8,9 @@ public abstract class Puzzle {
     private final String description;
     private boolean isSolved;
     private int attempts;
-//    private string hint;
+    //    private string hint;
     private String name;
- /*   private int suceessesToPass;*/
+    /*   private int suceessesToPass;*/
 
     /**
      * Creates a new puzzel with the given id.

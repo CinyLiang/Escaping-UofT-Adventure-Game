@@ -2,26 +2,26 @@ package use_case.card_game_hints;
 
 import entity.Card;
 import use_case.play_card_game.utilities.SolutionGenerator;
+import interface_adapter.card_game_hints.CardGameHintsPresenter;
+import java.util.*;
 
-import java.util.List;
+public class CardGameHintsInteractor implements CardGameHintsInputDataBoundary {
+    private final CardGameHintsOutputBoundary presenter;
 
-public class CardGameHintsInteractor {
-    private final CardGameHintsOutputBoundary outputBoundary;
-
-    public CardGameHintsInteractor(CardGameHintsOutputBoundary outputBoundary) {
-        this.outputBoundary = outputBoundary;
+    public CardGameHintsInteractor(CardGameHintsOutputBoundary presenter) {
+        this.presenter = presenter;
     }
 
     public void execute(CardGameHintsInputDataObject input) {
         try {
 //            String hint = input.getCardPuzzle().giveHint();
             List<Card> cards = input.getCardPuzzle().getCards();
-            String hint = getSampleSolution(cards);
+            String hint = generateHint(cards);
 
             CardGameHintsOutputDataObject outputData = new CardGameHintsOutputDataObject(hint);
-            this.outputBoundary.prepareSuccessView(outputData);
+            this.presenter.prepareSuccessView(outputData);
         }  catch (Exception e) {
-            this.outputBoundary.prepareFailView("Failed to get hint: " + e.getMessage());
+            this.presenter.prepareFailView("Failed to get hint: " + e.getMessage());
         }
     }
 
@@ -30,24 +30,37 @@ public class CardGameHintsInteractor {
     }
 
     public String extractInner(String solution) {
-        int open;
-        int close;
-        if (solution.contains("))")) {
-            open = solution.lastIndexOf("(");
-            close = solution.indexOf("))");
-        } else if (solution.contains("((")) {
-            open = solution.indexOf(")");
-            close = solution.indexOf("((");
-        } else {
-            open = solution.indexOf("(");
-            close = solution.indexOf(")");
+        if (solution == null || solution.isEmpty()) {
+            return "a simple calculation";
         }
-        return solution.substring(open + 1, close);
+
+        solution = solution.replaceAll("\\s+", "");
+
+
+        try {
+            int lastOpen = solution.lastIndexOf('(');
+            int firstCloseAfterLastOpen = solution.indexOf(')', lastOpen);
+
+            if (lastOpen != -1 && firstCloseAfterLastOpen != -1 && firstCloseAfterLastOpen > lastOpen) {
+                String inner = solution.substring(lastOpen + 1, firstCloseAfterLastOpen);
+                return inner;
+            }
+
+            if (solution.length() > 8) {
+                return solution.substring(0, Math.min(6, solution.length()));
+            }
+
+            return solution;
+
+        } catch (Exception e) {
+            System.err.println("Fail to get hint: " + e.getMessage());
+            return "a basic operation";
+        }
     }
 
     public String generateHint(List<Card> cards) {
         String sampleSolution = getSampleSolution(cards);
         String substring = extractInner(sampleSolution);
-        return "Maybe try"+substring+"first.";
+        return "Maybe try "+substring+" first.";
     }
 }
