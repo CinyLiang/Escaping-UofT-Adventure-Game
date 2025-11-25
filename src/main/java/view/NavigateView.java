@@ -46,6 +46,9 @@ public class NavigateView extends JPanel {
     private JButton saveButton;
     private JButton quitButton;
 
+    // MAP IMAGES
+    private JLabel mainMapLabel;
+
     private JLabel keysLabel;
 
     private static final String FONT = "Arial";
@@ -56,8 +59,10 @@ public class NavigateView extends JPanel {
         this.setLayout(new BorderLayout());
         this.setBackground(Color.BLACK);
 
-        JPanel topSection = new JPanel(new BorderLayout());
-        topSection.setBackground(Color.BLACK);
+//        JPanel topSection = new JPanel(new BorderLayout());
+        JPanel topSection = new JPanel();
+        topSection.setLayout(new BoxLayout(topSection, BoxLayout.Y_AXIS));
+        topSection.setBackground(Color.WHITE);
 
         JPanel statusBar = new JPanel(new FlowLayout(FlowLayout.RIGHT, 20, 10));
         statusBar.setOpaque(false);
@@ -97,7 +102,21 @@ public class NavigateView extends JPanel {
 
         JScrollPane storyScroll = new JScrollPane(storyArea);
         storyScroll.setBorder(BorderFactory.createEmptyBorder(20, 20, 10, 20));
-        storyScroll.setPreferredSize(new Dimension(700, 300));
+//        storyScroll.setPreferredSize(new Dimension(700, 300));
+        storyScroll.setPreferredSize(new Dimension(400, 100));
+
+        // init map
+
+        ImageIcon originalMap = new ImageIcon("/Users/vanessa.hanbao/Downloads/mapview.jpg");
+        int newWidth = 500;
+        int newHeight = (originalMap.getIconHeight() * newWidth) / originalMap.getIconWidth();
+        Image scaledMapImage = originalMap.getImage().getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH);
+        ImageIcon scaledMapIcon = new ImageIcon(scaledMapImage);
+
+        mainMapLabel = new JLabel(scaledMapIcon);
+        mainMapLabel.setHorizontalAlignment(JLabel.CENTER);
+        mainMapLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        topSection.add(mainMapLabel);
 
         topSection.add(storyScroll, BorderLayout.CENTER);
 
@@ -236,4 +255,5 @@ public class NavigateView extends JPanel {
         this.clearHistoryViewModel = vm;
         vm.addPropertyChangeListener(evt -> JOptionPane.showMessageDialog(this, vm.getMessage()));
     }
+
 }
