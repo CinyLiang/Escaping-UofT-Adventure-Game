@@ -5,6 +5,7 @@ import interface_adapter.navigate.NavigateViewModel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 
 public class HomeView extends JPanel {
 
@@ -47,7 +48,13 @@ public class HomeView extends JPanel {
 
 //        NAVIGATE TO INSTRUCTIONS VIEW FIRST
         startButton.addActionListener(e -> {
-            viewManagerModel.setState(new InstructionsView(viewManagerModel).getViewName()); // ????
+            try {
+                viewManagerModel.setState(new InstructionsView(viewManagerModel).getViewName()); // ????
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            } catch (FontFormatException ex) {
+                throw new RuntimeException(ex);
+            }
             viewManagerModel.firePropertyChange();
         });
 
