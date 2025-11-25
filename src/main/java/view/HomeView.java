@@ -2,6 +2,7 @@ package view;
 
 import interface_adapter.ViewManagerModel;
 import interface_adapter.navigate.NavigateViewModel;
+import view.NavigateView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -91,7 +92,7 @@ public class HomeView extends JPanel {
 
         // 1. Start New Adventure (Navigates to the main game view)
         startButton.addActionListener(e -> {
-            viewManagerModel.setActiveView(new NavigateViewModel().getViewName());
+            viewManagerModel.setState(NavigateView.VIEW_NAME);
             viewManagerModel.firePropertyChange();
         });
 
