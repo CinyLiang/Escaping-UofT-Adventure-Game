@@ -1,6 +1,5 @@
 package use_case.play_card_game;
 
-import java.util.ArrayList;
 import entity.CardPuzzle;
 
 /**

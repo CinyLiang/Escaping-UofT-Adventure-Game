@@ -1,10 +1,8 @@
-package use_case.validateCardAnswer;
+package use_case.validate_card_answer;
 
 import entity.Card;
-import use_case.play_card_game.utilities.ExpressionEvaluator;
-import entity.Player;
+import use_case.validate_card_answer.utilities.Expression24Verifier;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ValidateCardAnswerInteractor implements ValidateCardAnswerInputBoundary {
@@ -16,7 +14,6 @@ public class ValidateCardAnswerInteractor implements ValidateCardAnswerInputBoun
 
     @Override
     public void execute(ValidateCardAnswerInputData validateInputData) {
-        Player player = validateInputData.getPlayer();
         String expression =  validateInputData.getExpression();
         List<Card> cards = validateInputData.getCards();
 
@@ -26,7 +23,6 @@ public class ValidateCardAnswerInteractor implements ValidateCardAnswerInputBoun
         String message = validity.getMessage();
 
         if (validity.isValid()) {
-            player.markPuzzleSolved(validateInputData.getCardPuzzle().getName());
             // consider not doing this and instead updating the nav state (not sure about the player entity here)
             output = new ValidateCardAnswerOutputData(true,  message);
             this.validatePresenter.prepareSuccessView(output);
@@ -38,17 +34,13 @@ public class ValidateCardAnswerInteractor implements ValidateCardAnswerInputBoun
 
     public CardValidationResult isSolution(String expression,  List<Card> cards) {
         try {
-            List<Integer> cardVals = new ArrayList<>();
-            for (Card card : cards) {
-                cardVals.add(card.getValue());
-            }
-
-            if (!ExpressionEvaluator.checkExprPrereq(expression, cardVals)) {
+            if (!expression.matches("[0-9+\\-*/()]+")) {
                 return new CardValidationResult(false, "Invalid use of card numbers and/or operators.");
             }
-            if (ExpressionEvaluator.evaluate(expression) != 24) {
+            if (!Expression24Verifier.isValidSolution(expression, cards)) {
                 return new CardValidationResult(false, "Expression does not add up to 24. Please try again.");
             }
+
             return new CardValidationResult(true, "Correct Answer!! It's UofT's honour to have smart people like you!");
         } catch (Exception e){
             return new CardValidationResult(false, "Evaluation error: " + e.getMessage());

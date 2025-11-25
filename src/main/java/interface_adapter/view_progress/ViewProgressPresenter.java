@@ -1,23 +1,27 @@
 package interface_adapter.view_progress;
 
+import interface_adapter.navigate.NavigateState;
+import interface_adapter.navigate.NavigateViewModel;
 import use_case.view_progress.ViewProgressOutputBoundary;
 import use_case.view_progress.ViewProgressOutputData;
 
 public class ViewProgressPresenter implements ViewProgressOutputBoundary {
 
-    private final ViewProgressViewModel viewModel;
+    private final NavigateViewModel viewModel;
 
-    public ViewProgressPresenter(ViewProgressViewModel viewModel) {
+    // changed to nav view state bc my guy, this is not even used.
+    public ViewProgressPresenter(NavigateViewModel viewModel) {
         this.viewModel = viewModel;
     }
 
     @Override
     public void present(ViewProgressOutputData data) {
-        String text = "=== Your Progress ===\n"
-                + "Location: " + data.getLocation() + "\n"
+        String text = "Location: " + data.getLocation() + "\n"
                 + "Keys collected: " + data.getKeysCollected() + "\n"
                 + "Solved puzzles: " + data.getSolvedPuzzles();
 
-        viewModel.setProgressText(text);
+        NavigateState current = viewModel.getState();
+        current.setProgressText(text);
+        viewModel.firePropertyChange();
     }
 }

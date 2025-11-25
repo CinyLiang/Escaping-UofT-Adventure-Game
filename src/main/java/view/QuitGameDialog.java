@@ -2,6 +2,8 @@ package view;
 
 import java.awt.*;
 import javax.swing.*;
+
+import interface_adapter.navigate.NavigateViewModel;
 import interface_adapter.quit_game.QuitGameController;
 import interface_adapter.save_progress.SaveProgressController;
 
@@ -10,11 +12,11 @@ public class QuitGameDialog extends JDialog {
     private QuitGameController quitGameController;
 
     public QuitGameDialog(QuitGameController quitGameController,
-                          SaveProgressController saveProgressController) {
+                          SaveProgressController saveProgressController, NavigateViewModel navigateViewModel) {
 
         this.quitGameController = quitGameController;
         this.quitGameController.setShowSaveDialog(() -> {
-            SaveGameDialog saveDialog = new SaveGameDialog(saveProgressController);
+            SaveGameDialog saveDialog = new SaveGameDialog(saveProgressController, navigateViewModel);
             saveDialog.show();
         });
 

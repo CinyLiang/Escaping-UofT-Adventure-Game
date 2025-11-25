@@ -1,6 +1,4 @@
-package use_case.validateCardAnswer;
-
-import java.util.ArrayList;
+package use_case.validate_card_answer;
 
 /**
  * Output Data for the Validate Card Answer Use Case.

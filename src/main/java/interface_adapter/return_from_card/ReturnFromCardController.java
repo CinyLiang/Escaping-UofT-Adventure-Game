@@ -4,7 +4,7 @@ import use_case.card_return_to_home.CardReturnInputBoundary;
 
 public class ReturnFromCardController {
     private Runnable returnFromCardDialogue;
-    private CardReturnInputBoundary cardReturnInputBoundary;
+    private final CardReturnInputBoundary cardReturnInputBoundary;
 
     public ReturnFromCardController(CardReturnInputBoundary cardReturnInputBoundary) {
         this.cardReturnInputBoundary = cardReturnInputBoundary;

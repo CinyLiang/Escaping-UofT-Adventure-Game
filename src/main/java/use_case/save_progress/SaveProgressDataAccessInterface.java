@@ -1,5 +1,7 @@
 package use_case.save_progress;
 
+import java.util.Set;
+
 /**
  * Gateway for saving the current game progress.
  * The implementation is responsible for knowing where the current game state is
@@ -12,5 +14,5 @@ public interface SaveProgressDataAccessInterface {
      *
      * @return true if saving succeeded, false otherwise
      */
-    boolean saveProgress();
+    boolean saveProgress(String currentLocation, int keysCollected, Set<String> solvedPuzzles);
 }

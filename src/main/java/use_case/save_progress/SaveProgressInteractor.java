@@ -16,7 +16,7 @@ public class SaveProgressInteractor implements SaveProgressInputBoundary {
 
     @Override
     public void execute(SaveProgressInputData inputData) {
-        boolean ok = saveGateway.saveProgress();
+        boolean ok = saveGateway.saveProgress(inputData.getLocation(), inputData.getNumberOfKeys(), inputData.getPuzzlesSolved());
 
         if (ok) {
             SaveProgressOutputData outputData =

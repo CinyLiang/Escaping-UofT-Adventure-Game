@@ -1,6 +1,9 @@
 package interface_adapter.view_progress;
 
 import use_case.view_progress.ViewProgressInputBoundary;
+import use_case.view_progress.ViewProgressInputData;
+
+import java.util.Set;
 
 public class ViewProgressController {
 
@@ -10,7 +13,8 @@ public class ViewProgressController {
         this.interactor = interactor;
     }
 
-    public void execute() {
-        interactor.execute();
+    public void execute(String loc, int keys, Set<String> puzzles) {
+        ViewProgressInputData inputData = new ViewProgressInputData(loc, keys, puzzles);
+        interactor.execute(inputData);
     }
 }

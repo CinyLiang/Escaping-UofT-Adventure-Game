@@ -1,6 +1,4 @@
-package use_case.validateCardAnswer;
-
-import use_case.play_card_game.PlayCardGameOutputData;
+package use_case.validate_card_answer;
 
 /**
  * The output boundary for the Validate Card Answer Use Case.

@@ -3,7 +3,7 @@ package use_case.trivia_game;
 public class TriviaGameInputData {
     private final String playerAnswer;
 
-    public TriviaGameInputData(String playerAnswer, String playerName) {
+    public TriviaGameInputData(String playerAnswer) {
         this.playerAnswer = playerAnswer;
     }
 

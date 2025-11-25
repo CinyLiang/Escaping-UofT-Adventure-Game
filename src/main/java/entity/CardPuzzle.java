@@ -1,7 +1,6 @@
 package entity;
 
 import java.util.*;
-import entity.Card;
 
 /**
  * An entity representing a Card Puzzle
@@ -14,7 +13,6 @@ public class CardPuzzle extends Puzzle {
      * Creates a new card puzzle with the given id and cards.
      * @param cards the randomly drawn cards
      */
-
     public CardPuzzle(List<Card> cards) {
         super("", "Math 24 Game", NAME);
         this.cards = cards;
@@ -36,8 +34,4 @@ public class CardPuzzle extends Puzzle {
         List<Integer> cardNumbers = this.getCardNumbers();
         return cardNumbers.toString();
     }
-
-//    public String getMessage() {
-//        return this.message;
-//    }
 }

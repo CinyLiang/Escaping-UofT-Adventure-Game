@@ -1,7 +1,7 @@
 package view;
 
 import interface_adapter.ViewManagerModel;
-import view.NavigateView;
+import interface_adapter.navigate.NavigateViewModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,12 +10,9 @@ public class HomeView extends JPanel {
 
     public static final String VIEW_NAME = "home_view";
 
-    private JButton startButton;
-    private final ViewManagerModel viewManagerModel;
+    private final JButton startButton;
 
     public HomeView(ViewManagerModel viewManagerModel) {
-        this.viewManagerModel = viewManagerModel;
-
         this.setLayout(new BorderLayout());
         this.setBackground(Color.BLACK);
 
@@ -44,7 +41,7 @@ public class HomeView extends JPanel {
 
         // Navigation
         startButton.addActionListener(e -> {
-            viewManagerModel.setState(NavigateView.VIEW_NAME);
+            viewManagerModel.setState(new NavigateViewModel().getViewName()); // ????
             viewManagerModel.firePropertyChange();
         });
 

@@ -20,6 +20,7 @@ public class OpenTriviaAPI implements TriviaGameDataAccessInterface {
                     .build();
 
             Response response = client.newCall(request).execute();
+            assert response.body() != null;
             String responseBody = response.body().string();
 
             JSONObject json = new JSONObject(responseBody);
@@ -34,7 +35,7 @@ public class OpenTriviaAPI implements TriviaGameDataAccessInterface {
 
             JSONArray results = json.getJSONArray("results");
 
-            if (results.length() == 0) {
+            if (results.isEmpty()) {
                 return new String[]{
                         "No questions available. Please try again.",
                         "True"

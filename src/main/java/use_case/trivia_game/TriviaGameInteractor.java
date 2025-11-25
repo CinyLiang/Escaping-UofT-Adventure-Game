@@ -57,4 +57,9 @@ public class TriviaGameInteractor implements TriviaGameInputBoundary {
 
         presenter.presentResult(outputData);
     }
+
+    @Override
+    public void exitPuzzle() {
+        presenter.exitPuzzle();
+    }
 }

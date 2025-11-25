@@ -26,39 +26,48 @@ public class TwentyFourChecker {
         return nums;
     }
 
-    private static boolean solve(List<Double> nums) {
+    private static List<List<Double>> generateNextStates(List<Double> nums) {
         int n = nums.size();
+        List<List<Double>> results = new ArrayList<>();
 
-        if (n == 1) {
-            return Math.abs(nums.get(0) - TARGET) < EPS;
-        }
-
-        // Try all ordered pairs to combine
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
                 if (i == j) continue;
 
-                // Build the list of the remaining numbers
-                List<Double> next = new ArrayList<>();
-                for (int k = 0; k < n; k++) {
-                    if (k != i && k != j) next.add(nums.get(k));
-                }
-
-                // Pick operands
                 double x = nums.get(i);
                 double y = nums.get(j);
 
-                // Try all operations
+                // Remaining numbers (other than i, j)
+                List<Double> rest = new ArrayList<>();
+                for (int k = 0; k < n; k++) {
+                    if (k != i && k != j) rest.add(nums.get(k));
+                }
+
                 for (double val : generateResults(x, y)) {
+                    List<Double> next = new ArrayList<>(rest);
                     next.add(val);
-                    if (solve(next)) return true;
-                    next.remove(next.size() - 1);
+                    results.add(next);
                 }
             }
         }
 
+        return results;
+    }
+
+
+    private static boolean solve(List<Double> nums) {
+        if (nums.size() == 1) {
+            return Math.abs(nums.get(0) - TARGET) < EPS;
+        }
+
+        for (List<Double> nextState : generateNextStates(nums)) {
+            if (solve(nextState)) return true;
+        }
+
         return false;
     }
+
+
 
     // returns all possible values from x op y
     private static List<Double> generateResults(double x, double y) {

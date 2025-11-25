@@ -1,22 +1,43 @@
 package view;
 
-import interface_adapter.clear_history.ClearHistoryController;
-import interface_adapter.clear_history.ClearHistoryViewModel;
+import javax.swing.*;
+
 import interface_adapter.navigate.NavigateController;
+import interface_adapter.clear_history.ClearHistoryViewModel;
+
+import interface_adapter.clear_history.ClearHistoryController;
+import interface_adapter.navigate.NavigateState;
 import interface_adapter.navigate.NavigateViewModel;
 import interface_adapter.save_progress.SaveProgressController;
 import interface_adapter.view_progress.ViewProgressController;
+
 import interface_adapter.quit_game.QuitGameController;
+import interface_adapter.win_game.WinGameController;
 
-import view.QuitGameDialog;
-
-import javax.swing.*;
 import java.awt.*;
 
 public class NavigateView extends JPanel {
+    private ClearHistoryViewModel clearHistoryViewModel;
 
     public static final String VIEW_NAME = "navigate_view";
 
+    // CONTROLLERS
+    private QuitGameController quitGameController;
+    private ClearHistoryController clearHistoryController;
+    private SaveProgressController saveProgressController;
+    private ViewProgressController viewProgressController;
+    private NavigateController navigateController;
+    private WinGameController winGameController;
+
+    // VIEW MODEL
+    private NavigateViewModel  navigateViewModel;
+
+    // DIALOGS
+    private QuitGameDialog quitGameDialog;
+    private SaveGameDialog saveGameDialog;
+    private ConfirmRestartGameDialog confirmRestartGameDialog;
+
+    // NAV UI
     private JTextArea storyArea;
     private JComboBox<String> directionSelector;
 
@@ -27,25 +48,13 @@ public class NavigateView extends JPanel {
 
     private JLabel keysLabel;
 
-    private QuitGameDialog quitDialog;
+    private static final String FONT = "Arial";
 
-    // Controllers
-    private NavigateController navigateController;
-    private ClearHistoryController clearHistoryController;
-    private SaveProgressController saveController;
-    private ViewProgressController viewProgressController;
-    private QuitGameController quitGameController;
-
-    // ViewModels
-    private NavigateViewModel navigateViewModel;
-    private ClearHistoryViewModel clearHistoryViewModel;
-
-    public NavigateView() {
+    public NavigateView(NavigateViewModel navigateViewModel) {
+        this.navigateViewModel = navigateViewModel;
 
         this.setLayout(new BorderLayout());
         this.setBackground(Color.BLACK);
-
-        quitDialog = new QuitGameDialog();
 
         JPanel topSection = new JPanel(new BorderLayout());
         topSection.setBackground(Color.BLACK);
@@ -53,21 +62,38 @@ public class NavigateView extends JPanel {
         JPanel statusBar = new JPanel(new FlowLayout(FlowLayout.RIGHT, 20, 10));
         statusBar.setOpaque(false);
 
-        keysLabel = new JLabel("Keys: 0 / 3");
+        // init text
+        keysLabel = new JLabel("Keys: 0 / 2");
+        storyArea = new JTextArea("Welcome to Escaping UofT!\nSelect a direction to begin...");
+
+        // set up important text
+        if (navigateViewModel != null) {
+            keysLabel.setText("Keys: "+ navigateViewModel.getState().getNumberOfKeys() + " / 2");
+            storyArea.setText("Welcome to Escaping UofT!\nSelect a direction to begin...");
+
+            // actually calls on change lmao. did not know that.
+            navigateViewModel.addPropertyChangeListener(evt -> {
+                NavigateState s = navigateViewModel.getState();
+                storyArea.setText(s.getStoryText());
+                keysLabel.setText("Keys: " + s.getNumberOfKeys() + " / 2");
+            });
+        } else {
+            System.out.println("navigationViewModel is null");
+        }
+
+        // styling
         keysLabel.setForeground(Color.WHITE);
-        keysLabel.setFont(new Font("Arial", Font.BOLD, 18));
-
-        statusBar.add(keysLabel);
-        topSection.add(statusBar, BorderLayout.NORTH);
-
-        storyArea = new JTextArea();
+        keysLabel.setFont(new Font(FONT, Font.BOLD, 18));
         storyArea.setEditable(false);
         storyArea.setLineWrap(true);
         storyArea.setWrapStyleWord(true);
         storyArea.setBackground(new Color(40, 40, 40));
         storyArea.setForeground(Color.WHITE);
         storyArea.setFont(new Font("Serif", Font.PLAIN, 22));
-        storyArea.setText("Welcome to Escaping UofT!\nSelect a direction to begin...");
+
+        // structure
+        statusBar.add(keysLabel);
+        topSection.add(statusBar, BorderLayout.NORTH);
 
         JScrollPane storyScroll = new JScrollPane(storyArea);
         storyScroll.setBorder(BorderFactory.createEmptyBorder(20, 20, 10, 20));
@@ -90,7 +116,7 @@ public class NavigateView extends JPanel {
 
         JLabel dirLabel = new JLabel("Choose Direction:");
         dirLabel.setForeground(Color.WHITE);
-        dirLabel.setFont(new Font("Arial", Font.BOLD, 18));
+        dirLabel.setFont(new Font(FONT, Font.BOLD, 18));
 
         directionSelector = new JComboBox<>(new String[]{
                 "North", "South", "East", "West"
@@ -128,21 +154,30 @@ public class NavigateView extends JPanel {
         });
 
         progressButton.addActionListener(e -> {
-            if (viewProgressController != null)
-                viewProgressController.execute();
+            if (viewProgressController != null) {
+                NavigateState state = navigateViewModel.getState();
+                viewProgressController.execute(state.getLocation(), state.getNumberOfKeys(), state.getPuzzlesSolved());
+                // show dialog
+                JDialog progressDialog = new ProgressDialog(state.getProgressText());
+                progressDialog.setVisible(true);
+            }
         });
 
         saveButton.addActionListener(e -> {
-            if (saveController != null)
-                saveController.execute();
+            NavigateState s = navigateViewModel.getState();
+            if (saveProgressController != null)
+                saveProgressController.execute(s.getLocation(), s.getNumberOfKeys(), s.getPuzzlesSolved());
         });
 
         quitButton.addActionListener(e -> {
-            if (quitDialog != null) quitDialog.show();
+            if (quitGameController != null) {
+                quitGameController.showQuit();
+            }
         });
 
         directionSelector.addActionListener(e -> {
             if (navigateController != null) {
+                System.out.println("selected direction: " + directionSelector.getSelectedItem());
                 navigateController.execute((String) directionSelector.getSelectedItem());
             }
         });
@@ -152,64 +187,53 @@ public class NavigateView extends JPanel {
         JButton b = new JButton(text);
         b.setBackground(new Color(70, 70, 70));
         b.setForeground(Color.WHITE);
-        b.setFont(new Font("Arial", Font.BOLD, 16));
+        b.setFont(new Font(FONT, Font.BOLD, 16));
         return b;
     }
 
-    public void setNavigateController(NavigateController c) {
-        this.navigateController = c;
+    // QUIT GAME CONTROLLER
+    public void setQuitGameController(QuitGameController quitGameController,
+                                      SaveProgressController saveProgressController) {
+        this.quitGameController = quitGameController;
+
+        // set up runnable
+        this.quitGameDialog = new QuitGameDialog(quitGameController, saveProgressController, navigateViewModel);
+        this.saveGameDialog = new SaveGameDialog(saveProgressController, navigateViewModel);
+        this.quitGameController.setShowQuitDialog(() -> quitGameDialog.show());
+        this.quitGameController.setShowSaveDialog(() -> saveGameDialog.show());
     }
 
-    // Quit dialog
-    public void setQuitGameDialog(QuitGameDialog quitDialog) {
-        this.quitDialog = quitDialog;
+    // CLEAR GAME CONTROLLER
+    public void setClearHistoryController(ClearHistoryController clearHistoryController) {
+        this.clearHistoryController = clearHistoryController;
+
+        // set up runnable
+        this.confirmRestartGameDialog = new ConfirmRestartGameDialog(clearHistoryController);
+        this.clearHistoryController.setShowConfirmDialog(() -> confirmRestartGameDialog.show());
     }
 
-    // Restart controller
-    public void setRestartController(ClearHistoryController controller) {
-        restartButton.addActionListener(e -> controller.execute());
+    // SAVE PROGRESS CONTROLLER
+    public void setSaveProgressController(SaveProgressController saveProgressController) {
+        this.saveProgressController = saveProgressController;
     }
 
-    // Progress controller
-    public void setViewProgressController(ViewProgressController controller) {
-        progressButton.addActionListener(e -> controller.execute());
+    // VIEW PROGRESS CONTROLLER
+    public void setViewProgressController(ViewProgressController viewProgressController) {
+        this.viewProgressController = viewProgressController;
     }
 
-    // Save controller
-    public void setSaveProgressController(SaveProgressController controller) {
-        saveButton.addActionListener(e -> controller.execute());
+    // WIN GAME CONTROLLER
+    public void setWinGameController(WinGameController winGameController) {
+        this.winGameController = winGameController;
     }
 
-    public void setNavigateViewModel(NavigateViewModel vm) {
-        this.navigateViewModel = vm;
-
-        vm.addPropertyChangeListener(evt -> {
-            var state = vm.getState();
-            storyArea.setText(state.getStoryText());
-            keysLabel.setText("Keys: " + state.getNumberOfKeys() + " / 3");
-        });
+    // ACTION LISTENERS
+    public void setNavigateController(NavigateController navigateController) {
+           this.navigateController = navigateController;
     }
 
     public void setClearHistoryViewModel(ClearHistoryViewModel vm) {
         this.clearHistoryViewModel = vm;
-
-        vm.addPropertyChangeListener(evt ->
-                JOptionPane.showMessageDialog(this, vm.getMessage())
-        );
-    }
-
-    public void setClearHistoryController(ClearHistoryController controller) {
-        this.clearHistoryController = controller;
-    }
-
-    public void setQuitGameController(QuitGameController quitController,
-                                      SaveProgressController saveController) {
-
-        this.quitGameController = quitController;
-        this.saveController = saveController;
-
-        this.quitDialog = new QuitGameDialog(quitController, saveController);
-
-        quitButton.addActionListener(e -> quitDialog.show());
+        vm.addPropertyChangeListener(evt -> JOptionPane.showMessageDialog(this, vm.getMessage()));
     }
 }

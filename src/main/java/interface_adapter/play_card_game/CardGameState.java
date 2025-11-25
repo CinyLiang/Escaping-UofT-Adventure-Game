@@ -10,6 +10,8 @@ public class CardGameState {
     private String message;
     private boolean solved;
 
+    private String locationName = "Gerstein Library";
+
     public CardGameState () {
         this.cardPuzzle = null;
         this.hint = "";
@@ -55,5 +57,7 @@ public class CardGameState {
     public void setSolved() {
         this.solved = true;
     }
+
+    public String getLocationName() { return locationName; }
 
 }

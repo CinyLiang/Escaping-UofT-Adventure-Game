@@ -1,6 +1,5 @@
 package use_case.card_game_hints;
 
-import java.util.*;
 import entity.CardPuzzle;
 
 public class CardGameHintsInputDataObject {

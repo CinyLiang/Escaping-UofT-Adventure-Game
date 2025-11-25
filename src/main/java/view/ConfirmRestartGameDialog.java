@@ -7,7 +7,7 @@ import interface_adapter.clear_history.ClearHistoryController;
 
 public class ConfirmRestartGameDialog extends JDialog {
 
-    private ClearHistoryController clearHistoryController;
+    private final ClearHistoryController clearHistoryController;
 
     public ConfirmRestartGameDialog(ClearHistoryController clearHistoryController) {
 

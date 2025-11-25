@@ -1,21 +1,32 @@
 package use_case.navigate;
 
+import org.jetbrains.annotations.NotNull;
+
 public class NavigateInteractor implements NavigateInputBoundary {
 
-    private final NavigateOutputBoundary presenter;
-    public NavigateInteractor(NavigateOutputBoundary presenter) {
-        this.presenter = presenter;
+    private final NavigateOutputBoundary navigatePresenter;
+
+    public NavigateInteractor(NavigateOutputBoundary navigatePresenter) {
+        this.navigatePresenter = navigatePresenter;
     }
 
+    /*
+     * Takes a direction and returns updated story
+     */
     @Override
     public void execute(NavigateInputData inputData) {
         String direction = inputData.getDirection();
-        String storyText = generateStoryForDirection(direction);
-        NavigateOutputData output =
-                new NavigateOutputData(storyText, direction);
-        presenter.prepareSuccessView(output);
+        navigatePresenter.prepareSuccessView(new NavigateOutputData2(getTargetView(direction)));
     }
-    private String generateStoryForDirection(String direction) {
-        return direction;
+
+    @NotNull
+    private static String getTargetView(String direction) {
+        return switch (direction.toLowerCase()) {
+            case "north" -> "Card game";
+            case "south" -> "Win game";
+            case "east" -> "Trivia game";
+            case "west" -> "Card game";
+            default -> "";
+        };
     }
 }

@@ -1,6 +1,7 @@
 package view;
 
 import entity.CardPuzzle;
+import entity.Player;
 import interface_adapter.play_card_game.CardGameState;
 import interface_adapter.play_card_game.CardGameViewModel;
 import interface_adapter.play_card_game.CardGameController;
@@ -8,7 +9,7 @@ import interface_adapter.card_game_hints.CardGameHintsController;
 import interface_adapter.return_from_card.ReturnFromCardController;
 import interface_adapter.validate_card_answer.ValidateCardController;
 import use_case.card_game_hints.CardGameHintsInputDataObject;
-import use_case.validateCardAnswer.ValidateCardAnswerInputData;
+import use_case.validate_card_answer.ValidateCardAnswerInputData;
 
 import javax.swing.*;
 import java.awt.*;

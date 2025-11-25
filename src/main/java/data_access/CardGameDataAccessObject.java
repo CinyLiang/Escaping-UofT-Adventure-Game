@@ -25,7 +25,7 @@ public class CardGameDataAccessObject implements CardGameDataAccessInterface {
                     .url(urlString)
                     .build();
 
-            List<Card> cards = new ArrayList<Card>();
+            List<Card> cards = new ArrayList<>();
             try (Response response = client.newCall(request).execute()) {
                 String jsondata = response.body().string();
                 JSONObject subinfo = new JSONObject(jsondata);

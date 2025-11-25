@@ -1,15 +1,15 @@
 package interface_adapter.validate_card_answer;
 
-import use_case.validateCardAnswer.ValidateCardAnswerInteractor;
-import use_case.validateCardAnswer.ValidateCardAnswerInputData;
+import use_case.validate_card_answer.ValidateCardAnswerInputBoundary;
+import use_case.validate_card_answer.ValidateCardAnswerInputData;
 
 /**
  * Controller for the Validate Card Answer Use Case.
  */
 public class ValidateCardController {
-    private final ValidateCardAnswerInteractor interactor;
+    private final ValidateCardAnswerInputBoundary interactor;
 
-    public ValidateCardController(ValidateCardAnswerInteractor interactor) {
+    public ValidateCardController(ValidateCardAnswerInputBoundary interactor) {
         this.interactor = interactor;
     }
 

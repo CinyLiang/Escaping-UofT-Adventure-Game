@@ -1,6 +1,5 @@
-package use_case.validateCardAnswer;
+package use_case.validate_card_answer;
 
-import use_case.play_card_game.PlayCardGameInputData;
 /**
  * The Validate Card Answer Use Case.
  */

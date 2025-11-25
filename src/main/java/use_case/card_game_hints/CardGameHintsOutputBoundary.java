@@ -1,6 +1,5 @@
 package use_case.card_game_hints;
 
-import use_case.play_card_game.PlayCardGameOutputData;
 
 /**
  * The output boundary for the Play Card Game Use Case.
