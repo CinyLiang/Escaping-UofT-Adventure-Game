@@ -13,8 +13,7 @@ public class HomeView extends JPanel {
     private static final String FONT = "Arial";
 
     private Image backgroundImage;
-    private final String IMAGE_PATH = "src/main/java/resources/uoft_bg.png";
-
+    private final String IMAGE_PATH = "/src/main/java/recourses/uoft_bg.png";
     // Menu Buttons
     private final JButton startButton;
     private final JButton continueButton;
@@ -32,7 +31,7 @@ public class HomeView extends JPanel {
         this.setLayout(new BorderLayout());
 
         // TITLE
-        JLabel title = new JLabel("ESCAPE UOFT");
+        JLabel title = new JLabel("ESCAPE UofT");
         title.setHorizontalAlignment(SwingConstants.CENTER);
         title.setFont(new Font("Serif", Font.BOLD, 52));
         title.setForeground(highlightGold);
