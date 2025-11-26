@@ -11,8 +11,11 @@ public class SettingsInteractor implements SettingsInputBoundary {
     @Override
     public void saveSettings(SettingsInputData data) {
         SettingsOutputData output = new SettingsOutputData(
-                data.theme, data.fontSize, data.accessibility
+                data.getTheme(),
+                data.getFontSize(),
+                data.isAccessibility()
         );
+
         presenter.applySettings(output);
     }
 }

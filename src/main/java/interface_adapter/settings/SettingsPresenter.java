@@ -3,6 +3,7 @@ package interface_adapter.settings;
 import interface_adapter.ViewManagerModel;
 import use_case.settings.SettingsOutputBoundary;
 import use_case.settings.SettingsOutputData;
+import view.ThemeManager;
 
 public class SettingsPresenter implements SettingsOutputBoundary {
 
@@ -17,9 +18,13 @@ public class SettingsPresenter implements SettingsOutputBoundary {
 
     @Override
     public void applySettings(SettingsOutputData data) {
+
+        // Update view model
         viewModel.setTheme(data.theme);
         viewModel.setFontSize(data.fontSize);
         viewModel.setAccessibility(data.accessibility);
+
+        ThemeManager.applyTheme(data.theme);
 
         viewManagerModel.firePropertyChange();
     }

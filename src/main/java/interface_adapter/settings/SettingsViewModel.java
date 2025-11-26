@@ -5,8 +5,6 @@ import java.beans.PropertyChangeSupport;
 
 public class SettingsViewModel {
 
-    public static final String VIEW_NAME = "settings_view";
-
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
 
     private String theme = "dark";
@@ -15,17 +13,17 @@ public class SettingsViewModel {
 
     public void setTheme(String theme) {
         this.theme = theme;
-        support.firePropertyChange("settings", null, null);
+        support.firePropertyChange("theme", null, theme);
     }
 
-    public void setFontSize(String size) {
-        this.fontSize = size;
-        support.firePropertyChange("settings", null, null);
+    public void setFontSize(String fs) {
+        this.fontSize = fs;
+        support.firePropertyChange("fontSize", null, fs);
     }
 
-    public void setAccessibility(boolean enabled) {
-        this.accessibility = enabled;
-        support.firePropertyChange("settings", null, null);
+    public void setAccessibility(boolean acc) {
+        this.accessibility = acc;
+        support.firePropertyChange("accessibility", null, acc);
     }
 
     public String getTheme() { return theme; }

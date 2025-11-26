@@ -2,6 +2,7 @@ package interface_adapter.settings;
 
 import use_case.settings.SettingsInputBoundary;
 import use_case.settings.SettingsInputData;
+import view.ThemeManager;
 
 public class SettingsController {
 
@@ -11,8 +12,14 @@ public class SettingsController {
         this.interactor = interactor;
     }
 
-    public void apply(String theme, String fontSize, boolean accessibility) {
-        SettingsInputData data = new SettingsInputData(theme, fontSize, accessibility);
+    public void save(String theme, String font, boolean accessibility) {
+
+        // Apply to ThemeManager
+        ThemeManager.applyTheme(theme);
+        ThemeManager.applyFontSize(font);
+        ThemeManager.setAccessibility(accessibility);
+
+        SettingsInputData data = new SettingsInputData(theme, font, accessibility);
         interactor.saveSettings(data);
     }
 }
