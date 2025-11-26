@@ -23,91 +23,54 @@ public class SettingsView extends JPanel {
         JLabel title = new JLabel("SETTINGS", SwingConstants.CENTER);
         title.setFont(new Font("Arial", Font.BOLD, 32));
         title.setForeground(Color.WHITE);
-        title.setBorder(BorderFactory.createEmptyBorder(20, 0, 20, 0));
+        title.setBorder(BorderFactory.createEmptyBorder(20, 0, 30, 0));
         add(title, BorderLayout.NORTH);
 
-        // Center menu
-        JPanel menu = new JPanel(new GridLayout(3, 2, 20, 20));
-        menu.setOpaque(false);
-        menu.setBorder(BorderFactory.createEmptyBorder(20, 60, 20, 60));
+        // MAIN CENTER PANEL
+        JPanel center = new JPanel();
+        center.setLayout(new GridLayout(3, 1, 0, 20));
+        center.setOpaque(false);
+        center.setBorder(BorderFactory.createEmptyBorder(20, 80, 20, 80));
 
         // Theme
-        JLabel themeLabel = makeLabel("Theme");
         OptionSelector themeSelector = new OptionSelector(
+                "Theme",
                 new String[]{"Light", "Dark"},
                 settingsViewModel.getTheme().equals("dark") ? 1 : 0
         );
 
-        // Font
-        JLabel fontLabel = makeLabel("Text Size");
+        // Font Size
+        int fontIndex = switch (settingsViewModel.getFontSize()) {
+            case "small" -> 0;
+            case "large" -> 2;
+            default -> 1;
+        };
+
         OptionSelector fontSelector = new OptionSelector(
+                "Text Size",
                 new String[]{"Small", "Medium", "Large"},
-                switch (settingsViewModel.getFontSize()) {
-                    case "small" -> 0;
-                    case "large" -> 2;
-                    default -> 1;
-                }
+                fontIndex
         );
 
         // Accessibility
-        JLabel accessLabel = makeLabel("Accessibility");
-        OptionSelector accessSelector = new OptionSelector(
+        OptionSelector accessibilitySelector = new OptionSelector(
+                "Accessibility",
                 new String[]{"Off", "On"},
                 settingsViewModel.isAccessibility() ? 1 : 0
         );
 
-        menu.add(themeLabel);
-        menu.add(themeSelector);
-        menu.add(fontLabel);
-        menu.add(fontSelector);
-        menu.add(accessLabel);
-        menu.add(accessSelector);
+        center.add(themeSelector);
+        center.add(fontSelector);
+        center.add(accessibilitySelector);
 
-        add(menu, BorderLayout.CENTER);
+        add(center, BorderLayout.CENTER);
 
-        // Buttons bottom
-        JPanel buttons = new JPanel();
-        buttons.setOpaque(false);
+        // BOTTOM Button
+        JPanel bottomButtons = new JPanel();
+        bottomButtons.setOpaque(false);
+        bottomButtons.setBorder(BorderFactory.createEmptyBorder(20, 0, 20, 0));
 
         JButton saveButton = new JButton("Save");
         JButton backButton = new JButton("Back");
-
-        styleButton(saveButton);
-        styleButton(backButton);
-
-        buttons.add(saveButton);
-        buttons.add(backButton);
-
-        add(buttons, BorderLayout.SOUTH);
-
-        // Button actions
-        saveButton.addActionListener(e -> {
-            controller.apply(
-                    themeSelector.getValue().toLowerCase(),
-                    fontSelector.getValue().toLowerCase(),
-                    accessSelector.getValue().equals("On")
-            );
-            viewManagerModel.setState(HomeView.VIEW_NAME);
-            viewManagerModel.firePropertyChange();
-        });
-
-        backButton.addActionListener(e -> {
-            viewManagerModel.setState(HomeView.VIEW_NAME);
-            viewManagerModel.firePropertyChange();
-        });
-    }
-
-    private JLabel makeLabel(String text) {
-        JLabel label = new JLabel(text);
-        label.setForeground(Color.WHITE);
-        label.setFont(new Font("Arial", Font.BOLD, 20));
-        return label;
-    }
-
-    private void styleButton(JButton button) {
-        button.setFont(new Font("Arial", Font.BOLD, 18));
-        button.setBackground(Color.WHITE);
-        button.setForeground(Color.BLACK);
-        button.setFocusPainted(false);
     }
 }

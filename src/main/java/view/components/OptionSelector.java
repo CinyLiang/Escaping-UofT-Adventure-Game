@@ -4,6 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 
 public class OptionSelector extends JPanel {
+
+    private final JLabel label;
     private final JLabel leftArrow;
     private final JLabel rightArrow;
     private final JLabel valueLabel;
@@ -11,25 +13,41 @@ public class OptionSelector extends JPanel {
     private final String[] values;
     private int index;
 
-    public OptionSelector(String[] values, int initialIndex) {
+    public OptionSelector(String labelText, String[] values, int initialIndex) {
         this.values = values;
         this.index = initialIndex;
 
         setLayout(new BorderLayout());
-        setOpaque(false);
+        setPreferredSize(new Dimension(600, 45));
+        setBackground(new Color(30, 30, 30));
+        setBorder(BorderFactory.createMatteBorder(1, 0, 1, 0, new Color(80, 80, 80)));
 
-        leftArrow = new JLabel("<");
-        rightArrow = new JLabel(">");
+        label = new JLabel(labelText);
+        label.setForeground(Color.WHITE);
+        label.setFont(new Font("Consolas", Font.BOLD, 20));
+        label.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 0));
+
+        leftArrow = new JLabel("<  ");
+        rightArrow = new JLabel("  >");
+
+        styleArrow(leftArrow);
+        styleArrow(rightArrow);
+
         valueLabel = new JLabel(values[index], SwingConstants.CENTER);
+        valueLabel.setForeground(Color.CYAN);
+        valueLabel.setFont(new Font("Consolas", Font.BOLD, 20));
 
-        style(leftArrow);
-        style(rightArrow);
-        style(valueLabel);
+        JPanel rightBox = new JPanel(new BorderLayout());
+        rightBox.setOpaque(false);
 
-        add(leftArrow, BorderLayout.WEST);
-        add(valueLabel, BorderLayout.CENTER);
-        add(rightArrow, BorderLayout.EAST);
+        rightBox.add(leftArrow, BorderLayout.WEST);
+        rightBox.add(valueLabel, BorderLayout.CENTER);
+        rightBox.add(rightArrow, BorderLayout.EAST);
 
+        add(label, BorderLayout.WEST);
+        add(rightBox, BorderLayout.EAST);
+
+        // Click
         leftArrow.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent e) {
                 index = (index - 1 + values.length) % values.length;
@@ -45,9 +63,10 @@ public class OptionSelector extends JPanel {
         });
     }
 
-    private void style(JLabel label) {
-        label.setForeground(Color.WHITE);
-        label.setFont(new Font("Arial", Font.BOLD, 20));
+    private void styleArrow(JLabel arrow) {
+        arrow.setForeground(Color.GRAY);
+        arrow.setFont(new Font("Consolas", Font.BOLD, 20));
+        arrow.setCursor(new Cursor(Cursor.HAND_CURSOR));
     }
 
     public String getValue() {
