@@ -29,10 +29,6 @@ import interface_adapter.validate_card_answer.ValidateCardPresenter;
 import interface_adapter.win_game.WinGameController;
 import interface_adapter.win_game.WinGamePresenter;
 import interface_adapter.win_game.WinGameViewModel;
-import interface_adapter.settings.SettingsViewModel;
-import interface_adapter.settings.SettingsController;
-import interface_adapter.settings.SettingsPresenter;
-
 import use_case.card_game_hints.CardGameHintsInputDataBoundary;
 import use_case.card_game_hints.CardGameHintsInteractor;
 import use_case.card_game_hints.CardGameHintsOutputBoundary;
@@ -49,7 +45,6 @@ import use_case.navigate.NavigateOutputBoundary;
 import use_case.play_card_game.PlayCardGameInputBoundary;
 import use_case.play_card_game.PlayCardGameInteractor;
 import use_case.play_card_game.PlayCardGameOutputBoundary;
-import use_case.settings.SettingsInputBoundary;
 import use_case.trivia_game.TriviaGameInputBoundary;
 import use_case.trivia_game.TriviaGameInteractor;
 import use_case.trivia_game.TriviaGameOutputBoundary;
@@ -59,12 +54,7 @@ import use_case.validate_card_answer.ValidateCardAnswerOutputBoundary;
 import use_case.win_game.WinGameInputBoundary;
 import use_case.win_game.WinGameInteractor;
 import use_case.win_game.WinGameOutputBoundary;
-import use_case.settings.SettingsOutputBoundary;
-import use_case.settings.SettingsOutputBoundary;
-import use_case.settings.SettingsInteractor;
-
 import view.*;
-import view.SettingsView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -102,7 +92,6 @@ public class AppBuilder {
     private WinGameViewModel winGameViewModel;
     private CardGameViewModel cardGameViewModel;
     private TriviaGameViewModel triviaGameViewModel;
-    private SettingsViewModel settingsViewModel;
 
     // Views
     private HomeView homeView;
@@ -115,7 +104,6 @@ public class AppBuilder {
     private QuitGameDialog quitGameDialog;
     private ReturnFromCardDialogue returnFromCardDialogue;
     private ConfirmRestartGameDialog confirmRestartGameDialog;
-    private SettingsView settingsView;
 
     // oh god the player. OH GOD THE PLAYER
     Player player;
@@ -280,7 +268,6 @@ public class AppBuilder {
         triviaGameViewModel = new TriviaGameViewModel();
         winGameViewModel = new WinGameViewModel();
         viewProgressViewModel = new ViewProgressViewModel();
-        settingsViewModel = new SettingsViewModel();
 
         // Create Views
         homeView = new HomeView(viewManagerModel);
@@ -298,16 +285,6 @@ public class AppBuilder {
         addView(homeView, HomeView.VIEW_NAME);
         addView(navigateView, NavigateView.VIEW_NAME);
         addView(instructionsView, InstructionsView.VIEW_NAME);
-
-        // Settings
-        SettingsOutputBoundary settingsPresenter =
-                new SettingsPresenter(settingsViewModel, viewManagerModel);
-        SettingsInputBoundary settingsInteractor =
-                new SettingsInteractor(settingsPresenter);
-        SettingsController settingsController =
-                new SettingsController(settingsInteractor);
-        settingsView = new SettingsView(settingsController, settingsViewModel, viewManagerModel);
-        addView(settingsView, SettingsView.VIEW_NAME);
 
         // Add use cases
         addClearHistoryUseCase();
