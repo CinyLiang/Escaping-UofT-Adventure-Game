@@ -29,6 +29,7 @@ class PlayCardGameInteractorTest {
 
     @Test
     void successNewGameTest() {
+        // Test the prepare success and fail functionalities of the interactor
         CardGameDataAccessObject cardGameDataAccessObject = new CardGameDataAccessObject(4);
         CardGameViewModel cardGameViewModel = new CardGameViewModel();
         ViewManagerModel viewManagerModel = new ViewManagerModel();
@@ -56,6 +57,7 @@ class PlayCardGameInteractorTest {
 
     @Test
     void successEvaluationTest() {
+        // Test execute on a success call
         TestPresenter presenter = new TestPresenter();
         CardGameHintsInteractor interactor = new CardGameHintsInteractor(presenter);
 
@@ -71,6 +73,7 @@ class PlayCardGameInteractorTest {
 
     @Test
     void failureEvaluationTest() {
+        // Test execute on a fail call
         TestPresenter presenter = new TestPresenter();
         CardGameHintsInteractor interactor = new CardGameHintsInteractor(presenter);
 
@@ -84,6 +87,7 @@ class PlayCardGameInteractorTest {
 
     @Test
     void testCardPuzzleWithDifferentCardValues() {
+        // Test the interacter with different card values
         TestPresenter presenter = new TestPresenter();
         CardGameHintsInteractor interactor = new CardGameHintsInteractor(presenter);
 
@@ -99,6 +103,7 @@ class PlayCardGameInteractorTest {
 
     @Test
     void testCardPuzzleWithDuplicateCards() {
+        // Test the interacter with duplicate card values
         TestPresenter presenter = new TestPresenter();
         CardGameHintsInteractor interactor = new CardGameHintsInteractor(presenter);
 
@@ -114,6 +119,7 @@ class PlayCardGameInteractorTest {
 
     @Test
     void testLessThanFourCards() {
+        // Test the interacter with less than four cards so that it should generate a failure view
         // Use the TestPlayCardGamePresenter directly with the interactor
         TestPlayCardGamePresenter mockPresenter = new TestPlayCardGamePresenter();
 
@@ -130,6 +136,7 @@ class PlayCardGameInteractorTest {
 
     @Test
     void testExtractedNull() {
+        // Test extracted with an empty card set
         // Use the TestPlayCardGamePresenter directly with the interactor
         List<Card> cards = null;
         TestPlayCardGamePresenter mockPresenter = new TestPlayCardGamePresenter();
@@ -143,6 +150,7 @@ class PlayCardGameInteractorTest {
 
     @Test
     void testEmptyCardPuzzle() {
+        // // Test the interacter with empty card input
         TestPresenter presenter = new TestPresenter();
         CardGameHintsInteractor interactor = new CardGameHintsInteractor(presenter);
 
@@ -159,6 +167,7 @@ class PlayCardGameInteractorTest {
 
     @Test
     void testCardGameDataAccessObject() {
+        // Test that the drawCards method in CardGameDataAccessObject draws cards as desired
         CardGameDataAccessObject dao = new CardGameDataAccessObject(4);
 
         // Test drawing different numbers of cards
@@ -168,6 +177,7 @@ class PlayCardGameInteractorTest {
 
     @Test
     void testCardCreationAndProperties() {
+        // Test card creation
         // Test card creation with different values
         Card card1 = new Card(1);
         assertEquals(1, card1.getValue());
@@ -183,6 +193,7 @@ class PlayCardGameInteractorTest {
 
     @Test
     void testCardPuzzleProperties() {
+        // Test CardPuzzle properties
         List<Card> cards = Arrays.asList(new Card(1), new Card(2), new Card(3), new Card(4));
         CardPuzzle puzzle = new CardPuzzle(cards);
 
@@ -193,6 +204,7 @@ class PlayCardGameInteractorTest {
 
     @Test
     void testPresenterMethods() {
+        // Test presenter functions correctly
         CardGameViewModel viewModel = new CardGameViewModel();
         ViewManagerModel viewManagerModel = new ViewManagerModel();
         CardGamePresenter presenter = new CardGamePresenter(viewModel, viewManagerModel);
@@ -207,6 +219,7 @@ class PlayCardGameInteractorTest {
     // Test the utilities
     @Test
     void testSolutionGenerator() {
+        // Test the solutionGenerator with valid cards that are solvable
         List<Card> cards = Arrays.asList(new Card(2), new Card(2), new Card(2), new Card(4));
         List<String> solutions = SolutionGenerator.find24Solutions(cards);
         assertTrue(solutions.size() > 0);
@@ -217,6 +230,7 @@ class PlayCardGameInteractorTest {
 
     @Test
     void testTwentyFourChecker() {
+        // Test the twentyFourChecker with cards that are solvable and not solvable
         System.out.println(canMake24(6, 6, 6, 6));   // -> true
         System.out.println(canMake24(1, 1, 1, 1));   // -> false
         System.out.println(canMake24(3, 9, 6, 7));   // -> true
@@ -226,6 +240,7 @@ class PlayCardGameInteractorTest {
 }
 
 class TestPresenter implements CardGameHintsOutputBoundary {
+    // Mock vacuous presenters for CardGameHints
     public boolean successCalled = false;
     public boolean failCalled = false;
     public CardGameHintsOutputDataObject lastOutputData = null;
@@ -243,6 +258,7 @@ class TestPresenter implements CardGameHintsOutputBoundary {
 }
 
 class TestPlayCardGamePresenter implements PlayCardGameOutputBoundary {
+    // Mock presenter for PlayCardGame
     public boolean failViewCalled = false;
     public boolean successViewCalled = false;
     public String errorMessage = "";
