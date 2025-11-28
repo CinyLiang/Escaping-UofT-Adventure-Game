@@ -19,7 +19,7 @@ import static org.mockito.Mockito.doThrow;
 public class CardGameHintsInteractorTest {
     @Test
     void successTest() {
-
+        // Test the interactor execution on successful calls
         CardGameViewModel cardGameViewModel = new CardGameViewModel();
         ViewManagerModel viewManagerModel = new ViewManagerModel();
 
@@ -42,6 +42,7 @@ public class CardGameHintsInteractorTest {
 
     @Test
     void testGenerateHintWithKnownCards() {
+        // Test generating a new puzzle with four known cards.
         TestPresenter presenter = new TestPresenter();
         CardGameHintsInteractor interactor = new CardGameHintsInteractor(presenter);
         List<Card> cards = Arrays.asList(new Card(2), new Card(3), new Card(4), new Card(4));
@@ -54,13 +55,14 @@ public class CardGameHintsInteractorTest {
 
     @Test
     void getHintsTest() {
+        // Test getHint on a given hint
         CardGameHintsOutputDataObject output = new CardGameHintsOutputDataObject("Test Hint");
         assertEquals("Test Hint", output.getHint());
     }
 
     @Test
     void testExtractInnerEmpty() {
-
+        // Test extractInner on an empty string
         TestPresenter mockPresenter = new TestPresenter();
         CardGameHintsInteractor interactor = new CardGameHintsInteractor(mockPresenter);
         String result = interactor.extractInner("");
@@ -69,6 +71,7 @@ public class CardGameHintsInteractorTest {
 
     @Test
     void testExtractInnerNull() {
+        // Test extractInner on a null object
         TestPresenter mockPresenter = new TestPresenter();
         CardGameHintsInteractor interactor = new CardGameHintsInteractor(mockPresenter);
         String result = interactor.extractInner(null);
@@ -77,6 +80,7 @@ public class CardGameHintsInteractorTest {
 
     @Test
     void testExtractInnerStrange() {
+        // Test extractInner with illogical bracelets
         TestPresenter mockPresenter = new TestPresenter();
         CardGameHintsInteractor interactor = new CardGameHintsInteractor(mockPresenter);
         String result = interactor.extractInner(")(");
@@ -86,6 +90,7 @@ public class CardGameHintsInteractorTest {
 
     @Test
     void testExtractInnerLarge() {
+        // Test extractInner on an overly long string
         TestPresenter mockPresenter = new TestPresenter();
         CardGameHintsInteractor interactor = new CardGameHintsInteractor(mockPresenter);
         String result = interactor.extractInner("6+7+8+9+10");
@@ -94,6 +99,7 @@ public class CardGameHintsInteractorTest {
 
     @Test
     void testExceptionWhenGenerateHintFails() {
+        // Test interactor behaviour when generateHint fails
         CardGameHintsOutputBoundary failurePresenter = new CardGameHintsOutputBoundary() {
             @Override
             public void prepareSuccessView(CardGameHintsOutputDataObject outputData) {
@@ -122,6 +128,7 @@ public class CardGameHintsInteractorTest {
 
     @Test
     public void execute() {
+        // Test the main excute method in interactor with a null input object
         CardGameViewModel cardGameViewModel =  new CardGameViewModel();
         ViewManagerModel viewManagerMode = new ViewManagerModel();
         CardGameHintsPresenter presenter = new CardGameHintsPresenter(cardGameViewModel,viewManagerMode);
@@ -148,6 +155,7 @@ public class CardGameHintsInteractorTest {
 
 
 class TestPresenter implements CardGameHintsOutputBoundary {
+    // Create a class that provides vacuous mock presenters
     public boolean successCalled = false;
     public boolean failCalled = false;
     public CardGameHintsOutputDataObject lastOutputData = null;
