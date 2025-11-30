@@ -2,7 +2,7 @@ package use_case.card_game_hints;
 
 import entity.Card;
 import use_case.play_card_game.utilities.SolutionGenerator;
-import interface_adapter.card_game_hints.CardGameHintsPresenter;
+
 import java.util.*;
 
 public class CardGameHintsInteractor implements CardGameHintsInputDataBoundary {

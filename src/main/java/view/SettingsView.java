@@ -1,8 +1,8 @@
 package view;
 
-import interface_adapter.ViewManagerModel;
-import interface_adapter.settings.SettingsController;
-import interface_adapter.settings.SettingsViewModel;
+import interfaceadapter.ViewManagerModel;
+import interfaceadapter.settings.SettingsController;
+import interfaceadapter.settings.SettingsViewModel;
 import view.components.OptionSelector;
 
 import javax.swing.*;

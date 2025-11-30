@@ -1,9 +1,8 @@
 package view;
 
-import interface_adapter.win_game.WinGameState;
-import interface_adapter.win_game.WinGameViewModel;
-import interface_adapter.ViewManagerModel;
-import view.UISettings;
+import interfaceadapter.win_game.WinGameState;
+import interfaceadapter.win_game.WinGameViewModel;
+import interfaceadapter.ViewManagerModel;
 
 import javax.swing.*;
 import java.awt.*;

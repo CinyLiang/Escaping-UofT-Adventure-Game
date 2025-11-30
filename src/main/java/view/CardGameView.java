@@ -1,13 +1,12 @@
 package view;
 
 import entity.CardPuzzle;
-import entity.Player;
-import interface_adapter.play_card_game.CardGameState;
-import interface_adapter.play_card_game.CardGameViewModel;
-import interface_adapter.play_card_game.CardGameController;
-import interface_adapter.card_game_hints.CardGameHintsController;
-import interface_adapter.return_from_card.ReturnFromCardController;
-import interface_adapter.validate_card_answer.ValidateCardController;
+import interfaceadapter.play_card_game.CardGameState;
+import interfaceadapter.play_card_game.CardGameViewModel;
+import interfaceadapter.play_card_game.CardGameController;
+import interfaceadapter.card_game_hints.CardGameHintsController;
+import interfaceadapter.return_from_card.ReturnFromCardController;
+import interfaceadapter.validate_card_answer.ValidateCardController;
 import use_case.card_game_hints.CardGameHintsInputDataObject;
 import use_case.validate_card_answer.ValidateCardAnswerInputData;
 

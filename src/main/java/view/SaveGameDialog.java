@@ -1,8 +1,8 @@
 package view;
 
-import interface_adapter.navigate.NavigateState;
-import interface_adapter.navigate.NavigateViewModel;
-import interface_adapter.save_progress.SaveProgressController;
+import interfaceadapter.navigate.NavigateState;
+import interfaceadapter.navigate.NavigateViewModel;
+import interfaceadapter.save_progress.SaveProgressController;
 
 import javax.swing.*;
 import java.awt.*;

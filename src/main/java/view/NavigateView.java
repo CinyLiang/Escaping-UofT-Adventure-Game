@@ -1,21 +1,20 @@
 package view;
 
 import javax.swing.*;
-import javax.swing.plaf.basic.BasicScrollBarUI;
-import interface_adapter.navigate.NavigateController;
-import interface_adapter.clear_history.ClearHistoryViewModel;
-import interface_adapter.clear_history.ClearHistoryController;
-import interface_adapter.navigate.NavigateState;
-import interface_adapter.navigate.NavigateViewModel;
-import interface_adapter.save_progress.SaveProgressController;
-import interface_adapter.view_progress.ViewProgressController;
-import interface_adapter.quit_game.QuitGameController;
-import interface_adapter.win_game.WinGameController;
-import view.UISettings;
+
+import interfaceadapter.navigate.NavigateController;
+import interfaceadapter.clear_history.ClearHistoryViewModel;
+import interfaceadapter.clear_history.ClearHistoryController;
+import interfaceadapter.navigate.NavigateState;
+import interfaceadapter.navigate.NavigateViewModel;
+import interfaceadapter.save_progress.SaveProgressController;
+import interfaceadapter.view_progress.ViewProgressController;
+import interfaceadapter.quit_game.QuitGameController;
+import interfaceadapter.win_game.WinGameController;
+
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.File;
 import java.io.IOException;
 
 public class NavigateView extends JPanel {

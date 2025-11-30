@@ -3,7 +3,7 @@ package view;
 import javax.swing.*;
 import java.awt.*;
 
-import interface_adapter.clear_history.ClearHistoryController;
+import interfaceadapter.clear_history.ClearHistoryController;
 
 public class ConfirmRestartGameDialog extends JDialog {
 

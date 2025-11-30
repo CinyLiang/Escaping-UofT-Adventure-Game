@@ -1,15 +1,13 @@
 package view;
 
-import interface_adapter.trivia_game.TriviaGameController;
-import interface_adapter.trivia_game.TriviaGameState;
-import interface_adapter.trivia_game.TriviaGameViewModel;
+import interfaceadapter.trivia_game.TriviaGameController;
+import interfaceadapter.trivia_game.TriviaGameState;
+import interfaceadapter.trivia_game.TriviaGameViewModel;
 
 import javax.swing.*;
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-
-import view.UISettings;
 
 public class TriviaGameView extends JPanel implements PropertyChangeListener {
     private final String viewName = "trivia game";

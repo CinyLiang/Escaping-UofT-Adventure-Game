@@ -7,7 +7,7 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 
-import interface_adapter.ViewManagerModel;
+import interfaceadapter.ViewManagerModel;
 
 public class InstructionsView extends JPanel {
 

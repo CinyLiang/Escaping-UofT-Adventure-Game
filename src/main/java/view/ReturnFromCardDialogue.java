@@ -3,7 +3,7 @@ package view;
 import java.awt.*;
 import javax.swing.*;
 
-import interface_adapter.return_from_card.ReturnFromCardController;
+import interfaceadapter.return_from_card.ReturnFromCardController;
 
 public class ReturnFromCardDialogue extends JDialog {
 
