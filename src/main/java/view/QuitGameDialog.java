@@ -58,7 +58,7 @@ public class QuitGameDialog extends JDialog implements PropertyChangeListener {
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getPropertyName().equals(QuitGameViewModel.SHOW_QUIT_DIALOG_PROPERTY)) {
-            boolean visible = (boolean) quitGameViewModel.getState().isQuitDialogVisible();
+            boolean visible = quitGameViewModel.getState().isQuitDialogVisible();
             if (visible) {
                 this.setVisible(true);
                 this.toFront();
