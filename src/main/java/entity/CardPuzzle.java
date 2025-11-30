@@ -1,13 +1,14 @@
 package entity;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * An entity representing a Card Puzzle
+ * An entity representing a Card Puzzle.
  */
 public class CardPuzzle extends Puzzle {
-    private final List<Card> cards;
     private static final String NAME = "CardPuzzle";
+    private final List<Card> cards;
 
     /**
      * Creates a new card puzzle with the given id and cards.
@@ -22,16 +23,24 @@ public class CardPuzzle extends Puzzle {
         return cards;
     }
 
+    /**
+     * The getCardNumber method.
+     * @return the list of card numbers.
+     */
     public List<Integer> getCardNumbers() {
-        List<Integer> cardNumbers = new ArrayList<>();
+        final List<Integer> cardNumbers = new ArrayList<>();
         for (Card card : cards) {
             cardNumbers.add(card.getValue());
         }
         return cardNumbers;
     }
 
+    /**
+     * The getCardNumberString method.
+     * @return the String of the list of card numbers.
+     */
     public String getCardNumberString() {
-        List<Integer> cardNumbers = this.getCardNumbers();
+        final List<Integer> cardNumbers = this.getCardNumbers();
         return cardNumbers.toString();
     }
 }
