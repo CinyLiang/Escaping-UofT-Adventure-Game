@@ -19,6 +19,8 @@ import interface_adapter.play_card_game.CardGameController;
 import interface_adapter.play_card_game.CardGamePresenter;
 import interface_adapter.play_card_game.CardGameViewModel;
 import interface_adapter.quit_game.QuitGameController;
+import interface_adapter.quit_game.QuitGamePresenter;
+import interface_adapter.quit_game.QuitGameViewModel;
 import interface_adapter.return_from_card.ReturnFromCardController;
 import interface_adapter.return_from_card.ReturnFromCardPresenter;
 import interface_adapter.trivia_game.TriviaGameController;
@@ -49,6 +51,9 @@ import use_case.navigate.NavigateOutputBoundary;
 import use_case.play_card_game.PlayCardGameInputBoundary;
 import use_case.play_card_game.PlayCardGameInteractor;
 import use_case.play_card_game.PlayCardGameOutputBoundary;
+import use_case.quit_game.QuitGameInputBoundary;
+import use_case.quit_game.QuitGameInteractor;
+import use_case.quit_game.QuitGameOutputBoundary;
 import use_case.settings.SettingsInputBoundary;
 import use_case.trivia_game.TriviaGameInputBoundary;
 import use_case.trivia_game.TriviaGameInteractor;
@@ -104,6 +109,7 @@ public class AppBuilder {
     private CardGameViewModel cardGameViewModel;
     private TriviaGameViewModel triviaGameViewModel;
     private SettingsViewModel settingsViewModel;
+    private QuitGameViewModel quitGameViewModel;
 
     // Views
     private HomeView homeView;
@@ -199,14 +205,16 @@ public class AppBuilder {
         navigateView.setSaveProgressController(saveController);
 
         // Also the quit thing as well
-        QuitGameController quitController = new QuitGameController();
-        quitGameDialog = new QuitGameDialog(quitController, saveController, navigateViewModel);
+        QuitGameOutputBoundary quitPresenter =  new QuitGamePresenter(quitGameViewModel);
+        QuitGameInputBoundary quitInteractor = new QuitGameInteractor(quitPresenter);
+        QuitGameController quitController = new QuitGameController(quitInteractor);
+        quitGameDialog = new QuitGameDialog(quitController, saveController, navigateViewModel, quitGameViewModel);
 
         // and save game
         saveGameDialog = new SaveGameDialog(saveController, navigateViewModel);
 
         // and navigate view
-        navigateView.setQuitGameController(quitController, saveController);
+        navigateView.setQuitGameController(quitController);
 
         return this;
     }
@@ -282,6 +290,7 @@ public class AppBuilder {
         winGameViewModel = new WinGameViewModel();
         viewProgressViewModel = new ViewProgressViewModel();
         settingsViewModel = new SettingsViewModel();
+        quitGameViewModel = new QuitGameViewModel();
 
         // Create Views
         homeView = new HomeView(viewManagerModel);

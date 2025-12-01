@@ -1,25 +1,22 @@
 package interface_adapter.quit_game;
 
+import use_case.quit_game.QuitGameInputBoundary;
+
 /**
  * The controller for the Login Use Case.
  */
 public class QuitGameController {
-    private Runnable showSaveDialog;
-    private Runnable showQuitDialog;
+    private QuitGameInputBoundary quitGameInteractor;
 
-    public void setShowSaveDialog(Runnable r) {
-        this.showSaveDialog = r;
+    public QuitGameController(QuitGameInputBoundary quitGameInteractor) {
+        this.quitGameInteractor = quitGameInteractor;
     }
 
-    public void setShowQuitDialog(Runnable r) {
-        this.showQuitDialog = r;
+    public void execute() {
+        quitGameInteractor.execute();
     }
 
-    public void showSave() {
-        showSaveDialog.run();
-    }
-
-    public void showQuit() {
-        showQuitDialog.run();
+    public void executeRequestQuit() {
+        quitGameInteractor.executeRequestQuit();
     }
 }
