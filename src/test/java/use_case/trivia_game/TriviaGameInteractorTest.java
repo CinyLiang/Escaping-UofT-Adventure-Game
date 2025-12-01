@@ -21,6 +21,45 @@ class TriviaGameInteractorTest {
     }
 
     @Test
+    void testExecuteWithStartNewQuestionAction() {
+        TriviaGameInputData inputData = new TriviaGameInputData(
+                TriviaGameInputData.Action.START_NEW_QUESTION
+        );
+
+        interactor.execute(inputData);
+
+        assertTrue(mockPresenter.questionPresented);
+        assertNotNull(mockPresenter.lastOutputData);
+        assertEquals("Test Question?", mockPresenter.lastOutputData.getQuestion());
+    }
+
+    @Test
+    void testExecuteWithSubmitAnswerAction() {
+        interactor.startNewQuestion();
+
+        TriviaGameInputData inputData = new TriviaGameInputData(
+                TriviaGameInputData.Action.SUBMIT_ANSWER,
+                "True"
+        );
+
+        interactor.execute(inputData);
+
+        assertTrue(mockPresenter.resultPresented);
+        assertTrue(mockPresenter.lastOutputData.wasCorrect());
+    }
+
+    @Test
+    void testExecuteWithExitPuzzleAction() {
+        TriviaGameInputData inputData = new TriviaGameInputData(
+                TriviaGameInputData.Action.EXIT_PUZZLE
+        );
+
+        interactor.execute(inputData);
+
+        assertTrue(mockPresenter.exitCalled);
+    }
+
+    @Test
     void testStartNewQuestionLoadsQuestion() {
         interactor.startNewQuestion();
 
@@ -34,8 +73,7 @@ class TriviaGameInteractorTest {
     @Test
     void testSubmitCorrectAnswer() {
         interactor.startNewQuestion();
-        TriviaGameInputData inputData = new TriviaGameInputData(TriviaGameInputData.Action.START_NEW_QUESTION,"True");
-        interactor.submitAnswer(inputData.getPlayerAnswer());
+        interactor.submitAnswer("True");
 
         assertTrue(mockPresenter.resultPresented);
         assertTrue(mockPresenter.lastOutputData.wasCorrect());
@@ -47,8 +85,7 @@ class TriviaGameInteractorTest {
     @Test
     void testSubmitIncorrectAnswer() {
         interactor.startNewQuestion();
-        TriviaGameInputData inputData = new TriviaGameInputData(TriviaGameInputData.Action.START_NEW_QUESTION, "False");
-        interactor.submitAnswer(inputData.getPlayerAnswer());
+        interactor.submitAnswer("False");
 
         assertTrue(mockPresenter.resultPresented);
         assertFalse(mockPresenter.lastOutputData.wasCorrect());
@@ -60,8 +97,7 @@ class TriviaGameInteractorTest {
     void testThreeCorrectAnswersSolvesPuzzle() {
         for (int i = 0; i < 3; i++) {
             interactor.startNewQuestion();
-            TriviaGameInputData inputData = new TriviaGameInputData(TriviaGameInputData.Action.START_NEW_QUESTION,"True");
-            interactor.submitAnswer(inputData.getPlayerAnswer());
+            interactor.submitAnswer("True");
         }
 
         assertTrue(mockPresenter.lastOutputData.isPuzzleSolved());
@@ -72,12 +108,11 @@ class TriviaGameInteractorTest {
     @Test
     void testProgressTracking() {
         interactor.startNewQuestion();
-        TriviaGameInputData correct = new TriviaGameInputData(TriviaGameInputData.Action.START_NEW_QUESTION,"True");
-        interactor.submitAnswer(correct.getPlayerAnswer());
+        interactor.submitAnswer("True");
         assertEquals(1, puzzle.getCorrectAnswers());
 
         interactor.startNewQuestion();
-        interactor.submitAnswer(correct.getPlayerAnswer());
+        interactor.submitAnswer("True");
         assertEquals(2, puzzle.getCorrectAnswers());
     }
 
@@ -90,8 +125,23 @@ class TriviaGameInteractorTest {
     @Test
     void testCaseInsensitiveAnswers() {
         interactor.startNewQuestion();
-        TriviaGameInputData inputData = new TriviaGameInputData(TriviaGameInputData.Action.START_NEW_QUESTION,"true");
-        interactor.submitAnswer(inputData.getPlayerAnswer());
+        interactor.submitAnswer("true");
+
+        assertTrue(mockPresenter.lastOutputData.wasCorrect());
+    }
+
+    @Test
+    void testCaseInsensitiveAnswersUppercase() {
+        interactor.startNewQuestion();
+        interactor.submitAnswer("TRUE");
+
+        assertTrue(mockPresenter.lastOutputData.wasCorrect());
+    }
+
+    @Test
+    void testCaseInsensitiveAnswersMixedCase() {
+        interactor.startNewQuestion();
+        interactor.submitAnswer("TrUe");
 
         assertTrue(mockPresenter.lastOutputData.wasCorrect());
     }
@@ -100,6 +150,59 @@ class TriviaGameInteractorTest {
     void testExitPuzzle() {
         interactor.exitPuzzle();
         assertTrue(mockPresenter.exitCalled);
+    }
+
+    @Test
+    void testPuzzleNotSolvedAfterTwoCorrectAnswers() {
+        interactor.startNewQuestion();
+        interactor.submitAnswer("True");
+
+        interactor.startNewQuestion();
+        interactor.submitAnswer("True");
+
+        assertFalse(mockPresenter.lastOutputData.isPuzzleSolved());
+        assertEquals(2, mockPresenter.lastOutputData.getCorrectAnswers());
+    }
+
+    @Test
+    void testIncorrectAnswerDoesNotIncrementProgress() {
+        interactor.startNewQuestion();
+        interactor.submitAnswer("False");
+
+        assertEquals(0, puzzle.getCorrectAnswers());
+
+        interactor.startNewQuestion();
+        interactor.submitAnswer("False");
+
+        assertEquals(0, puzzle.getCorrectAnswers());
+    }
+
+    @Test
+    void testGetPlayerAnswerFromInputData() {
+        TriviaGameInputData inputData = new TriviaGameInputData(
+                TriviaGameInputData.Action.SUBMIT_ANSWER,
+                "True"
+        );
+
+        assertEquals("True", inputData.getPlayerAnswer());
+    }
+
+    @Test
+    void testGetActionFromInputData() {
+        TriviaGameInputData inputData = new TriviaGameInputData(
+                TriviaGameInputData.Action.START_NEW_QUESTION
+        );
+
+        assertEquals(TriviaGameInputData.Action.START_NEW_QUESTION, inputData.getAction());
+    }
+
+    @Test
+    void testInputDataWithoutPlayerAnswer() {
+        TriviaGameInputData inputData = new TriviaGameInputData(
+                TriviaGameInputData.Action.EXIT_PUZZLE
+        );
+
+        assertNull(inputData.getPlayerAnswer());
     }
 
     private static class MockTriviaDataAccess implements TriviaGameDataAccessInterface {
