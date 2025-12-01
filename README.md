@@ -1,19 +1,47 @@
-# Escaping-UofT-Adventure-Game
-the final project for CSC207
+# Escaping UofT: An Adventure Game
+- Team: **TUT0501-BA3185-10**
 
-## Resources
-> relevant links for development
+## About
+This is a text-based adventure game with Java Swing GUI where players can click buttons to navigate King College's Cricle.
+Visit buildings and solve puzzles to collect keys. Player must collect 2 keys before heading to right direction and win the game.
 
-### Blueprints
-- [GDoc Blueprint](https://docs.google.com/document/d/1eDEFzjqPFTQpO_aZhCucCp2KHAXdEoNilbq0ufk-uSQ/edit?tab=t.4s0v2tne4f53)
-- [UML diagram](https://excalidraw.com/#room=9953f2d1f4b60849c2a2,ITU8nGynvILjCVyAadHbYA)
-- [UI diagram](https://excalidraw.com/#room=cd68b1e7659d3b6e88b9,A13EYZP0qzDc3AjOH8w4jA)
+## Use cases
+| #             | User story                                                                                                                |          | 
+|---------------|---------------------------------------------------------------------------------------------------------------------------|----------|
+| User story 1  | As a player, I want to navigate using text commands between different campus locations so I can explore and find puzzles. | Vanessa  |
+| User story 2  | As a player, I want to be able to quit from games that are too challenging.                                               | Kimberly |
+| User story 3  | As a player, I want to be able to clear my history.                                                                       | Kimberly |
+| User story 4  | As a player, I want to be able to save my progress when exiting the game.                                                 | Edison   |
+| User story 5  | As a player, I want to be able to view my progress when exploring the game.                                               | Edison   |
+| User story 6  | As a player, I want to be able to begin and then complete a playing card puzzle.                                          | Ciny     |
+| User story 7  | As a player, I want to be able to be able to interact with the game UI meaningfully                                       | Jean     |
+| User story 8  | As a player, I want to be able to begin and then complete a trivia puzzle.                                                | Gabriel  |
+| User story 9  | As a player, I want to be able to win (or lose) the game.                                                                 | Gabriel  |
+| User story 10 | As a player, I want to customize the game's theme and text size so I can play comfortably.                                | Jean     |
+| User story 11 | As a player, I want a clear home screen that lets me start, continue, or adjust settings.                                 | Jean     |
 
-### APIs
-- [DecksOfCards](https://deckofcardsapi.com/)
-- [Lichess](https://lichess.org/api)
-- [OpenTrivia](https://opentdb.com/api_config.php)
+## APIs
+Each API will be used for a puzzle within the adventure game. The player will have to complete the puzzle to get a key to unlock the ending of the game. Each puzzle will use an API. The following are our chosen APIs:
 
-### "Templates"
-> if stuck just reference these idk
-- [ca-lab sample repo](https://github.com/CSC207-2025F-UofT/ca-lab/tree/main/src/main/java/interface_adapter)
+### Card Games
+Link: https://deckofcardsapi.com/
+Notes:
+- We were able to get the API working.
+- Used for the Math 24 Game 
+- rules: https://gamerules.com/rules/twenty-four/
+
+### Trivia:
+Link: https://opentdb.com/api_config.php
+Notes:
+- We were able to get the API working. 
+- This is our potential link: https://opentdb.com/api.php?amount=1&category=17&type=boolean
+- Configuration: Science and Nature, 1 question, true or false, any difficulty.
+- Used for generating random puzzles to escape Gerstein Library
+
+## Screenshots
+![Main](src/screenshots/main.png)
+![Info](src/screenshots/info.png)
+![Settings](src/screenshots/settings.png)
+![Navigate View](src/screenshots/navigate.png)
+![Science Trivia](src/screenshots/science_trivia.png)
+![Math24](src/screenshots/math24.png)
