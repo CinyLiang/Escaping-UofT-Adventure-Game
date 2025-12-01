@@ -64,9 +64,7 @@ public class CardGameHintsInteractor implements CardGameHintsInputDataBoundary {
         try {
             List<String> solutions = SolutionGenerator.find24Solutions(cards);
 
-            // 双重检查
             if (solutions == null || solutions.isEmpty()) {
-                // 返回通用提示
                 List<Integer> values = cards.stream()
                         .map(Card::getValue)
                         .collect(Collectors.toList());
