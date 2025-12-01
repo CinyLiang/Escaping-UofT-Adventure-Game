@@ -16,7 +16,6 @@ public class Expression24Verifier {
         int d = cards.get(3).getValue();
 
         return isValidSolution(expr, a, b, c, d);
-
         // for now, use this. will make better later
     }
 
@@ -44,6 +43,7 @@ public class Expression24Verifier {
         // 3. Evaluate expression safely
         try {
             double result = evaluate(expr);
+
             return Math.abs(result - TARGET) < EPS;
         } catch (Exception e) {
             return false; // malformed or invalid math (e.g. /0)
@@ -73,6 +73,7 @@ public class Expression24Verifier {
 
     // Evaluate using shunting-yard → RPN → calculator
     private static double evaluate(String expr) {
+        System.out.println("to RPN called");
         List<String> rpn = toRPN(expr);
         return evalRPN(rpn);
     }
@@ -106,12 +107,11 @@ public class Expression24Verifier {
                 ops.push(c);
             } else if (c == '(') {
                 ops.push(c);
-//            } else if (c == ')') {
-//                while (ops.peek() != '(') {
-//                    output.add("" + ops.pop());
-//                }
-//                ops.pop(); // discard '('
-//            }
+            } else if (c == ')') {
+                while (ops.peek() != '(') {
+                    output.add("" + ops.pop());
+                }
+                ops.pop(); // discard '('
             }
         }
 
