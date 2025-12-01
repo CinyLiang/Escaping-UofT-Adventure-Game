@@ -12,7 +12,7 @@ public class UISettings {
     public static final String INSTRUCTIONS_IMAGE_PATH = "/Users/vanessa.hanbao/Downloads/Gemini_Generated_Image_1lcv901lcv901lcv.png";
     public static final String CONHALL_INT_IMAGE_PATH = "/Users/vanessa.hanbao/Downloads/conhallint.jpg";
     public static final String CONHALL_EXT_IMAGE_PATH = "/Users/vanessa.hanbao/Downloads/conhallext.png";
-    public static final String KNOX_EXT_IMAGE_PATH = "/Users/vanessa.hanbao/Downloads/knoxext.png";
+    public static final String KNOX_EXT_IMAGE_PATH = "/Users/vanessa.hanbao/Downloads/csc207 final project resources/knoxext.png";
     public static final String KNOX_INT_IMAGE_PATH = "/Users/vanessa.hanbao/Downloads/KNOXINT.jpg";
     public static final String GERSTEIN_INT_IMAGE_PATH = "/Users/vanessa.hanbao/Downloads/gersteinint.jpg";
     public static final String GERSTEIN_EXT_IMAGE_PATH = "/Users/vanessa.hanbao/Downloads/gersteinext.jpg";

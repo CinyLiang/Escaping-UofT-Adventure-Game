@@ -9,6 +9,7 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
+import view.UISettings;
 
 public class KnoxExteriorView extends JPanel {
     public static final String VIEW_NAME = "knox_exterior_view";
@@ -34,7 +35,14 @@ public class KnoxExteriorView extends JPanel {
         this.setLayout(new BorderLayout());
         this.setBackground(UISettings.PARCHMENT_BACKGROUND);
 
-        storyArea = new JTextArea("insert text about knox exterior here...");
+        storyArea = new JTextArea("A cold wind blows across the open grass of Front Campus, pushing " +
+                "you toward the entrance of Knox College. You get the sudden feeling that you aren't walking to the " +
+                "building—the building is pulling you in. \n \n You stand before the main archway. Above you, " +
+                "the stone is carved into complex, twisting knots. The shadows here are deep, hiding" +
+                " the corners of the architecture. \n \n You place your hand on the wood. It " +
+                "vibrates slightly, like the purr of a giant, sleeping cat. " +
+                "Somewhere deep inside, a pipe organ plays a low, dissonant chord." +
+                "\n \n Do you dare enter?");
 
         // status bar
         JPanel statusBar = new JPanel(new FlowLayout(FlowLayout.RIGHT, 20, 10));
