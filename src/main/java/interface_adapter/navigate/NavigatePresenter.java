@@ -18,13 +18,15 @@ public class NavigatePresenter implements NavigateOutputBoundary {
     private final WinGameViewModel winGameViewModel;
     private final CardGameViewModel cardGameViewModel;
     private final TriviaGameViewModel triviaGameViewModel;
+    private final KnoxExtViewModel knoxExtViewModel;
 
-    public NavigatePresenter(NavigateViewModel navigateViewModel, ViewManagerModel viewManagerModel, WinGameViewModel winGameViewModel, CardGameViewModel cardGameViewModel, TriviaGameViewModel triviaGameViewModel) {
+    public NavigatePresenter(NavigateViewModel navigateViewModel, ViewManagerModel viewManagerModel, WinGameViewModel winGameViewModel, CardGameViewModel cardGameViewModel, TriviaGameViewModel triviaGameViewModel, KnoxExtViewModel knoxExtViewModel) {
         this.navigateViewModel = navigateViewModel;
         this.viewManagerModel = viewManagerModel;
         this.winGameViewModel = winGameViewModel;
         this.cardGameViewModel = cardGameViewModel;
         this.triviaGameViewModel = triviaGameViewModel;
+        this.knoxExtViewModel = knoxExtViewModel;
     }
 
     @Override
@@ -50,6 +52,10 @@ public class NavigatePresenter implements NavigateOutputBoundary {
             case "trivia game" -> {
                 updateNavigation(triviaGameViewModel.getState().getLocationName());
                 viewManagerModel.setState(triviaGameViewModel.getViewName());
+            }
+            case "knox exterior" -> {
+                updateNavigation(knoxExtViewModel.getState().getLocation());
+                viewManagerModel.setState(knoxExtViewModel.getViewName());
             }
             default -> {
                 // optional: ignore or throw

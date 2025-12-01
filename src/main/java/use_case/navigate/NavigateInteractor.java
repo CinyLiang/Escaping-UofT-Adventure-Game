@@ -25,7 +25,8 @@ public class NavigateInteractor implements NavigateInputBoundary {
             case "north" -> "Card game";
             case "south" -> "Win game";
             case "east" -> "Trivia game";
-            case "west" -> "Card game";
+//            case "west" -> "Card game";
+            case "west" -> "Knox exterior";
             default -> "";
         };
     }

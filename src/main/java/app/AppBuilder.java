@@ -12,6 +12,7 @@ import interface_adapter.card_game_hints.CardGameHintsController;
 import interface_adapter.card_game_hints.CardGameHintsPresenter;
 import interface_adapter.clear_history.ClearHistoryController;
 import interface_adapter.clear_history.ClearHistoryPresenter;
+import interface_adapter.navigate.KnoxExtViewModel;
 import interface_adapter.navigate.NavigateController;
 import interface_adapter.navigate.NavigatePresenter;
 import interface_adapter.navigate.NavigateViewModel;
@@ -104,6 +105,7 @@ public class AppBuilder {
     private CardGameViewModel cardGameViewModel;
     private TriviaGameViewModel triviaGameViewModel;
     private SettingsViewModel settingsViewModel;
+    private KnoxExtViewModel knoxExtViewModel;
 
     // Views
     private HomeView homeView;
@@ -117,6 +119,7 @@ public class AppBuilder {
     private ReturnFromCardDialogue returnFromCardDialogue;
     private ConfirmRestartGameDialog confirmRestartGameDialog;
     private SettingsView settingsView;
+    private KnoxExteriorView knoxExteriorView;
 
     // oh god the player. OH GOD THE PLAYER
     Player player;
@@ -157,7 +160,8 @@ public class AppBuilder {
                 viewManagerModel,
                 winGameViewModel,
                 cardGameViewModel,
-                triviaGameViewModel
+                triviaGameViewModel,
+                knoxExtViewModel
         );
         NavigateInputBoundary interactor = new NavigateInteractor(presenter);
         NavigateController controller = new NavigateController(interactor);
@@ -282,6 +286,7 @@ public class AppBuilder {
         winGameViewModel = new WinGameViewModel();
         viewProgressViewModel = new ViewProgressViewModel();
         settingsViewModel = new SettingsViewModel();
+        knoxExtViewModel = new KnoxExtViewModel();
 
         // Create Views
         homeView = new HomeView(viewManagerModel);
@@ -290,6 +295,7 @@ public class AppBuilder {
         cardGameView = new CardGameView(cardGameViewModel);
         triviaGameView = new TriviaGameView(triviaGameViewModel);
         winGameView = new WinGameView(winGameViewModel);
+        knoxExteriorView = new KnoxExteriorView(knoxExtViewModel);
 
         // Set VM
         navigateView.setClearHistoryViewModel(clearHistoryViewModel);
@@ -299,6 +305,7 @@ public class AppBuilder {
         addView(homeView, HomeView.VIEW_NAME);
         addView(navigateView, NavigateView.VIEW_NAME);
         addView(instructionsView, InstructionsView.VIEW_NAME);
+        addView(knoxExteriorView, KnoxExteriorView.VIEW_NAME);
 
         // Settings
         SettingsOutputBoundary settingsPresenter =
