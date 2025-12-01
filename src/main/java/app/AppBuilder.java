@@ -208,7 +208,7 @@ public class AppBuilder {
         quitGameDialog = new QuitGameDialog(quitController, saveController, navigateViewModel, quitGameViewModel);
 
         // and save game
-        saveGameDialog = new SaveGameDialog(saveController, navigateViewModel);
+        saveGameDialog = new SaveGameDialog(saveController, navigateViewModel, quitGameViewModel, quitController);
 
         // and navigate view
         navigateView.setQuitGameController(quitController);
