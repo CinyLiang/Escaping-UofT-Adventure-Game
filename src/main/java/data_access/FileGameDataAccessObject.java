@@ -1,5 +1,15 @@
 package data_access;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import use_case.save_progress.SaveProgressDataAccessInterface;
+import use_case.view_progress.ViewProgressDataAccessInterface;
+
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.util.*;
+
 import use_case.save_progress.SaveProgressDataAccessInterface;
 import use_case.view_progress.ViewProgressDataAccessInterface;
 
@@ -16,143 +26,103 @@ public class FileGameDataAccessObject implements
         ViewProgressDataAccessInterface {
 
     private final String filePath;
+          
     private static final String DEFAULT_LOCATION = "Kings College Circle";
 
     // Current game state (in-memory)
     private String currentLocation = DEFAULT_LOCATION;
-    private int keysCollected = 0;
     private Set<String> solvedPuzzles = new HashSet<>();
 
+//     private String currentLocation = "Unknown";
+    private int keysCollected = 0;
+//     private List<String> solvedPuzzles = new ArrayList<>();
+
     /**
-     * Creates a new FileGameDataAccessObject.
-     * @param filePath the path to the save file
+     * Default constructor: use default file "progress.json"
+     */
+    public FileGameDataAccessObject() {
+        this.filePath = "progress.json";
+        loadProgress();
+    }
+          
+   public FileGameDataAccessObject(String filePath) {
+        this.filePath = filePath;
+        loadProgress();
+    }
+         
+
+    /**
+     * Constructor with custom file path (used by AppBuilder)
      */
     public FileGameDataAccessObject(String filePath) {
         this.filePath = filePath;
-        // Try to load existing save on initialization
         loadProgress();
     }
 
     /**
-     * Saves the current game progress to a file.
-     * @return true if save was successful, false otherwise
+     * Load JSON file if exists, otherwise keep default empty progress
      */
-    @Override
-    public boolean saveProgress(String currentLocation, int keysCollected, Set<String> solvedPuzzles) {
-        this.currentLocation = currentLocation;
-        this.keysCollected = keysCollected;
-        this.solvedPuzzles = solvedPuzzles;
+    private void loadProgress() {
+        try {
+            File file = new File(filePath);
+            if (!file.exists()) {
+                System.out.println("No save file found → starting fresh.");
+                return;
+            }
 
-        try (PrintWriter writer = new PrintWriter(new FileWriter(filePath))) {
-            writer.println(this.currentLocation);
-            writer.println(this.keysCollected);
-            writer.println(String.join(",", this.solvedPuzzles));
+            FileReader fr = new FileReader(file);
+            Scanner sc = new Scanner(fr);
+            StringBuilder sb = new StringBuilder();
+            while (sc.hasNextLine()) sb.append(sc.nextLine());
+            sc.close();
+
+            JSONObject json = new JSONObject(sb.toString());
+
+            currentLocation = json.getString("location");
+            keysCollected = json.getInt("keys");
+
+            solvedPuzzles.clear();
+            JSONArray puzzlesArray = json.getJSONArray("puzzles");
+            for (Object o : puzzlesArray) solvedPuzzles.add((String) o);
+
+        } catch (Exception e) {
+            System.err.println("Failed to load progress → starting fresh.");
+        }
+    }
+
+    // SAVE PROGRESS IMPLEMENTATION
+    @Override
+    public boolean saveProgress() {
+        try {
+            JSONObject json = new JSONObject();
+            json.put("location", currentLocation);
+            json.put("keys", keysCollected);
+            json.put("puzzles", solvedPuzzles);
+
+            FileWriter writer = new FileWriter(filePath);
+            writer.write(json.toString(4));  // pretty formatted JSON
+            writer.close();
             return true;
-        } catch (IOException e) {
-            System.err.println("Failed to save game: " + e.getMessage());
+
+        } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
     }
 
-    /**
-     * Loads game progress from the save file.
-     * If no save file exists, uses default starting values.
-     */
-    private void loadProgress() {
-        File file = new File(filePath);
-        if (!file.exists()) {
-            return; // No save file exists yet, use defaults
-        }
-
-        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-            currentLocation = reader.readLine();
-            if (currentLocation == null) {
-                currentLocation = DEFAULT_LOCATION;
-            }
-
-            String keysLine = reader.readLine();
-            if (keysLine != null) {
-                keysCollected = Integer.parseInt(keysLine);
-            }
-
-            String puzzlesLine = reader.readLine();
-            if (puzzlesLine != null && !puzzlesLine.isEmpty()) {
-                String[] puzzles = puzzlesLine.split(",");
-                solvedPuzzles = new HashSet<>();
-                for (String puzzle : puzzles) {
-                    if (!puzzle.trim().isEmpty()) {
-                        solvedPuzzles.add(puzzle.trim());
-                    }
-                }
-            }
-        } catch (IOException | NumberFormatException e) {
-            System.err.println("Failed to load game: " + e.getMessage());
-            // Reset to defaults on error
-            currentLocation = DEFAULT_LOCATION;
-            keysCollected = 0;
-            solvedPuzzles = new HashSet<>();
-        }
-    }
-
-    /**
-     * Gets the player's current location.
-     * @return the current location name
-     */
+    // VIEW PROGRESS IMPLEMENTATION
     @Override
     public String getLocation() {
         return currentLocation;
     }
 
-    /**
-     * Gets the number of keys the player has collected.
-     * @return the number of keys
-     */
     @Override
     public int getKeysCollected() {
         return keysCollected;
     }
 
-    /**
-     * Gets the set of puzzles the player has solved.
-     * @return a copy of the solved puzzles set
-     */
     @Override
     public Set<String> getSolvedPuzzles() {
         return new HashSet<>(solvedPuzzles);
-    }
-
-    // Methods to update state (called by use cases when game state changes)
-
-    /**
-     * Updates the player's current location.
-     * @param location the new location name
-     */
-    public void setLocation(String location) {
-        this.currentLocation = location;
-    }
-
-    /**
-     * Updates the number of keys collected.
-     * @param keys the new key count
-     */
-    public void setKeysCollected(int keys) {
-        this.keysCollected = keys;
-    }
-
-    /**
-     * Adds a puzzle to the solved puzzles set.
-     * @param puzzleName the name of the solved puzzle
-     */
-    public void addSolvedPuzzle(String puzzleName) {
-        this.solvedPuzzles.add(puzzleName);
-    }
-
-    /**
-     * Clears all game progress, resetting to starting values.
-     */
-    public void clearProgress() {
-        this.currentLocation = DEFAULT_LOCATION;
-        this.keysCollected = 0;
-        this.solvedPuzzles.clear();
     }
 }

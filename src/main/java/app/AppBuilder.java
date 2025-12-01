@@ -295,6 +295,22 @@ public class AppBuilder {
         // Register views
         addView(homeView, HomeView.VIEW_NAME);
         addView(navigateView, NavigateView.VIEW_NAME);
+      
+      
+//         QuitGameController quitController = new QuitGameController();
+//         SaveProgressController saveController = new SaveProgressController(null);
+//         QuitGameDialog quitDialog = new QuitGameDialog(quitController, saveController);
+//         SaveGameDialog saveDialog = new SaveGameDialog(saveController);
+//         quitController.setShowQuitDialog(quitDialog::show);
+//         quitController.setShowSaveDialog(saveDialog::show);
+//         navigateView.setQuitGameController(quitController, saveController);
+
+        addClearHistoryUseCase();
+
+        FileGameDataAccessObject dao = new FileGameDataAccessObject("game_data.json");
+        addSaveProgressUseCase(dao);
+        addViewProgressUseCase(dao);
+
         addView(instructionsView, InstructionsView.VIEW_NAME);
 
         // Settings
