@@ -1,6 +1,6 @@
 package use_case.navigate;
 
-public class NavigateOutputData2 {
+public class NavigateOutputData {
     private final String targetView;
 
     public NavigateOutputData(String targetViewName) {

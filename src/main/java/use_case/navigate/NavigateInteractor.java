@@ -16,7 +16,7 @@ public class NavigateInteractor implements NavigateInputBoundary {
     @Override
     public void execute(NavigateInputData inputData) {
         String direction = inputData.getDirection();
-        navigatePresenter.prepareSuccessView(new NavigateOutputData2(getTargetView(direction)));
+        navigatePresenter.prepareSuccessView(new NavigateOutputData(getTargetView(direction)));
     }
 
     @NotNull

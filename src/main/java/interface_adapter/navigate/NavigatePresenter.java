@@ -5,7 +5,7 @@ import interface_adapter.play_card_game.CardGameViewModel;
 import interface_adapter.trivia_game.TriviaGameViewModel;
 import interface_adapter.win_game.WinGameViewModel;
 import use_case.navigate.NavigateOutputBoundary;
-import use_case.navigate.NavigateOutputData2;
+import use_case.navigate.NavigateOutputData;
 
 /**
  * Presenter for the Navigation use case.
@@ -28,7 +28,7 @@ public class NavigatePresenter implements NavigateOutputBoundary {
     }
 
     @Override
-    public void prepareSuccessView(NavigateOutputData2 outputData) {
+    public void prepareSuccessView(NavigateOutputData outputData) {
         String target = outputData.getTargetView().toLowerCase();
 
         switch (target) {
