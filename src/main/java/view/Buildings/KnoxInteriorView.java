@@ -46,7 +46,6 @@ public class KnoxInteriorView extends JPanel implements PropertyChangeListener {
         this.setLayout(new BorderLayout());
         this.setBackground(UISettings.PARCHMENT_BACKGROUND);
 
-        // Updated Story Area text for the Interior
         storyArea = new JTextArea("You step over the worn stone threshold and into the main hall of Knox College. " +
                 "The air is cold and smells faintly of old books and damp wool. The sound of the pipe organ " +
                 "is louder now, echoing off the high vaulted ceiling. The dissonance resolves into a single, " +
@@ -68,14 +67,13 @@ public class KnoxInteriorView extends JPanel implements PropertyChangeListener {
         scrollableContent.setBackground(UISettings.PARCHMENT_BACKGROUND);
         scrollableContent.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20)); // Overall padding
 
-        // Updated Image Reference (Assuming UISettings has knoxIntImage)
+        // knox interior image
         ImageIcon knoxInt = UISettings.knoxIntImage;
         int newWidth = 500;
         int newHeight = (knoxInt.getIconHeight() * newWidth) / knoxInt.getIconWidth();
-        Image scaledKnoxInt = knoxInt.getImage().getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH);
-        ImageIcon scaledKnoxIntIcon = new ImageIcon(scaledKnoxInt);
+        Image scaledKnoxExt = knoxInt.getImage().getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH);
+        ImageIcon scaledKnoxIntIcon = new ImageIcon(scaledKnoxExt);
 
-        // Uses the updated knoxInteriorLabel
         knoxInteriorLabel = new JLabel(scaledKnoxIntIcon);
         knoxInteriorLabel.setHorizontalAlignment(JLabel.CENTER);
         knoxInteriorLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
