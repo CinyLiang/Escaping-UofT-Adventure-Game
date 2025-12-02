@@ -1,0 +1,35 @@
+@startuml
+' 1. STYLE CONFIGURATION
+skinparam linetype ortho
+skinparam nodesep 100
+skinparam ranksep 80
+hide empty members
+
+' 2. RELATIONSHIPS WITH DIRECTIONAL HINTS
+
+' View -> Controller interactions
+view.QuitGameDialog -down-> interface_adapter.quit_game.QuitGameController
+view.QuitGameDialog -down-> interface_adapter.save_progress.SaveProgressController
+view.SaveGameDialog -down-> interface_adapter.save_progress.SaveProgressController
+
+' Controller -> Input Boundary
+interface_adapter.quit_game.QuitGameController -down-> use_case.quit_game.QuitGameInputBoundary
+
+' Interactor Implementation
+use_case.quit_game.QuitGameInteractor .up.|> use_case.quit_game.QuitGameInputBoundary
+use_case.quit_game.QuitGameInteractor -right-> use_case.quit_game.QuitGameOutputBoundary
+
+' Presenter Implementation
+interface_adapter.quit_game.QuitGamePresenter .up.|> use_case.quit_game.QuitGameOutputBoundary
+interface_adapter.quit_game.QuitGamePresenter -up-> interface_adapter.quit_game.QuitGameViewModel : updates
+
+' ViewModel -> View (Observation/Updates)
+view.QuitGameDialog .left.> interface_adapter.quit_game.QuitGameViewModel : observes
+
+'ViewModel -> ViewModel (Extends)
+interface_adapter.quit_game.QuitGameViewModel -left-|> interface_adapter.ViewModel : extends
+
+' State association (optional, can clutter diagram)
+interface_adapter.quit_game.QuitGameViewModel -right-> interface_adapter.quit_game.QuitGameState
+
+@enduml

@@ -1,0 +1,68 @@
+@startuml
+' 1. STYLE CONFIGURATION
+skinparam linetype ortho
+skinparam nodesep 100
+skinparam ranksep 80
+hide empty members
+
+
+' 2. STRUCTURAL GROUPING
+package "view" {
+    class QuitGameDialog {
+        + QuitGameDialog(...)
+        + propertyChange(PropertyChangeEvent)
+    }
+    class SaveGameDialog {
+        + SaveGameDialog(...)
+    }
+}
+
+package "interface_adapter" {
+    class quit_game.QuitGameController {
+        + execute()
+        + executeRequestQuit()
+    }
+
+    class quit_game.QuitGamePresenter {
+        + prepareSavePromptView()
+        + prepareExitView()
+        + prepareQuitView()
+    }
+
+    class quit_game.QuitGameViewModel {
+        + fireShowQuitDialog()
+        + fireExitGame()
+        + fireShowSavePrompt()
+    }
+
+    class quit_game.QuitGameState {
+        - boolean quitDialogVisible
+        - boolean isSaveDialogRequired
+        - boolean shouldExitGame
+    }
+
+    class save_progress.SaveProgressController
+    class save_progress.SaveProgressPresenter
+    class navigate.NavigateViewModel
+    class ViewModel
+}
+
+package "use_case" {
+    interface quit_game.QuitGameInputBoundary {
+        ~ void execute()
+        ~ void executeRequestQuit()
+        ~ void exitGame()
+    }
+
+    interface quit_game.QuitGameOutputBoundary {
+        ~ void prepareQuitView()
+        ~ void prepareSavePromptView()
+        ~ void prepareExitView()
+    }
+
+    class quit_game.QuitGameInteractor {
+        + execute()
+        + executeRequestQuit()
+    }
+}
+@enduml

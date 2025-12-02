@@ -1,0 +1,66 @@
+@startuml
+' 1. STYLE CONFIGURATION
+skinparam linetype ortho
+skinparam nodesep 100
+skinparam ranksep 80
+hide empty members
+
+' 2. STRUCTURAL GROUPING
+package "view" {
+    class ConfirmRestartGameDialog {
+        - ClearHistoryController clearHistoryController
+        - ClearHistoryViewModel clearHistoryViewModel
+        + ConfirmRestartGameDialog(...)
+        + void propertyChange(PropertyChangeEvent)
+    }
+}
+
+package "interface_adapter" {
+    class clear_history.ClearHistoryController {
+        - ClearHistoryInputBoundary interactor
+        + ClearHistoryController(ClearHistoryInputBoundary)
+        + void execute()
+        + void showConfirmDialog()
+    }
+
+    class clear_history.ClearHistoryPresenter {
+        - NavigateViewModel viewModel
+        - ClearHistoryViewModel clearHistoryViewModel
+        + execute()
+        + prepareClearHistoryView()
+    }
+
+    class clear_history.ClearHistoryViewModel {
+        + {static} String CLEAR_HISTORY_STATE
+        + fireShowRestartDialog()
+    }
+
+    class clear_history.ClearHistoryState {
+        - boolean clearDialogVisible
+        + void setClearDialogVisible(boolean)
+        + boolean isClearDialogVisible()
+    }
+
+    class navigate.NavigateViewModel
+
+    class ViewModel
+}
+
+package "use_case" {
+    interface clear_history.ClearHistoryInputBoundary {
+        + clearHistory()
+        + executeRequestClearHistory()
+    }
+
+    interface clear_history.ClearHistoryOutputBoundary {
+        + execute()
+        + prepareClearHistoryView()
+    }
+
+    class clear_history.ClearHistoryInteractor {
+        - ClearHistoryOutputBoundary presenter
+        + clearHistory()
+        + executeRequestClearHistory()
+    }
+}
+@enduml
