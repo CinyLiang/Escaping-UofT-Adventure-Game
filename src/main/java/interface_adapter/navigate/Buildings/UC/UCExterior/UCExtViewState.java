@@ -1,10 +1,10 @@
-package interface_adapter.navigate.Buildings.Knox.KnoxExterior;
+package interface_adapter.navigate.Buildings.UC.UCExterior;
 
-public class KnoxExtViewState{
+public class UCExtViewState{
     // Location
-    private String location = "Knox Exterior";
+    private String location = "UC Exterior";
 
-    public KnoxExtViewState() {
+    public UCExtViewState() {
     }
 
     public void setLocation(String location) {

@@ -18,6 +18,12 @@ import interface_adapter.navigate.Buildings.Gerstein.GersteinInterior.GersteinIn
 // knox
 import interface_adapter.navigate.Buildings.Knox.KnoxExterior.KnoxExtViewModel;
 import interface_adapter.navigate.Buildings.Knox.KnoxInterior.KnoxIntViewModel;
+// uc
+import interface_adapter.navigate.Buildings.UC.UCExterior.UCExtViewModel;
+import interface_adapter.navigate.Buildings.UC.UCInterior.UCIntViewModel;
+// con hall
+import interface_adapter.navigate.Buildings.ConHall.ConHallExterior.ConHallExtViewModel;
+import interface_adapter.navigate.Buildings.ConHall.ConHallInterior.ConHallIntViewModel;
 
 import interface_adapter.navigate.NavigateController;
 import interface_adapter.navigate.NavigatePresenter;
@@ -76,6 +82,12 @@ import view.Buildings.KnoxInteriorView;
 // gerstein
 import view.Buildings.GersteinExteriorView;
 import view.Buildings.GersteinInteriorView;
+// uc
+import view.Buildings.UCExteriorView;
+import view.Buildings.UCInteriorView;
+// con hall
+import view.Buildings.ConHallExteriorView;
+import view.Buildings.ConHallInteriorView;
 
 import view.Buildings.*;
 import view.SettingsView;
@@ -124,6 +136,12 @@ public class AppBuilder {
         // gerstein
     private GersteinExtViewModel gersteinExtViewModel;
     private GersteinIntViewModel gersteinIntViewModel;
+        // uc
+    private UCExtViewModel ucExtViewModel;
+    private UCIntViewModel ucIntViewModel;
+        // con hall
+    private ConHallExtViewModel conHallExtViewModel;
+    private ConHallIntViewModel conHallIntViewModel;
 
     // Views
     private HomeView homeView;
@@ -143,6 +161,12 @@ public class AppBuilder {
     // gerstein
     private GersteinExteriorView gersteinExteriorView;
     private GersteinInteriorView gersteinInteriorView;
+    // uc
+    private UCExteriorView ucExteriorView;
+    private UCInteriorView ucInteriorView;
+    // con hall
+    private ConHallExteriorView conHallExteriorView;
+    private ConHallInteriorView conHallInteriorView;
 
     // oh god the player. OH GOD THE PLAYER
     Player player;
@@ -187,7 +211,11 @@ public class AppBuilder {
                 knoxExtViewModel,
                 knoxIntViewModel,
                 gersteinExtViewModel,
-                gersteinIntViewModel
+                gersteinIntViewModel,
+                ucExtViewModel,
+                ucIntViewModel //,
+//                conHallExteriorViewModel,
+//                conHallInteriorViewModel
         );
         NavigateInputBoundary interactor = new NavigateInteractor(presenter);
         NavigateController controller = new NavigateController(interactor);
@@ -195,6 +223,11 @@ public class AppBuilder {
         knoxInteriorView.setNavigateController(controller);
         gersteinExteriorView.setNavigateController(controller); // gerstein
         gersteinInteriorView.setNavigateController(controller);
+        ucExteriorView.setNavigateController(controller); // uc
+        ucInteriorView.setNavigateController(controller);
+        conHallExteriorView.setNavigateController(controller); // con hall
+//        conHallInteriorView.setNavigateController(controller);
+
         navigateView.setNavigateController(controller);
         return this;
     }
@@ -319,6 +352,10 @@ public class AppBuilder {
         knoxIntViewModel = new KnoxIntViewModel();
         gersteinExtViewModel = new GersteinExtViewModel(); // gerstein
         gersteinIntViewModel = new GersteinIntViewModel();
+        ucExtViewModel = new UCExtViewModel(); // uc
+        ucIntViewModel = new UCIntViewModel();
+        conHallExtViewModel = new ConHallExtViewModel(); // con hall
+        conHallIntViewModel = new ConHallIntViewModel();
 
         // Create Views
         homeView = new HomeView(viewManagerModel);
@@ -331,6 +368,10 @@ public class AppBuilder {
         knoxInteriorView = new KnoxInteriorView(knoxIntViewModel);
         gersteinExteriorView = new GersteinExteriorView(gersteinExtViewModel); // gerstein
         gersteinInteriorView = new GersteinInteriorView(gersteinIntViewModel);
+        ucExteriorView = new UCExteriorView(ucExtViewModel); // uc
+        ucInteriorView = new UCInteriorView(ucIntViewModel);
+        conHallExteriorView = new ConHallExteriorView(conHallExtViewModel); // con hall
+//        conHallInteriorView = new ConHallInteriorView(conHallIntViewModel);
 
         // Set VM
         navigateView.setClearHistoryViewModel(clearHistoryViewModel);
@@ -343,7 +384,11 @@ public class AppBuilder {
         addView(knoxExteriorView, KnoxExteriorView.VIEW_NAME); // knox
         addView(knoxInteriorView, KnoxInteriorView.VIEW_NAME);
         addView(gersteinExteriorView, GersteinExteriorView.VIEW_NAME); // gerstein
-        addView(gersteinInteriorView, GersteinInteriorView.VIEW_NAME); // gerstein
+        addView(gersteinInteriorView, GersteinInteriorView.VIEW_NAME);
+        addView(ucExteriorView, UCExteriorView.VIEW_NAME);
+        addView(ucInteriorView, UCInteriorView.VIEW_NAME);
+        addView(conHallExteriorView, ConHallExteriorView.VIEW_NAME); // con hall
+//        addView(conHallInteriorView, ConHallInteriorView.VIEW_NAME);
 
         // Settings
         SettingsOutputBoundary settingsPresenter =

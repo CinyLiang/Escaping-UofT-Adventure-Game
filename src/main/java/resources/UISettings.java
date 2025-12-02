@@ -16,6 +16,8 @@ public class UISettings {
     public static final String KNOX_INT_IMAGE_PATH = "/Users/vanessa.hanbao/Downloads/csc207 final project resources/KNOXINT.jpg";
     public static final String GERSTEIN_INT_IMAGE_PATH = "/Users/vanessa.hanbao/Downloads/csc207 final project resources/gersteinint.jpg";
     public static final String GERSTEIN_EXT_IMAGE_PATH = "/Users/vanessa.hanbao/Downloads/csc207 final project resources/gersteinext.jpg";
+    public static final String UC_EXT_IMAGE_PATH = "/Users/vanessa.hanbao/Downloads/csc207 final project resources/ucext.png";
+    public static final String UC_INT_IMAGE_PATH = "/Users/vanessa.hanbao/Downloads/csc207 final project resources/ucint.jpg";
 
     public static final int WINDOW_WIDTH = 800;
     public static final int WINDOW_HEIGHT = 600;
@@ -62,6 +64,8 @@ public class UISettings {
     public static ImageIcon knoxIntImage = new ImageIcon(KNOX_INT_IMAGE_PATH);
     public static ImageIcon gersteinIntImage = new ImageIcon(GERSTEIN_INT_IMAGE_PATH);
     public static ImageIcon gersteinExtImage = new ImageIcon(GERSTEIN_EXT_IMAGE_PATH);
+    public static ImageIcon ucExtImage = new ImageIcon(UC_EXT_IMAGE_PATH);
+    public static ImageIcon ucIntImage = new ImageIcon(UC_INT_IMAGE_PATH);
 
     public UISettings() throws IOException, FontFormatException {
         // insert code if needed

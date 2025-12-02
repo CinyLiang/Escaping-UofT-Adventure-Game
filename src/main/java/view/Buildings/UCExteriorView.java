@@ -2,36 +2,26 @@ package view.Buildings;
 
 import javax.swing.*;
 
-// Updated import to reflect the ViewModel for the Interior (if it exists)
-import interface_adapter.navigate.Buildings.Knox.KnoxInterior.KnoxIntViewModel;
-import interface_adapter.navigate.Buildings.Knox.KnoxInterior.KnoxIntViewState;
+import interface_adapter.navigate.Buildings.UC.UCExterior.UCExtViewModel;
 import interface_adapter.navigate.NavigateController;
-import interface_adapter.play_card_game.CardGameState;
-import interface_adapter.trivia_game.TriviaGameState;
 import resources.UISettings;
 
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.io.IOException;
 
-// Updated Class Name
-public class KnoxInteriorView extends JPanel implements PropertyChangeListener {
-    // Updated View Name Constant
-    public static final String VIEW_NAME = "knox_interior_view";
+public class UCExteriorView extends JPanel {
+    public static final String VIEW_NAME = "uc_exterior_view";
 
     // IMAGES + FONT
-    // Updated Label Name
-    private final JLabel knoxInteriorLabel;
+    private final JLabel ucExteriorLabel;
 
     // CONTROLLERS
     private NavigateController navigateController;
 
     // VIEW MODEL
-    // Updated ViewModel Reference
-    private KnoxIntViewModel knoxIntViewModel;
+    private UCExtViewModel ucExtViewModel;
 
     // DIALOGS
 
@@ -39,20 +29,15 @@ public class KnoxInteriorView extends JPanel implements PropertyChangeListener {
     private JTextArea storyArea;
     private JButton continueButton;
 
-    // Updated Constructor Name and ViewModel Parameter
-    public KnoxInteriorView(KnoxIntViewModel knoxIntViewModel) throws IOException, FontFormatException {
-        this.knoxIntViewModel = knoxIntViewModel;
-        this.knoxIntViewModel.addPropertyChangeListener(this);
+    public UCExteriorView(UCExtViewModel ucExtViewModel) throws IOException, FontFormatException {
+        this.ucExtViewModel = ucExtViewModel;
+//        setNavigateController();
         this.setLayout(new BorderLayout());
         this.setBackground(UISettings.PARCHMENT_BACKGROUND);
 
-        storyArea = new JTextArea("You step over the worn stone threshold and into the main hall of Knox College. " +
-                "The air is cold and smells faintly of old books and damp wool. The sound of the pipe organ " +
-                "is louder now, echoing off the high vaulted ceiling. The dissonance resolves into a single, " +
-                "unsettling, low C note that seems to vibrate the floor beneath your feet. \n \n " +
-                "Ahead, a grand, sweeping staircase winds up into shadow. To your left, a heavy oak door " +
-                "is slightly ajar, leading toward what looks like a library or study. \n \n " +
-                "Which way do you proceed?");
+        // insert header image
+
+        storyArea = new JTextArea("uc story text");
 
         // status bar
         JPanel statusBar = new JPanel(new FlowLayout(FlowLayout.RIGHT, 20, 10));
@@ -62,25 +47,27 @@ public class KnoxInteriorView extends JPanel implements PropertyChangeListener {
         this.add(statusBar, BorderLayout.NORTH);
 
         // scroll pane containing center content
+        // map, story, and selector all in here
         JPanel scrollableContent = new JPanel();
         scrollableContent.setLayout(new BoxLayout(scrollableContent, BoxLayout.Y_AXIS));
         scrollableContent.setBackground(UISettings.PARCHMENT_BACKGROUND);
         scrollableContent.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20)); // Overall padding
 
-        // knox interior image
-        ImageIcon knoxInt = UISettings.knoxIntImage;
+        // uc exterior image
+        ImageIcon ucExt = UISettings.ucExtImage;
         int newWidth = 500;
-        int newHeight = (knoxInt.getIconHeight() * newWidth) / knoxInt.getIconWidth();
-        Image scaledKnoxExt = knoxInt.getImage().getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH);
-        ImageIcon scaledKnoxIntIcon = new ImageIcon(scaledKnoxExt);
+        int newHeight = (ucExt.getIconHeight() * newWidth) / ucExt.getIconWidth();
+        Image scaledUcExt = ucExt.getImage().getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH);
+        ImageIcon scaledUcExtIcon = new ImageIcon(scaledUcExt);
 
-        knoxInteriorLabel = new JLabel(scaledKnoxIntIcon);
-        knoxInteriorLabel.setHorizontalAlignment(JLabel.CENTER);
-        knoxInteriorLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        scrollableContent.add(knoxInteriorLabel);
+        ucExteriorLabel = new JLabel(scaledUcExtIcon);
+        ucExteriorLabel.setHorizontalAlignment(JLabel.CENTER);
+        ucExteriorLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        scrollableContent.add(ucExteriorLabel);
         scrollableContent.add(Box.createVerticalStrut(25));
 
         // storyArea
+        // note: moved story text out of its own scroll pane to the main scroll pane
         storyArea.setEditable(false);
         storyArea.setLineWrap(true);
         storyArea.setWrapStyleWord(true);
@@ -98,38 +85,24 @@ public class KnoxInteriorView extends JPanel implements PropertyChangeListener {
 
         this.add(mainScrollPane, BorderLayout.CENTER);
 
-        // BOTTOM PANE: game control buttons
+        // Bottom panel
         JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 10));
         bottomPanel.setBackground(UISettings.ACCENT_COLOR);
 
-        continueButton = makeButton("Play Card Game");
+        // Continue button
+        continueButton = makeButton("Continue inside Uc College");
         bottomPanel.add(continueButton);
 
         this.add(bottomPanel, BorderLayout.SOUTH);
 
         // action listeners (button + dropdown logic)
-//        continueButton.addActionListener(e -> {
-//            if (navigateController != null) {
-//                // Updated Print Statement and Navigation String
-//                System.out.println("Move from knox interior to card game");
-//                navigateController.execute("North");
-//            }
-//        });
         continueButton.addActionListener(e -> {
-            String requestedDirection = "card game"; // maps to "Card game"
-            System.out.println("[KnoxInteriorView] BUTTON CLICKED -> requestedDirection=\"" + requestedDirection + "\", navigateController=" + navigateController);
-            if (navigateController == null) {
-                System.out.println("[KnoxInteriorView] BUTTON: navigateController is null");
-                return;
-            }
-            try {
-                navigateController.execute(requestedDirection);
-                System.out.println("[KnoxInteriorView] BUTTON: navigateController.execute returned.");
-            } catch (Throwable t) {
-                System.err.println("[KnoxInteriorView] BUTTON: Exception while calling navigateController.execute:");
-                t.printStackTrace();
+            if (navigateController != null) {
+                System.out.println("Move from uc exterior to uc interior");
+                navigateController.execute("UC Interior");
             }
         });
+
     }
 
     private JButton makeButton(String text) {
@@ -166,10 +139,6 @@ public class KnoxInteriorView extends JPanel implements PropertyChangeListener {
     // ACTION LISTENERS
     public void setNavigateController(NavigateController navigateController) {
         this.navigateController = navigateController;
-    }
-
-    public void propertyChange(PropertyChangeEvent evt) {
-        KnoxIntViewState state = knoxIntViewModel.getState();
     }
 
 }
