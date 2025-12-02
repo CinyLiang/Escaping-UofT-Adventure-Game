@@ -12,9 +12,13 @@ import interface_adapter.card_game_hints.CardGameHintsController;
 import interface_adapter.card_game_hints.CardGameHintsPresenter;
 import interface_adapter.clear_history.ClearHistoryController;
 import interface_adapter.clear_history.ClearHistoryPresenter;
+// gerstein
 import interface_adapter.navigate.Buildings.Gerstein.GersteinExterior.GersteinExtViewModel;
+import interface_adapter.navigate.Buildings.Gerstein.GersteinInterior.GersteinIntViewModel;
+// knox
 import interface_adapter.navigate.Buildings.Knox.KnoxExterior.KnoxExtViewModel;
 import interface_adapter.navigate.Buildings.Knox.KnoxInterior.KnoxIntViewModel;
+
 import interface_adapter.navigate.NavigateController;
 import interface_adapter.navigate.NavigatePresenter;
 import interface_adapter.navigate.NavigateViewModel;
@@ -66,8 +70,13 @@ import use_case.settings.SettingsOutputBoundary;
 import use_case.settings.SettingsInteractor;
 
 import view.*;
+// knox
 import view.Buildings.KnoxExteriorView;
 import view.Buildings.KnoxInteriorView;
+// gerstein
+import view.Buildings.GersteinExteriorView;
+import view.Buildings.GersteinInteriorView;
+
 import view.Buildings.*;
 import view.SettingsView;
 
@@ -109,9 +118,12 @@ public class AppBuilder {
     private CardGameViewModel cardGameViewModel;
     private TriviaGameViewModel triviaGameViewModel;
     private SettingsViewModel settingsViewModel;
+        // knox
     private KnoxExtViewModel knoxExtViewModel;
     private KnoxIntViewModel knoxIntViewModel;
+        // gerstein
     private GersteinExtViewModel gersteinExtViewModel;
+    private GersteinIntViewModel gersteinIntViewModel;
 
     // Views
     private HomeView homeView;
@@ -125,9 +137,12 @@ public class AppBuilder {
     private ReturnFromCardDialogue returnFromCardDialogue;
     private ConfirmRestartGameDialog confirmRestartGameDialog;
     private SettingsView settingsView;
+    // knox
     private KnoxExteriorView knoxExteriorView;
     private KnoxInteriorView knoxInteriorView;
+    // gerstein
     private GersteinExteriorView gersteinExteriorView;
+    private GersteinInteriorView gersteinInteriorView;
 
     // oh god the player. OH GOD THE PLAYER
     Player player;
@@ -171,12 +186,15 @@ public class AppBuilder {
                 triviaGameViewModel,
                 knoxExtViewModel,
                 knoxIntViewModel,
-                gersteinExtViewModel
+                gersteinExtViewModel,
+                gersteinIntViewModel
         );
         NavigateInputBoundary interactor = new NavigateInteractor(presenter);
         NavigateController controller = new NavigateController(interactor);
-        knoxExteriorView.setNavigateController(controller);
+        knoxExteriorView.setNavigateController(controller); // knox
         knoxInteriorView.setNavigateController(controller);
+        gersteinExteriorView.setNavigateController(controller); // gerstein
+        gersteinInteriorView.setNavigateController(controller);
         navigateView.setNavigateController(controller);
         return this;
     }
@@ -297,9 +315,10 @@ public class AppBuilder {
         winGameViewModel = new WinGameViewModel();
         viewProgressViewModel = new ViewProgressViewModel();
         settingsViewModel = new SettingsViewModel();
-        knoxExtViewModel = new KnoxExtViewModel();
+        knoxExtViewModel = new KnoxExtViewModel(); // knox
         knoxIntViewModel = new KnoxIntViewModel();
-        gersteinExtViewModel = new GersteinExtViewModel();
+        gersteinExtViewModel = new GersteinExtViewModel(); // gerstein
+        gersteinIntViewModel = new GersteinIntViewModel();
 
         // Create Views
         homeView = new HomeView(viewManagerModel);
@@ -308,9 +327,10 @@ public class AppBuilder {
         cardGameView = new CardGameView(cardGameViewModel);
         triviaGameView = new TriviaGameView(triviaGameViewModel);
         winGameView = new WinGameView(winGameViewModel);
-        knoxExteriorView = new KnoxExteriorView(knoxExtViewModel);
+        knoxExteriorView = new KnoxExteriorView(knoxExtViewModel); // knox
         knoxInteriorView = new KnoxInteriorView(knoxIntViewModel);
-        gersteinExteriorView = new GersteinExteriorView(gersteinExtViewModel);
+        gersteinExteriorView = new GersteinExteriorView(gersteinExtViewModel); // gerstein
+        gersteinInteriorView = new GersteinInteriorView(gersteinIntViewModel);
 
         // Set VM
         navigateView.setClearHistoryViewModel(clearHistoryViewModel);
@@ -320,9 +340,10 @@ public class AppBuilder {
         addView(homeView, HomeView.VIEW_NAME);
         addView(navigateView, NavigateView.VIEW_NAME);
         addView(instructionsView, InstructionsView.VIEW_NAME);
-        addView(knoxExteriorView, KnoxExteriorView.VIEW_NAME);
+        addView(knoxExteriorView, KnoxExteriorView.VIEW_NAME); // knox
         addView(knoxInteriorView, KnoxInteriorView.VIEW_NAME);
-        addView(gersteinExteriorView, GersteinExteriorView.VIEW_NAME);
+        addView(gersteinExteriorView, GersteinExteriorView.VIEW_NAME); // gerstein
+        addView(gersteinInteriorView, GersteinInteriorView.VIEW_NAME); // gerstein
 
         // Settings
         SettingsOutputBoundary settingsPresenter =

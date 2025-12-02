@@ -1,10 +1,10 @@
 package interface_adapter.navigate;
 
 import interface_adapter.ViewManagerModel;
-import interface_adapter.navigate.Buildings.Gerstein.GersteinExterior.GersteinExtViewModel;
-import interface_adapter.navigate.Buildings.Knox.KnoxExterior.KnoxExtViewModel;
+import interface_adapter.navigate.Buildings.Gerstein.GersteinExterior.GersteinExtViewModel; // gerstein
+import interface_adapter.navigate.Buildings.Gerstein.GersteinInterior.GersteinIntViewModel;
+import interface_adapter.navigate.Buildings.Knox.KnoxExterior.KnoxExtViewModel; // knox
 import interface_adapter.navigate.Buildings.Knox.KnoxInterior.KnoxIntViewModel;
-import interface_adapter.navigate.Buildings.Gerstein.GersteinExterior.GersteinExtViewModel;
 import interface_adapter.play_card_game.CardGameViewModel;
 import interface_adapter.trivia_game.TriviaGameViewModel;
 import interface_adapter.win_game.WinGameViewModel;
@@ -22,11 +22,12 @@ public class NavigatePresenter implements NavigateOutputBoundary {
     private final WinGameViewModel winGameViewModel;
     private final CardGameViewModel cardGameViewModel;
     private final TriviaGameViewModel triviaGameViewModel;
-    private final KnoxExtViewModel knoxExtViewModel;
+    private final KnoxExtViewModel knoxExtViewModel; // knox
     private final KnoxIntViewModel knoxIntViewModel;
-    private final GersteinExtViewModel gersteinExtViewModel;
+    private final GersteinExtViewModel gersteinExtViewModel; // gerstein
+    private final GersteinIntViewModel gersteinIntViewModel;
 
-    public NavigatePresenter(NavigateViewModel navigateViewModel, ViewManagerModel viewManagerModel, WinGameViewModel winGameViewModel, CardGameViewModel cardGameViewModel, TriviaGameViewModel triviaGameViewModel, KnoxExtViewModel knoxExtViewModel, KnoxIntViewModel knoxIntViewModel, GersteinExtViewModel gersteinExtViewModel) {
+    public NavigatePresenter(NavigateViewModel navigateViewModel, ViewManagerModel viewManagerModel, WinGameViewModel winGameViewModel, CardGameViewModel cardGameViewModel, TriviaGameViewModel triviaGameViewModel, KnoxExtViewModel knoxExtViewModel, KnoxIntViewModel knoxIntViewModel, GersteinExtViewModel gersteinExtViewModel, GersteinIntViewModel gersteinIntViewModel) {
         this.navigateViewModel = navigateViewModel;
         this.viewManagerModel = viewManagerModel;
         this.winGameViewModel = winGameViewModel;
@@ -35,6 +36,7 @@ public class NavigatePresenter implements NavigateOutputBoundary {
         this.knoxExtViewModel = knoxExtViewModel;
         this.knoxIntViewModel = knoxIntViewModel;
         this.gersteinExtViewModel = gersteinExtViewModel;
+        this.gersteinIntViewModel = gersteinIntViewModel;
     }
 
     @Override
@@ -75,10 +77,10 @@ public class NavigatePresenter implements NavigateOutputBoundary {
                 updateNavigation(gersteinExtViewModel.getState().getLocation());
                 viewManagerModel.setState(gersteinExtViewModel.getViewName());
             }
-//            case "gerstein interior" -> {
-//                updateNavigation(gersteinIntViewModel.getState().getLocation());
-//                viewManagerModel.setState(gersteinIntViewModel.getViewName());
-//            }
+            case "gerstein interior" -> {
+                updateNavigation(gersteinIntViewModel.getState().getLocation());
+                viewManagerModel.setState(gersteinIntViewModel.getViewName());
+            }
             default -> {
                 // optional: ignore or throw
             }

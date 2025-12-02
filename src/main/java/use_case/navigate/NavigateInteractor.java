@@ -35,6 +35,7 @@ public class NavigateInteractor implements NavigateInputBoundary {
             case "west" -> "Knox exterior"; // knox exterior > interior > card game
 //            case "card game" -> "Card game";
             case "knox interior" -> "Knox interior";
+            case "gerstein interior" -> "Gerstein interior";
             case "trivia game" -> "Trivia game";
             default -> "";
         };
