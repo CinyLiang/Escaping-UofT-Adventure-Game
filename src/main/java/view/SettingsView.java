@@ -55,7 +55,7 @@ public class SettingsView extends JPanel {
                 fontIndex
         );
 
-        // ACCESSIBILITY
+        // BACKGROUND
         OptionSelector accessSelector = new OptionSelector(
                 "Accessibility",
                 new String[]{"Off", "On"},
@@ -126,7 +126,6 @@ public class SettingsView extends JPanel {
             }
 
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                // Reset to current themed colors
                 button.setBackground(ThemeManager.getButtonBackground());
                 button.setForeground(ThemeManager.getButtonForeground());
             }
