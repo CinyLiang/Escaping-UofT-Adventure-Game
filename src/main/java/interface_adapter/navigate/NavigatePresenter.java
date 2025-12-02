@@ -7,6 +7,8 @@ import interface_adapter.navigate.Buildings.Knox.KnoxExterior.KnoxExtViewModel; 
 import interface_adapter.navigate.Buildings.Knox.KnoxInterior.KnoxIntViewModel;
 import interface_adapter.navigate.Buildings.UC.UCExterior.UCExtViewModel; // uc
 import interface_adapter.navigate.Buildings.UC.UCInterior.UCIntViewModel;
+import interface_adapter.navigate.Buildings.ConHall.ConHallExterior.ConHallExtViewModel; // con hall
+import interface_adapter.navigate.Buildings.ConHall.ConHallInterior.ConHallIntViewModel;
 import interface_adapter.play_card_game.CardGameViewModel;
 import interface_adapter.trivia_game.TriviaGameViewModel;
 import interface_adapter.win_game.WinGameViewModel;
@@ -30,8 +32,10 @@ public class NavigatePresenter implements NavigateOutputBoundary {
     private final GersteinIntViewModel gersteinIntViewModel;
     private final UCExtViewModel ucExtViewModel; // uc
     private final UCIntViewModel ucIntViewModel;
+    private final ConHallExtViewModel conHallExtViewModel; // con hall
+    private final ConHallIntViewModel conHallIntViewModel;
 
-    public NavigatePresenter(NavigateViewModel navigateViewModel, ViewManagerModel viewManagerModel, WinGameViewModel winGameViewModel, CardGameViewModel cardGameViewModel, TriviaGameViewModel triviaGameViewModel, KnoxExtViewModel knoxExtViewModel, KnoxIntViewModel knoxIntViewModel, GersteinExtViewModel gersteinExtViewModel, GersteinIntViewModel gersteinIntViewModel, UCExtViewModel ucExtViewModel, UCIntViewModel ucIntViewModel) {
+    public NavigatePresenter(NavigateViewModel navigateViewModel, ViewManagerModel viewManagerModel, WinGameViewModel winGameViewModel, CardGameViewModel cardGameViewModel, TriviaGameViewModel triviaGameViewModel, KnoxExtViewModel knoxExtViewModel, KnoxIntViewModel knoxIntViewModel, GersteinExtViewModel gersteinExtViewModel, GersteinIntViewModel gersteinIntViewModel, UCExtViewModel ucExtViewModel, UCIntViewModel ucIntViewModel, ConHallExtViewModel conHallExtViewModel, ConHallIntViewModel conHallIntViewModel) {
         this.navigateViewModel = navigateViewModel;
         this.viewManagerModel = viewManagerModel;
         this.winGameViewModel = winGameViewModel;
@@ -43,6 +47,8 @@ public class NavigatePresenter implements NavigateOutputBoundary {
         this.gersteinIntViewModel = gersteinIntViewModel;
         this.ucExtViewModel = ucExtViewModel;
         this.ucIntViewModel = ucIntViewModel;
+        this.conHallExtViewModel = conHallExtViewModel;
+        this.conHallIntViewModel = conHallIntViewModel;
     }
 
     @Override
@@ -94,6 +100,14 @@ public class NavigatePresenter implements NavigateOutputBoundary {
             case "uc interior" -> {
                 updateNavigation(ucIntViewModel.getState().getLocation());
                 viewManagerModel.setState(ucIntViewModel.getViewName());
+            }
+            case "con hall exterior" -> {
+                updateNavigation(conHallExtViewModel.getState().getLocation());
+                viewManagerModel.setState(conHallExtViewModel.getViewName());
+            }
+            case "con hall interior" -> {
+                updateNavigation(conHallIntViewModel.getState().getLocation());
+                viewManagerModel.setState(conHallIntViewModel.getViewName());
             }
             default -> {
                 // optional: ignore or throw

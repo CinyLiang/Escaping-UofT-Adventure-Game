@@ -99,7 +99,7 @@ public class ConHallExteriorView extends JPanel {
         continueButton.addActionListener(e -> {
             if (navigateController != null) {
                 System.out.println("Move from conHall exterior to conHall interior");
-                navigateController.execute("ConHall Interior");
+                navigateController.execute("Con hall Interior");
             }
         });
 

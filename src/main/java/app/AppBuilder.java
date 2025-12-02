@@ -213,9 +213,9 @@ public class AppBuilder {
                 gersteinExtViewModel,
                 gersteinIntViewModel,
                 ucExtViewModel,
-                ucIntViewModel //,
-//                conHallExteriorViewModel,
-//                conHallInteriorViewModel
+                ucIntViewModel,
+                conHallExtViewModel,
+                conHallIntViewModel
         );
         NavigateInputBoundary interactor = new NavigateInteractor(presenter);
         NavigateController controller = new NavigateController(interactor);
@@ -226,7 +226,7 @@ public class AppBuilder {
         ucExteriorView.setNavigateController(controller); // uc
         ucInteriorView.setNavigateController(controller);
         conHallExteriorView.setNavigateController(controller); // con hall
-//        conHallInteriorView.setNavigateController(controller);
+        conHallInteriorView.setNavigateController(controller);
 
         navigateView.setNavigateController(controller);
         return this;
@@ -371,7 +371,7 @@ public class AppBuilder {
         ucExteriorView = new UCExteriorView(ucExtViewModel); // uc
         ucInteriorView = new UCInteriorView(ucIntViewModel);
         conHallExteriorView = new ConHallExteriorView(conHallExtViewModel); // con hall
-//        conHallInteriorView = new ConHallInteriorView(conHallIntViewModel);
+        conHallInteriorView = new ConHallInteriorView(conHallIntViewModel);
 
         // Set VM
         navigateView.setClearHistoryViewModel(clearHistoryViewModel);
@@ -388,7 +388,7 @@ public class AppBuilder {
         addView(ucExteriorView, UCExteriorView.VIEW_NAME);
         addView(ucInteriorView, UCInteriorView.VIEW_NAME);
         addView(conHallExteriorView, ConHallExteriorView.VIEW_NAME); // con hall
-//        addView(conHallInteriorView, ConHallInteriorView.VIEW_NAME);
+        addView(conHallInteriorView, ConHallInteriorView.VIEW_NAME);
 
         // Settings
         SettingsOutputBoundary settingsPresenter =
