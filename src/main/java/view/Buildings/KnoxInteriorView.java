@@ -52,7 +52,10 @@ public class KnoxInteriorView extends JPanel implements PropertyChangeListener {
                 "unsettling, low C note that seems to vibrate the floor beneath your feet. \n \n " +
                 "Ahead, a grand, sweeping staircase winds up into shadow. To your left, a heavy oak door " +
                 "is slightly ajar, leading toward what looks like a library or study. \n \n " +
-                "Which way do you proceed?");
+                "You step toward the oak door and peer inside. A single gas lamp illuminates a worn card table" +
+                "where a cloaked figure sits, shuffling a deck of cards with unnerving speed. They gesture " +
+                "to the seat opposite them. 'Care for a hand, traveler?' they rasp, their voice barely a whisper." +
+                "\n\n Do you accept the challenge?");
 
         // status bar
         JPanel statusBar = new JPanel(new FlowLayout(FlowLayout.RIGHT, 20, 10));
@@ -108,13 +111,7 @@ public class KnoxInteriorView extends JPanel implements PropertyChangeListener {
         this.add(bottomPanel, BorderLayout.SOUTH);
 
         // action listeners (button + dropdown logic)
-//        continueButton.addActionListener(e -> {
-//            if (navigateController != null) {
-//                // Updated Print Statement and Navigation String
-//                System.out.println("Move from knox interior to card game");
-//                navigateController.execute("North");
-//            }
-//        });
+
         continueButton.addActionListener(e -> {
             String requestedDirection = "card game"; // maps to "Card game"
             System.out.println("[KnoxInteriorView] BUTTON CLICKED -> requestedDirection=\"" + requestedDirection + "\", navigateController=" + navigateController);

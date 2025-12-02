@@ -37,7 +37,15 @@ public class ConHallExteriorView extends JPanel {
 
         // insert header image
 
-        storyArea = new JTextArea("con hall text");
+        storyArea = new JTextArea("A cool, damp wind swirls around you as you reach the wide, grand stairs of Convocation Hall. The building is imposing, capped by a magnificent dome that mirrors the starry, empty sky above. Unlike the other colleges, this structure feels more like a civic monument—a vault for solemn agreements.\n" +
+                "\n" +
+                "You notice immediately that the massive, central bronze doors are not just closed, they are sealed. Heavy, corroded iron chains are crisscrossed over the entrance, fastened by an enormous, intricately carved padlock. A brass plaque gleams dully beneath the lock.\n" +
+                "\n" +
+                "It reads: \"SEALED UNTIL FINAL VERDICT.\"\n" +
+                "\n" +
+                "The hall is not merely locked; it is under judgment. You realize the bright yellow light spilling from the arched windows isn't welcoming, it's illuminating a continuous, centuries-old trial.\n" +
+                "\n" +
+                "You run your hand along the granite balustrade, and a subtle energy prickles your skin. You realize that the lock requires three distinct Keys—one for each of the major faculties—before the final judgment can be passed and the Hall opened.");
 
         // status bar
         JPanel statusBar = new JPanel(new FlowLayout(FlowLayout.RIGHT, 20, 10));

@@ -8,15 +8,15 @@ import java.io.IOException;
 public class UISettings {
     public static final String QUINT_FONT_PATH = "/Users/vanessa.hanbao/Downloads/Quintessential/Quintessential-Regular.ttf";
     public static final String TEXTURINA_FONT_PATH = "/Users/vanessa.hanbao/Downloads/Quintessential,Texturina/Texturina/Texturina-VariableFont_opsz,wght.ttf";
-    public static final String NAVIGATE_IMAGE_PATH = "/Users/vanessa.hanbao/Downloads/mapview.jpg";
+    public static final String NAVIGATE_IMAGE_PATH = "/Users/vanessa.hanbao/Downloads/csc207 final project resources/mapview.jpg";
     public static final String INSTRUCTIONS_IMAGE_PATH = "/Users/vanessa.hanbao/Downloads/Gemini_Generated_Image_1lcv901lcv901lcv.png";
-    public static final String CONHALL_INT_IMAGE_PATH = "/Users/vanessa.hanbao/Downloads/conhallint.jpg";
-    public static final String CONHALL_EXT_IMAGE_PATH = "/Users/vanessa.hanbao/Downloads/conhallext.png";
+    public static final String CONHALL_INT_IMAGE_PATH = "/Users/vanessa.hanbao/Downloads/csc207 final project resources/conhallint.png";
+    public static final String CONHALL_EXT_IMAGE_PATH = "/Users/vanessa.hanbao/Downloads/csc207 final project resources/conhallext.png";
     public static final String KNOX_EXT_IMAGE_PATH = "/Users/vanessa.hanbao/Downloads/csc207 final project resources/knoxext.png";
     public static final String KNOX_INT_IMAGE_PATH = "/Users/vanessa.hanbao/Downloads/csc207 final project resources/KNOXINT.jpg";
     public static final String GERSTEIN_INT_IMAGE_PATH = "/Users/vanessa.hanbao/Downloads/csc207 final project resources/gersteinint.jpg";
     public static final String GERSTEIN_EXT_IMAGE_PATH = "/Users/vanessa.hanbao/Downloads/csc207 final project resources/gersteinext.jpg";
-    public static final String UC_EXT_IMAGE_PATH = "/Users/vanessa.hanbao/Downloads/csc207 final project resources/ucext.png";
+    public static final String UC_EXT_IMAGE_PATH = "/Users/vanessa.hanbao/Downloads/csc207 final project resources/ucext.jpg";
     public static final String UC_INT_IMAGE_PATH = "/Users/vanessa.hanbao/Downloads/csc207 final project resources/ucint.jpg";
 
     public static final int WINDOW_WIDTH = 800;

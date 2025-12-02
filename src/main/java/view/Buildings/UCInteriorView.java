@@ -44,7 +44,17 @@ public class UCInteriorView extends JPanel implements PropertyChangeListener {
         this.setLayout(new BorderLayout());
         this.setBackground(UISettings.PARCHMENT_BACKGROUND);
 
-        storyArea = new JTextArea("uc interior story text");
+        storyArea = new JTextArea("You step inside University College, and the heavy door closes " +
+                "behind you with a soft, ominous thud, silencing the outside world. The air is cool " +
+                "and charged, smelling faintly of ozone and old leather. You find yourself in a grand, multi-tiered hall.\n" +
+                "\n" +
+                "Above, magnificent stained-glass windows cast intricate, muted patterns of light across the vast, vaulted ceiling and the ancient stone walls, revealing hints of constellations and forgotten symbols. Countless bookshelves rise to dizzying heights, filled with volumes that seem to hum with unread knowledge.\n" +
+                "\n" +
+                "Below, at polished wooden desks, several cloaked figures are hunched over glowing, ethereal interfaces that float above their work. They are engrossed in complex diagrams and arcane algorithms, their faces illuminated by the eerie blue light. The soft, rhythmic click of keys and the whisper of data are the only sounds.\n" +
+                "\n" +
+                "A wide, central staircase, flanked by more towering bookshelves, leads up into deeper shadows. At the foot of the stairs, an empty workstation pulses invitingly.\n" +
+                "\n" +
+                "Do you approach the workstation?");
 
         // status bar
         JPanel statusBar = new JPanel(new FlowLayout(FlowLayout.RIGHT, 20, 10));

@@ -46,7 +46,12 @@ public class ConHallInteriorView extends JPanel implements PropertyChangeListene
         this.setLayout(new BorderLayout());
         this.setBackground(UISettings.PARCHMENT_BACKGROUND);
 
-        storyArea = new JTextArea("con hall interior view placeholder text. ");
+        storyArea = new JTextArea("The heavy seal breaks with a grinding, reverberating sound, echoing through the night. As the ancient bronze doors creak open, you step inside Convocation Hall.\n" +
+                "\n" +
+                "The vast interior is circular and breathtaking. Your gaze is immediately drawn upwards to the magnificent, domed ceiling, from which a grand, multi-tiered chandelier hangs, casting a single, ethereal beam of light onto the floor below.\n" +
+                "\n" +
+                "You find yourself in a great, tiered auditorium, with rows of dark, empty seats sweeping down in a graceful curve. But this is no ordinary lecture hall. Massive, dark bookshelves line the walls, rising to high, arched windows where moonlight filters through, illuminating faint dust motes dancing in the stillness. Statues of robed scholars and ancient figures stand sentinel in alcoves around the perimeter." +
+                "\n\n In the middle of it all is an elaborate, intricate dais. Glowing symbols and runes are etched into its surface, pulsing with a soft, otherworldly light. At its center lies a large, ornately carved pedestal, upon which rests a gleaming, multifaceted gem—waiting to be unleashed\n");
 
         // status bar
         JPanel statusBar = new JPanel(new FlowLayout(FlowLayout.RIGHT, 20, 10));
@@ -160,4 +165,7 @@ public class ConHallInteriorView extends JPanel implements PropertyChangeListene
         ConHallIntViewState state = conHallIntViewModel.getState();
     }
 
+    public void setStoryText(String storyText) {
+        this.storyArea.setText(storyText);
+    }
 }

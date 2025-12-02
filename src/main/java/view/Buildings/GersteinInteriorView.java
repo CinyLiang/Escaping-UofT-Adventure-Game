@@ -46,7 +46,18 @@ public class GersteinInteriorView extends JPanel implements PropertyChangeListen
         this.setLayout(new BorderLayout());
         this.setBackground(UISettings.PARCHMENT_BACKGROUND);
 
-        storyArea = new JTextArea("Gerstein Interior story text");
+        storyArea = new JTextArea("You step inside the library. The air is warm and still, " +
+                "thick with the scent of aged paper and beeswax. The light here is low—a golden, " +
+                "scholarly glow cast by dozens of desk lamps that line the long, ancient reading " +
+                "tables. Towering vaulted ceilings stretch far above, lost in shadow, " +
+                "while massive, two-story bookshelves line every wall.\n\n" +
+                "You feel utterly insignificant, pressed between millennia of collected wisdom." +
+                " The only sound is the subtle scratch of quill on vellum from unseen corners, " +
+                "and the slow, heavy tick of a grandfather clock somewhere in the darkness.\n\n" +
+                "A wide, empty table beckons you to sit. On the table's edge lies a single " +
+                "tarnished brass gear next to an open, hand-written journal. " +
+                "Its pages are covered in complex celestial diagrams.\n\n" +
+                "Do you examine the journal?");
 
         // status bar
         JPanel statusBar = new JPanel(new FlowLayout(FlowLayout.RIGHT, 20, 10));

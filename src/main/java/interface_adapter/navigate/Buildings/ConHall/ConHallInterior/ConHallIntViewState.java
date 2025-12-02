@@ -4,8 +4,7 @@ public class ConHallIntViewState {
     // Location
     private String location = "ConHall Interior";
 
-    private int numberOfKeys = 2; // test value
-
+    private String storyText = "";
     public ConHallIntViewState() {
     }
 
@@ -16,7 +15,5 @@ public class ConHallIntViewState {
         return location;
     }
 
-    public int getNumberOfKeys() {
-        return numberOfKeys;
-    }
+    private void setStoryText(String storyText) { this.storyText = storyText; }
 }

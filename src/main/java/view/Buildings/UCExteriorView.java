@@ -31,13 +31,26 @@ public class UCExteriorView extends JPanel {
 
     public UCExteriorView(UCExtViewModel ucExtViewModel) throws IOException, FontFormatException {
         this.ucExtViewModel = ucExtViewModel;
-//        setNavigateController();
         this.setLayout(new BorderLayout());
         this.setBackground(UISettings.PARCHMENT_BACKGROUND);
 
         // insert header image
 
-        storyArea = new JTextArea("uc story text");
+        storyArea = new JTextArea("A chilling mist clings to the Front Campus lawn, rising to meet" +
+                " the gray, imposing walls of University College. The building's architecture is a" +
+                " tapestry of ancient stonework and twisting spires, seeming less like a " +
+                "campus building and more like a fortress holding a secret.\n\n" +
+                "You stand directly before the heavy, recessed main archway. Above you, " +
+                "the stone carvings are eerily still, yet they seem to shift in your peripheral " +
+                "vision. The tall, gothic windows glow with a deep, unsettling yellow light, " +
+                "casting sharp, elongated shadows onto the damp grass.\n\n" +
+                "The silence is broken only by the hush of wind through the heavy ivy that" +
+                " clings to the walls, whispering secrets in a language you almost recognize." +
+                " A sense of profound age and stubborn memory presses down on you here.\n\n" +
+                "As you step onto the lowest stone stair, you notice a small, smooth piece" +
+                " of obsidian tucked into the crevice of the stone. It is cold to the" +
+                " touch and seems to pulse faintly with an inner heat.\n\n" +
+                "Do you dare step across the threshold?");
 
         // status bar
         JPanel statusBar = new JPanel(new FlowLayout(FlowLayout.RIGHT, 20, 10));
@@ -90,7 +103,7 @@ public class UCExteriorView extends JPanel {
         bottomPanel.setBackground(UISettings.ACCENT_COLOR);
 
         // Continue button
-        continueButton = makeButton("Continue inside Uc College");
+        continueButton = makeButton("Continue inside University College");
         bottomPanel.add(continueButton);
 
         this.add(bottomPanel, BorderLayout.SOUTH);

@@ -37,7 +37,15 @@ public class GersteinExteriorView extends JPanel {
 
         // insert header image
 
-        storyArea = new JTextArea("Insert Gerstein exterior story text here.");
+        storyArea = new JTextArea("A biting, late-autumn wind wraps around the broad, stone façade of " +
+                "the Gerstein Library. The building looms before you, a formidable structure built on " +
+                "layers of architectural history. Unlike the Gothic towers of other colleges, Gerstein's " +
+                "entrance is solid, imposing, and vaguely industrial, a temple dedicated to sheer knowledge. " +
+                "A faint, dry smell—not of old books, but of chemicals and burnt parchment, hinting at illicit " +
+                "or forgotten research—drifts from the vents near the entrance.\n\n" + "You reach out " +
+                "and touch the cold bronze railing. It's vibrating slightly, resonating with that " +
+                "unseen rhythm, a slow, relentless pulse of arcane scholarship.\n\n"+
+                "Do you dare enter the archive?");
 
         // status bar
         JPanel statusBar = new JPanel(new FlowLayout(FlowLayout.RIGHT, 20, 10));
