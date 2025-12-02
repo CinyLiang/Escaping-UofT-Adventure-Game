@@ -42,7 +42,6 @@ public class WinGameView extends JPanel implements PropertyChangeListener {
         titleLabel.setFont(UISettings.quintessential.deriveFont(Font.BOLD, 48f));
         titleLabel.setForeground(UISettings.ACCENT_COLOR);
 
-        // Message area
         messageArea = new JTextArea("You have successfully escaped UofT! " + "The doors of Convocation Hall swing open before you, and freedom awaits beyond.");
         messageArea.setEditable(false);
         messageArea.setLineWrap(true);
@@ -157,7 +156,7 @@ public class WinGameView extends JPanel implements PropertyChangeListener {
             buttonPanel.add(quitButton);
         } else {
             titleLabel.setText("Not Yet!");
-            messageArea.setText(state.getMessage() + "\n\nThe ancient doors remain sealed. " + "Continue your quest to find the remaining keys.");
+            messageArea.setText(state.getMessage() + "\n\nThe doors remain sealed. " + "Continue your quest to find the remaining keys.");
             keysLabel.setText("");
 
             JButton backButton = createStyledButton("Return to Map");
