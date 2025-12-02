@@ -15,7 +15,6 @@ public class CardGameHintsInteractor implements CardGameHintsInputDataBoundary {
 
     public void execute(CardGameHintsInputDataObject input) {
         try {
-//            String hint = input.getCardPuzzle().giveHint();
             List<Card> cards = input.getCardPuzzle().getCards();
             String hint = generateHint(cards);
 

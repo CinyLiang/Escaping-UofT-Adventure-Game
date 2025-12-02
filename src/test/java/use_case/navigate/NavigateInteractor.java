@@ -87,7 +87,7 @@ class NavigateInteractorTest {
         String updatedLocation = null;
 
         @Override
-        public void prepareSuccessView(NavigateOutputData2 data) {
+        public void prepareSuccessView(NavigateOutputData data) {
             successCalled = true;
             targetView = data.getTargetView();
         }
