@@ -62,7 +62,7 @@ public class GersteinExteriorView extends JPanel {
         scrollableContent.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20)); // Overall padding
 
         // knox exterior image
-        ImageIcon gersteinExt = UISettings.knoxExtImage;
+        ImageIcon gersteinExt = UISettings.gersteinExtImage;
         int newWidth = 500;
         int newHeight = (gersteinExt.getIconHeight() * newWidth) / gersteinExt.getIconWidth();
         Image scaledGersteinExt = gersteinExt.getImage().getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH);
