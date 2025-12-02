@@ -144,7 +144,6 @@ public class KnoxExteriorView extends JPanel {
         return b;
     }
 
-
     // ACTION LISTENERS
     public void setNavigateController(NavigateController navigateController) {
         this.navigateController = navigateController;

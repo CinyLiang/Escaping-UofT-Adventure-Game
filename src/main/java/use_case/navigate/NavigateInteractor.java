@@ -13,12 +13,19 @@ public class NavigateInteractor implements NavigateInputBoundary {
     /*
      * Takes a direction and returns updated story
      */
+//    @Override
+//    public void execute(NavigateInputData inputData) {
+//        String direction = inputData.getDirection();
+//        navigatePresenter.prepareSuccessView(new NavigateOutputData2(getTargetView(direction)));
+//    }
+
     @Override
     public void execute(NavigateInputData inputData) {
         String direction = inputData.getDirection();
-        navigatePresenter.prepareSuccessView(new NavigateOutputData2(getTargetView(direction)));
+        String target = getTargetView(direction);
+        System.out.println("[NavigateInteractor] execute called. direction=\"" + direction + "\", resolvedTarget=\"" + target + "\"");
+        navigatePresenter.prepareSuccessView(new NavigateOutputData2(target));
     }
-
     @NotNull
     private static String getTargetView(String direction) {
         return switch (direction.toLowerCase()) {
@@ -26,7 +33,8 @@ public class NavigateInteractor implements NavigateInputBoundary {
             case "south" -> "Win game";
             case "east" -> "Trivia game"; // gerstein exterior > interior > trivia game
             case "west" -> "Knox exterior"; // knox exterior > interior > card game
-            case "Card game" -> "Card game";
+//            case "card game" -> "Card game";
+            case "knox interior" -> "Knox interior";
             default -> "";
         };
     }

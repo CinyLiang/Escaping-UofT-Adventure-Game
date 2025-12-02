@@ -4,16 +4,21 @@ import javax.swing.*;
 
 // Updated import to reflect the ViewModel for the Interior (if it exists)
 import interface_adapter.navigate.Buildings.Knox.KnoxInterior.KnoxIntViewModel;
+import interface_adapter.navigate.Buildings.Knox.KnoxInterior.KnoxIntViewState;
 import interface_adapter.navigate.NavigateController;
+import interface_adapter.play_card_game.CardGameState;
+import interface_adapter.trivia_game.TriviaGameState;
 import resources.UISettings;
 
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.IOException;
 
 // Updated Class Name
-public class KnoxInteriorView extends JPanel {
+public class KnoxInteriorView extends JPanel implements PropertyChangeListener {
     // Updated View Name Constant
     public static final String VIEW_NAME = "knox_interior_view";
 
@@ -37,6 +42,7 @@ public class KnoxInteriorView extends JPanel {
     // Updated Constructor Name and ViewModel Parameter
     public KnoxInteriorView(KnoxIntViewModel knoxIntViewModel) throws IOException, FontFormatException {
         this.knoxIntViewModel = knoxIntViewModel;
+        this.knoxIntViewModel.addPropertyChangeListener(this);
         this.setLayout(new BorderLayout());
         this.setBackground(UISettings.PARCHMENT_BACKGROUND);
 
@@ -104,14 +110,28 @@ public class KnoxInteriorView extends JPanel {
         this.add(bottomPanel, BorderLayout.SOUTH);
 
         // action listeners (button + dropdown logic)
+//        continueButton.addActionListener(e -> {
+//            if (navigateController != null) {
+//                // Updated Print Statement and Navigation String
+//                System.out.println("Move from knox interior to card game");
+//                navigateController.execute("North");
+//            }
+//        });
         continueButton.addActionListener(e -> {
-            if (navigateController != null) {
-                // Updated Print Statement and Navigation String
-                System.out.println("Move from knox interior to card game");
-                navigateController.execute("Card game");
+            String requestedDirection = "north"; // maps to "Card game"
+            System.out.println("[KnoxInteriorView] BUTTON CLICKED -> requestedDirection=\"" + requestedDirection + "\", navigateController=" + navigateController);
+            if (navigateController == null) {
+                System.out.println("[KnoxInteriorView] BUTTON: navigateController is null");
+                return;
+            }
+            try {
+                navigateController.execute(requestedDirection);
+                System.out.println("[KnoxInteriorView] BUTTON: navigateController.execute returned.");
+            } catch (Throwable t) {
+                System.err.println("[KnoxInteriorView] BUTTON: Exception while calling navigateController.execute:");
+                t.printStackTrace();
             }
         });
-
     }
 
     private JButton makeButton(String text) {
@@ -148,6 +168,10 @@ public class KnoxInteriorView extends JPanel {
     // ACTION LISTENERS
     public void setNavigateController(NavigateController navigateController) {
         this.navigateController = navigateController;
+    }
+
+    public void propertyChange(PropertyChangeEvent evt) {
+        KnoxIntViewState state = knoxIntViewModel.getState();
     }
 
 }

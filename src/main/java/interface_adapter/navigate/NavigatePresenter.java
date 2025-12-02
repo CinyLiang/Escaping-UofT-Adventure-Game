@@ -33,9 +33,47 @@ public class NavigatePresenter implements NavigateOutputBoundary {
         this.knoxIntViewModel = knoxIntViewModel;
     }
 
+//    @Override
+//    public void prepareSuccessView(NavigateOutputData2 outputData) {
+//        String target = outputData.getTargetView().toLowerCase();
+//
+//        switch (target) {
+//            case "win game" -> {
+//                NavigateState state = this.navigateViewModel.getState();
+//                if (state.getNumberOfKeys() == state.getTargetNumberOfKeys()) {
+//                    viewManagerModel.setState(winGameViewModel.getViewName());
+//                } else {
+//                    state.setStoryText("Oh no, you can't enter yet. You need to get " + (2-state.getNumberOfKeys()) + " more keys");
+//                    this.navigateViewModel.firePropertyChange();
+//
+//                    // ok so this makes the whole controller then interactor bit useless lmaoaoaoa
+//                }
+//            }
+//            case "card game" -> {
+//                updateNavigation(cardGameViewModel.getState().getLocationName());
+//                viewManagerModel.setState(cardGameViewModel.getViewName());
+//            }
+//            case "trivia game" -> {
+//                updateNavigation(triviaGameViewModel.getState().getLocationName());
+//                viewManagerModel.setState(triviaGameViewModel.getViewName());
+//            }
+//            case "knox exterior" -> {
+//                updateNavigation(knoxExtViewModel.getState().getLocation());
+//                viewManagerModel.setState(knoxExtViewModel.getViewName());
+//            }
+//            case "knox interior" -> {
+//                updateNavigation(knoxIntViewModel.getState().getLocation());
+//                viewManagerModel.setState(knoxIntViewModel.getViewName());
+//            }
+//            default -> {
+//                // optional: ignore or throw
+//            }
+//        }
     @Override
     public void prepareSuccessView(NavigateOutputData2 outputData) {
-        String target = outputData.getTargetView().toLowerCase();
+        String targetRaw = outputData.getTargetView();
+        String target = targetRaw == null ? "" : targetRaw.toLowerCase();
+        System.out.println("[NavigatePresenter] prepareSuccessView called. rawTarget=\"" + targetRaw + "\", normalized=\"" + target + "\"");
 
         switch (target) {
             case "win game" -> {
@@ -43,7 +81,7 @@ public class NavigatePresenter implements NavigateOutputBoundary {
                 if (state.getNumberOfKeys() == state.getTargetNumberOfKeys()) {
                     viewManagerModel.setState(winGameViewModel.getViewName());
                 } else {
-                    state.setStoryText("Oh no, you can't enter yet. You need to get " + (2-state.getNumberOfKeys()) + " more keys");
+                    state.setStoryText("Oh no, you can't enter yet. You need to get " + (2 - state.getNumberOfKeys()) + " more keys");
                     this.navigateViewModel.firePropertyChange();
 
                     // ok so this makes the whole controller then interactor bit useless lmaoaoaoa
@@ -69,7 +107,7 @@ public class NavigatePresenter implements NavigateOutputBoundary {
                 // optional: ignore or throw
             }
         }
-
+        System.out.println("[NavigatePresenter] prepareSuccessView finished; viewManagerState=" + viewManagerModel.getState());
         viewManagerModel.firePropertyChange();
     }
 
