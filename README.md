@@ -14,7 +14,7 @@ Visit buildings and solve puzzles to collect keys. Player must collect 2 keys be
 | User story 4  | As a player, I want to be able to save my progress when exiting the game.                                                 | Edison   |
 | User story 5  | As a player, I want to be able to view my progress when exploring the game.                                               | Edison   |
 | User story 6  | As a player, I want to be able to begin and then complete a playing card puzzle.                                          | Ciny     |
-| User story 7  | As a player, I want to be able to interact with the game UI meaningfully so I can move betterrn different locations.      | Jean     |
+| User story 7  | As a player, I want to be able to interact with the game UI meaningfully so I can move between different locations.       | Jean     |
 | User story 8  | As a player, I want to be able to begin and then complete a trivia puzzle.                                                | Gabriel  |
 | User story 9  | As a player, I want to be able to win (or lose) the game.                                                                 | Gabriel  |
 | User story 10 | As a player, I want to be able to customize the game's theme and text size so I can play comfortably.                     | Jean     |
