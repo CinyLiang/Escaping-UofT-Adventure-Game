@@ -32,21 +32,18 @@ public class WinGameView extends JPanel implements PropertyChangeListener {
         setLayout(new BorderLayout());
         setBackground(UISettings.PARCHMENT_BACKGROUND);
 
-        // Main content panel
         JPanel contentPanel = new JPanel();
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
         contentPanel.setBackground(UISettings.PARCHMENT_BACKGROUND);
         contentPanel.setBorder(BorderFactory.createEmptyBorder(40, 60, 40, 60));
 
-        // Title
         titleLabel = new JLabel("Victory!", SwingConstants.CENTER);
         titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         titleLabel.setFont(UISettings.quintessential.deriveFont(Font.BOLD, 48f));
         titleLabel.setForeground(UISettings.ACCENT_COLOR);
 
         // Message area
-        messageArea = new JTextArea("You have successfully escaped UofT! " +
-                "The doors of Convocation Hall swing open before you, and freedom awaits beyond.");
+        messageArea = new JTextArea("You have successfully escaped UofT! " + "The doors of Convocation Hall swing open before you, and freedom awaits beyond.");
         messageArea.setEditable(false);
         messageArea.setLineWrap(true);
         messageArea.setWrapStyleWord(true);
@@ -59,18 +56,15 @@ public class WinGameView extends JPanel implements PropertyChangeListener {
                 BorderFactory.createEmptyBorder(20, 20, 20, 20)
         ));
 
-        // Keys label
         keysLabel = new JLabel("Keys Collected: 2 / 2");
         keysLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         keysLabel.setFont(UISettings.texturina.deriveFont(Font.BOLD, 20f));
         keysLabel.setForeground(UISettings.ACCENT_COLOR);
 
-        // Button panel
         buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 0));
         buttonPanel.setBackground(UISettings.PARCHMENT_BACKGROUND);
         buttonPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        // Initialize with win buttons
         JButton newGameButton = createStyledButton("New Adventure");
         JButton quitButton = createStyledButton("Exit Game");
 
@@ -86,7 +80,6 @@ public class WinGameView extends JPanel implements PropertyChangeListener {
         buttonPanel.add(newGameButton);
         buttonPanel.add(quitButton);
 
-        // Add components to content panel
         contentPanel.add(Box.createVerticalGlue());
         contentPanel.add(titleLabel);
         contentPanel.add(Box.createRigidArea(new Dimension(0, 30)));
@@ -114,7 +107,6 @@ public class WinGameView extends JPanel implements PropertyChangeListener {
                 BorderFactory.createEmptyBorder(10, 20, 10, 20)
         ));
 
-        // Hover effect
         button.addMouseListener(new MouseAdapter() {
             public void mouseEntered(MouseEvent evt) {
                 button.setBackground(UISettings.HOVER_COLOR);
@@ -148,8 +140,7 @@ public class WinGameView extends JPanel implements PropertyChangeListener {
 
         if (state.isWon()) {
             titleLabel.setText("Victory!");
-            messageArea.setText(state.getMessage() + "\n\nYou have successfully escaped UofT! " +
-                    "The doors of Convocation Hall swing open before you, and freedom awaits beyond.");
+            messageArea.setText(state.getMessage() + "\n\nYou have successfully escaped UofT! " + "The doors of Convocation Hall swing open before you, and freedom awaits beyond.");
             keysLabel.setText("Keys Collected: " + state.getKeysCollected() + " / 2");
 
             JButton newGameButton = createStyledButton("New Adventure");
@@ -166,8 +157,7 @@ public class WinGameView extends JPanel implements PropertyChangeListener {
             buttonPanel.add(quitButton);
         } else {
             titleLabel.setText("Not Yet!");
-            messageArea.setText(state.getMessage() + "\n\nThe ancient doors remain sealed. " +
-                    "Continue your quest to find the remaining keys.");
+            messageArea.setText(state.getMessage() + "\n\nThe ancient doors remain sealed. " + "Continue your quest to find the remaining keys.");
             keysLabel.setText("");
 
             JButton backButton = createStyledButton("Return to Map");
