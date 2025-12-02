@@ -14,8 +14,8 @@ public class UISettings {
     public static final String CONHALL_EXT_IMAGE_PATH = "/Users/vanessa.hanbao/Downloads/conhallext.png";
     public static final String KNOX_EXT_IMAGE_PATH = "/Users/vanessa.hanbao/Downloads/csc207 final project resources/knoxext.png";
     public static final String KNOX_INT_IMAGE_PATH = "/Users/vanessa.hanbao/Downloads/csc207 final project resources/KNOXINT.jpg";
-    public static final String GERSTEIN_INT_IMAGE_PATH = "/Users/vanessa.hanbao/Downloads/gersteinint.jpg";
-    public static final String GERSTEIN_EXT_IMAGE_PATH = "/Users/vanessa.hanbao/Downloads/gersteinext.jpg";
+    public static final String GERSTEIN_INT_IMAGE_PATH = "/Users/vanessa.hanbao/Downloads/csc207 final project resources/gersteinint.jpg";
+    public static final String GERSTEIN_EXT_IMAGE_PATH = "/Users/vanessa.hanbao/Downloads/csc207 final project resources/gersteinext.jpg";
 
     public static final int WINDOW_WIDTH = 800;
     public static final int WINDOW_HEIGHT = 600;

@@ -31,10 +31,11 @@ public class NavigateInteractor implements NavigateInputBoundary {
         return switch (direction.toLowerCase()) {
             case "north" -> "Card game"; // UC exterior > interior > card game
             case "south" -> "Win game";
-            case "east" -> "Trivia game"; // gerstein exterior > interior > trivia game
+            case "east" -> "Gerstein exterior"; // gerstein exterior > interior > trivia game
             case "west" -> "Knox exterior"; // knox exterior > interior > card game
 //            case "card game" -> "Card game";
             case "knox interior" -> "Knox interior";
+            case "trivia game" -> "Trivia game";
             default -> "";
         };
     }
