@@ -1,7 +1,7 @@
 package view;
 
 import javax.swing.*;
-import javax.swing.plaf.basic.BasicScrollBarUI;
+
 import interface_adapter.navigate.NavigateController;
 import interface_adapter.clear_history.ClearHistoryViewModel;
 import interface_adapter.clear_history.ClearHistoryController;
@@ -11,11 +11,10 @@ import interface_adapter.save_progress.SaveProgressController;
 import interface_adapter.view_progress.ViewProgressController;
 import interface_adapter.quit_game.QuitGameController;
 import interface_adapter.win_game.WinGameController;
-import view.UISettings;
+import resources.UISettings;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.File;
 import java.io.IOException;
 
 public class NavigateView extends JPanel {

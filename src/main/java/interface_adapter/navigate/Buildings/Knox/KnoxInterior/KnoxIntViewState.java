@@ -1,17 +1,13 @@
-package interface_adapter.navigate;
+package interface_adapter.navigate.Buildings.Knox.KnoxInterior;
 
-import java.util.HashSet;
-import java.util.Set;
-
-public class KnoxExtViewState{
-    private int numberOfKeys;
+public class KnoxIntViewState {
     private String storyText;
     private String direction;
 
     // Location
-    private String location = "Knox Exterior";
+    private String location = "Knox Interior";
 
-    public KnoxExtViewState() {
+    public KnoxIntViewState() {
         this.storyText = "abcdefghijklmnopqrstuvwxyz";
         this.direction = "";
     }

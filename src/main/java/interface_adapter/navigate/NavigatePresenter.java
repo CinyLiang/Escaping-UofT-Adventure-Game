@@ -1,6 +1,8 @@
 package interface_adapter.navigate;
 
 import interface_adapter.ViewManagerModel;
+import interface_adapter.navigate.Buildings.Knox.KnoxExterior.KnoxExtViewModel;
+import interface_adapter.navigate.Buildings.Knox.KnoxInterior.KnoxIntViewModel;
 import interface_adapter.play_card_game.CardGameViewModel;
 import interface_adapter.trivia_game.TriviaGameViewModel;
 import interface_adapter.win_game.WinGameViewModel;
@@ -19,14 +21,16 @@ public class NavigatePresenter implements NavigateOutputBoundary {
     private final CardGameViewModel cardGameViewModel;
     private final TriviaGameViewModel triviaGameViewModel;
     private final KnoxExtViewModel knoxExtViewModel;
+    private final KnoxIntViewModel knoxIntViewModel;
 
-    public NavigatePresenter(NavigateViewModel navigateViewModel, ViewManagerModel viewManagerModel, WinGameViewModel winGameViewModel, CardGameViewModel cardGameViewModel, TriviaGameViewModel triviaGameViewModel, KnoxExtViewModel knoxExtViewModel) {
+    public NavigatePresenter(NavigateViewModel navigateViewModel, ViewManagerModel viewManagerModel, WinGameViewModel winGameViewModel, CardGameViewModel cardGameViewModel, TriviaGameViewModel triviaGameViewModel, KnoxExtViewModel knoxExtViewModel, KnoxIntViewModel knoxIntViewModel) {
         this.navigateViewModel = navigateViewModel;
         this.viewManagerModel = viewManagerModel;
         this.winGameViewModel = winGameViewModel;
         this.cardGameViewModel = cardGameViewModel;
         this.triviaGameViewModel = triviaGameViewModel;
         this.knoxExtViewModel = knoxExtViewModel;
+        this.knoxIntViewModel = knoxIntViewModel;
     }
 
     @Override
@@ -56,6 +60,10 @@ public class NavigatePresenter implements NavigateOutputBoundary {
             case "knox exterior" -> {
                 updateNavigation(knoxExtViewModel.getState().getLocation());
                 viewManagerModel.setState(knoxExtViewModel.getViewName());
+            }
+            case "knox interior" -> {
+                updateNavigation(knoxIntViewModel.getState().getLocation());
+                viewManagerModel.setState(knoxIntViewModel.getViewName());
             }
             default -> {
                 // optional: ignore or throw

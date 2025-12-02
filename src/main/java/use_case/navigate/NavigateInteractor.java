@@ -22,11 +22,11 @@ public class NavigateInteractor implements NavigateInputBoundary {
     @NotNull
     private static String getTargetView(String direction) {
         return switch (direction.toLowerCase()) {
-            case "north" -> "Card game";
+            case "north" -> "Card game"; // UC exterior > interior > card game
             case "south" -> "Win game";
-            case "east" -> "Trivia game";
-//            case "west" -> "Card game";
-            case "west" -> "Knox exterior";
+            case "east" -> "Trivia game"; // gerstein exterior > interior > trivia game
+            case "west" -> "Knox exterior"; // knox exterior > interior > card game
+            case "Card game" -> "Card game";
             default -> "";
         };
     }

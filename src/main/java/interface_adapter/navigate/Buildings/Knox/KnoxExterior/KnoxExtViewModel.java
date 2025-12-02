@@ -1,7 +1,6 @@
-package interface_adapter.navigate;
+package interface_adapter.navigate.Buildings.Knox.KnoxExterior;
 
 import interface_adapter.ViewModel;
-import interface_adapter.navigate.NavigateState;
 
 public class KnoxExtViewModel extends ViewModel<KnoxExtViewState> {
     public KnoxExtViewModel() {

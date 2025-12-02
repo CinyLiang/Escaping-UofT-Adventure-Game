@@ -1,15 +1,15 @@
-package view;
+package view.Buildings;
 
 import javax.swing.*;
 
-import interface_adapter.navigate.KnoxExtViewModel;
+import interface_adapter.navigate.Buildings.Knox.KnoxExterior.KnoxExtViewModel;
 import interface_adapter.navigate.NavigateController;
+import resources.UISettings;
 
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
-import view.UISettings;
 
 public class KnoxExteriorView extends JPanel {
     public static final String VIEW_NAME = "knox_exterior_view";
@@ -34,6 +34,8 @@ public class KnoxExteriorView extends JPanel {
 //        setNavigateController();
         this.setLayout(new BorderLayout());
         this.setBackground(UISettings.PARCHMENT_BACKGROUND);
+
+        // insert header image
 
         storyArea = new JTextArea("A cold wind blows across the open grass of Front Campus, pushing " +
                 "you toward the entrance of Knox College. You get the sudden feeling that you aren't walking to the " +
@@ -96,7 +98,7 @@ public class KnoxExteriorView extends JPanel {
 
 
         // Continue button
-        continueButton = makeButton("Continue inside Knox Hall");
+        continueButton = makeButton("Continue inside Knox College");
         bottomPanel.add(continueButton);
 
         this.add(bottomPanel, BorderLayout.SOUTH);
@@ -105,7 +107,7 @@ public class KnoxExteriorView extends JPanel {
         continueButton.addActionListener(e -> {
             if (navigateController != null) {
                 System.out.println("Move from knox exterior to knox interior");
-                navigateController.execute("knoxInterior");
+                navigateController.execute("Knox Interior");
             }
         });
 
