@@ -5,17 +5,12 @@ import org.json.JSONObject;
 import use_case.save_progress.SaveProgressDataAccessInterface;
 import use_case.view_progress.ViewProgressDataAccessInterface;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.util.*;
 
 import use_case.save_progress.SaveProgressDataAccessInterface;
 import use_case.view_progress.ViewProgressDataAccessInterface;
 
 import java.io.*;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * File-based data access object for saving and loading game progress.
@@ -43,13 +38,7 @@ public class FileGameDataAccessObject implements
     public FileGameDataAccessObject() {
         this.filePath = "progress.json";
         loadProgress();
-    }
-          
-   public FileGameDataAccessObject(String filePath) {
-        this.filePath = filePath;
-        loadProgress();
-    }
-         
+    } 
 
     /**
      * Constructor with custom file path (used by AppBuilder)
@@ -92,20 +81,18 @@ public class FileGameDataAccessObject implements
 
     // SAVE PROGRESS IMPLEMENTATION
     @Override
-    public boolean saveProgress() {
-        try {
-            JSONObject json = new JSONObject();
-            json.put("location", currentLocation);
-            json.put("keys", keysCollected);
-            json.put("puzzles", solvedPuzzles);
+    public boolean saveProgress(String currentLocation, int keysCollected, Set<String> solvedPuzzles) {
+        this.currentLocation = currentLocation;
+        this.keysCollected = keysCollected;
+        this.solvedPuzzles = solvedPuzzles;
 
-            FileWriter writer = new FileWriter(filePath);
-            writer.write(json.toString(4));  // pretty formatted JSON
-            writer.close();
+        try (PrintWriter writer = new PrintWriter(new FileWriter(filePath))) {
+            writer.println(this.currentLocation);
+            writer.println(this.keysCollected);
+            writer.println(String.join(",", this.solvedPuzzles));
             return true;
-
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (IOException e) {
+            System.err.println("Failed to save game: " + e.getMessage());
             return false;
         }
     }

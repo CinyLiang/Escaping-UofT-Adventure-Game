@@ -57,6 +57,10 @@ public class SaveGameDialog extends JDialog implements PropertyChangeListener {
         setLocationRelativeTo(null);
     }
 
+    public void showDialog() {
+        setVisible(true);
+    }
+
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getPropertyName().equals(QuitGameViewModel.EXIT_GAME_PROPERTY)) {

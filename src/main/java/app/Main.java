@@ -36,7 +36,7 @@ public class Main {
         final AppBuilder appBuilder = new AppBuilder();
         JFrame app = null;
         try {
-            app = appBuilder.build("game_save.txt");
+            app = appBuilder.build("game_save.json");
         }
         catch (IOException ioException) {
             throw new RuntimeException(ioException);

@@ -307,9 +307,9 @@ public class AppBuilder {
 
         addClearHistoryUseCase();
 
-        FileGameDataAccessObject dao = new FileGameDataAccessObject("game_data.json");
-        addSaveProgressUseCase(dao);
-        addViewProgressUseCase(dao);
+        // FileGameDataAccessObject dao = new FileGameDataAccessObject("game_data.json");
+        // addSaveProgressUseCase(dao);
+        // addViewProgressUseCase(dao);
 
         addView(instructionsView, InstructionsView.VIEW_NAME);
 
