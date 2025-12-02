@@ -1,0 +1,35 @@
+@startuml
+class use_case.card_game_hints.CardGameHintsOutputDataObject {
+- String hint
++ String getHint()
+}
+
+
+interface use_case.card_game_hints.CardGameHintsInputDataBoundary {
+~ void execute(CardGameHintsInputDataObject)
+}
+
+class use_case.card_game_hints.CardGameHintsInputDataObject {
+- CardPuzzle cardPuzzle
++ CardPuzzle getCardPuzzle()
+}
+
+
+interface use_case.card_game_hints.CardGameHintsOutputBoundary {
+~ void prepareSuccessView(CardGameHintsOutputDataObject)
+~ void prepareFailView(String)
+}
+
+class use_case.card_game_hints.CardGameHintsInteractor {
+- CardGameHintsOutputBoundary presenter
++ void execute(CardGameHintsInputDataObject)
++ String getSampleSolution(List<Card>)
++ String extractInner(String)
++ String generateHint(List<Card>)
+}
+
+
+
+
+use_case.card_game_hints.CardGameHintsInputDataBoundary <|.. use_case.card_game_hints.CardGameHintsInteractor
+@enduml

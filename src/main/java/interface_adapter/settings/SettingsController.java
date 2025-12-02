@@ -2,7 +2,7 @@ package interface_adapter.settings;
 
 import use_case.settings.SettingsInputBoundary;
 import use_case.settings.SettingsInputData;
-import view.ThemeManager;
+import view.theme.ThemeManager;
 
 public class SettingsController {
 

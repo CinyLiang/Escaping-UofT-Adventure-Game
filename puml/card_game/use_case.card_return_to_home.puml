@@ -1,0 +1,19 @@
+@startuml
+interface use_case.card_return_to_home.CardReturnOutputBoundary {
+~ void changeView()
+}
+
+interface use_case.card_return_to_home.CardReturnInputBoundary {
+~ void execute()
+}
+
+class use_case.card_return_to_home.CardReturnInteractor {
+- CardReturnOutputBoundary outputBoundary
++ void execute()
+}
+
+
+
+
+use_case.card_return_to_home.CardReturnInputBoundary <|.. use_case.card_return_to_home.CardReturnInteractor
+@enduml

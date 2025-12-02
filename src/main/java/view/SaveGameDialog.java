@@ -2,17 +2,30 @@ package view;
 
 import interface_adapter.navigate.NavigateState;
 import interface_adapter.navigate.NavigateViewModel;
+import interface_adapter.quit_game.QuitGameController;
+import interface_adapter.quit_game.QuitGameState;
+import interface_adapter.quit_game.QuitGameViewModel;
 import interface_adapter.save_progress.SaveProgressController;
 
 import javax.swing.*;
 import java.awt.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
-public class SaveGameDialog extends JDialog {
+public class SaveGameDialog extends JDialog implements PropertyChangeListener {
 
     private SaveProgressController saveProgressController;
+    private QuitGameViewModel quitGameViewModel;
+    private QuitGameController quitGameController;
 
-    public SaveGameDialog(SaveProgressController saveProgressController, NavigateViewModel navigateViewModel) {
+    public SaveGameDialog(SaveProgressController saveProgressController,
+                          NavigateViewModel navigateViewModel,
+                          QuitGameViewModel quitGameViewModel,
+                          QuitGameController quitGameController) {
         this.saveProgressController = saveProgressController;
+        this.quitGameController = quitGameController;
+        this.quitGameViewModel = quitGameViewModel;
+        this.quitGameViewModel.addPropertyChangeListener(this);
 
         NavigateState navigateState = navigateViewModel.getState();
 
@@ -29,10 +42,10 @@ public class SaveGameDialog extends JDialog {
 
         saveAndQuit.addActionListener(e -> {
             this.saveProgressController.execute(navigateState.getLocation(), navigateState.getNumberOfKeys(), navigateState.getPuzzlesSolved());
-            closeGame();
+            this.quitGameController.exitGame();
         });
 
-        quitWithoutSaving.addActionListener(e -> closeGame());
+        quitWithoutSaving.addActionListener(e -> this.quitGameController.exitGame());
 
         buttons.add(saveAndQuit);
         buttons.add(quitWithoutSaving);
@@ -44,12 +57,18 @@ public class SaveGameDialog extends JDialog {
         setLocationRelativeTo(null);
     }
 
-    private void closeGame() {
-        dispose();
-        System.exit(0);
-    }
-
     public void showDialog() {
         setVisible(true);
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        if (evt.getPropertyName().equals(QuitGameViewModel.EXIT_GAME_PROPERTY)) {
+            QuitGameState state = (QuitGameState) evt.getNewValue();
+            if (state.getShouldExitGame()) {
+                this.dispose();
+                System.exit(0);
+            }
+        }
     }
 }

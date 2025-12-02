@@ -34,8 +34,8 @@ class TriviaGameInteractorTest {
     @Test
     void testSubmitCorrectAnswer() {
         interactor.startNewQuestion();
-        TriviaGameInputData inputData = new TriviaGameInputData("True");
-        interactor.submitAnswer(inputData);
+        TriviaGameInputData inputData = new TriviaGameInputData(TriviaGameInputData.Action.START_NEW_QUESTION,"True");
+        interactor.submitAnswer(inputData.getPlayerAnswer());
 
         assertTrue(mockPresenter.resultPresented);
         assertTrue(mockPresenter.lastOutputData.wasCorrect());
@@ -47,8 +47,8 @@ class TriviaGameInteractorTest {
     @Test
     void testSubmitIncorrectAnswer() {
         interactor.startNewQuestion();
-        TriviaGameInputData inputData = new TriviaGameInputData("False");
-        interactor.submitAnswer(inputData);
+        TriviaGameInputData inputData = new TriviaGameInputData(TriviaGameInputData.Action.START_NEW_QUESTION, "False");
+        interactor.submitAnswer(inputData.getPlayerAnswer());
 
         assertTrue(mockPresenter.resultPresented);
         assertFalse(mockPresenter.lastOutputData.wasCorrect());
@@ -60,8 +60,8 @@ class TriviaGameInteractorTest {
     void testThreeCorrectAnswersSolvesPuzzle() {
         for (int i = 0; i < 3; i++) {
             interactor.startNewQuestion();
-            TriviaGameInputData inputData = new TriviaGameInputData("True");
-            interactor.submitAnswer(inputData);
+            TriviaGameInputData inputData = new TriviaGameInputData(TriviaGameInputData.Action.START_NEW_QUESTION,"True");
+            interactor.submitAnswer(inputData.getPlayerAnswer());
         }
 
         assertTrue(mockPresenter.lastOutputData.isPuzzleSolved());
@@ -72,12 +72,12 @@ class TriviaGameInteractorTest {
     @Test
     void testProgressTracking() {
         interactor.startNewQuestion();
-        TriviaGameInputData correct = new TriviaGameInputData("True");
-        interactor.submitAnswer(correct);
+        TriviaGameInputData correct = new TriviaGameInputData(TriviaGameInputData.Action.START_NEW_QUESTION,"True");
+        interactor.submitAnswer(correct.getPlayerAnswer());
         assertEquals(1, puzzle.getCorrectAnswers());
 
         interactor.startNewQuestion();
-        interactor.submitAnswer(correct);
+        interactor.submitAnswer(correct.getPlayerAnswer());
         assertEquals(2, puzzle.getCorrectAnswers());
     }
 
@@ -90,8 +90,8 @@ class TriviaGameInteractorTest {
     @Test
     void testCaseInsensitiveAnswers() {
         interactor.startNewQuestion();
-        TriviaGameInputData inputData = new TriviaGameInputData("true");
-        interactor.submitAnswer(inputData);
+        TriviaGameInputData inputData = new TriviaGameInputData(TriviaGameInputData.Action.START_NEW_QUESTION,"true");
+        interactor.submitAnswer(inputData.getPlayerAnswer());
 
         assertTrue(mockPresenter.lastOutputData.wasCorrect());
     }

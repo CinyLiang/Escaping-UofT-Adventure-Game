@@ -4,8 +4,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.File;
-import java.io.IOException;
 
 import interface_adapter.ViewManagerModel;
 
@@ -14,15 +12,12 @@ public class InstructionsView extends JPanel {
     public static final String VIEW_NAME = "instructions";
     private JLabel imageLabel;
 
-    public InstructionsView(ViewManagerModel viewManagerModel) throws IOException, FontFormatException {
+    public InstructionsView(ViewManagerModel viewManagerModel) {
         this.setLayout(new GridBagLayout());
 
-//        // font
-        Font quintessentialBase = Font.createFont(Font.TRUETYPE_FONT, new File("/Users/vanessa.hanbao/Downloads/Quintessential/Quintessential-Regular.ttf"));
-        Font quintessential = quintessentialBase.deriveFont(Font.PLAIN, 24);
 
-        Font texturinaBase = Font.createFont(Font.TRUETYPE_FONT, new File("/Users/vanessa.hanbao/Downloads/Quintessential,Texturina/Texturina/Texturina-VariableFont_opsz,wght.ttf"));
-        Font texturina = texturinaBase.deriveFont(Font.PLAIN, 24);
+        Font quintessential = UISettings.quintessential;
+        Font texturina = UISettings.texturina;
 
         // colors to match map aesthetic
         final Color parchmentBackground = new Color(245, 235, 209);
@@ -48,23 +43,31 @@ public class InstructionsView extends JPanel {
         gbc.gridy++;
         this.add(title, gbc);
 
-        // make a scroll pane to keep everythign in view
+
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
         mainPanel.setBackground(parchmentBackground);
 
-        // image
-        ImageIcon originalImage = new ImageIcon("/Users/vanessa.hanbao/Downloads/Gemini_Generated_Image_1lcv901lcv901lcv.png");
-        int newWidth = 400;
-        int newHeight = (originalImage.getIconHeight() * newWidth) / originalImage.getIconWidth();
-        Image scaledImage = originalImage.getImage().getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH);
-        ImageIcon scaledIcon = new ImageIcon(scaledImage);
 
-        imageLabel = new JLabel(scaledIcon);
-        imageLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        if (UISettings.instructionsImage != null && UISettings.instructionsImage.getImage() != null) {
+            ImageIcon originalImage = UISettings.instructionsImage;
+            int newWidth = 400;
+            int newHeight = (originalImage.getIconHeight() * newWidth) / originalImage.getIconWidth();
+            Image scaledImage = originalImage.getImage().getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH);
+            ImageIcon scaledIcon = new ImageIcon(scaledImage);
 
-        mainPanel.add(imageLabel);
-        mainPanel.add(Box.createVerticalStrut(20));
+            imageLabel = new JLabel(scaledIcon);
+            imageLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+            mainPanel.add(imageLabel);
+            mainPanel.add(Box.createVerticalStrut(20));
+        } else {
+            JLabel placeholder = new JLabel("[Image Not Found]");
+            placeholder.setAlignmentX(Component.CENTER_ALIGNMENT);
+            placeholder.setFont(texturina);
+            placeholder.setForeground(accentColor);
+            mainPanel.add(placeholder);
+            mainPanel.add(Box.createVerticalStrut(20));
+        }
 
         // instructions
         JTextArea text = new JTextArea(
@@ -93,18 +96,7 @@ public class InstructionsView extends JPanel {
         mainPanel.add(textWrapper);
         JScrollPane mainScrollPane = new JScrollPane(mainPanel);
         mainScrollPane.setBorder(BorderFactory.createEmptyBorder());
-
-        // prevent horizontal scroll bar from appearing
         mainScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        mainScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-
-        gbc.gridy++;
-        gbc.weighty = 0.5;
-        gbc.fill = GridBagConstraints.BOTH;
-        mainPanel.add(text);
-
-        // wrap mainPanel into JScrollPane
-        mainScrollPane.setBorder(BorderFactory.createEmptyBorder());
         mainScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 
         // main scroll pane to primary view
@@ -129,7 +121,6 @@ public class InstructionsView extends JPanel {
         // hover effect
         startButton.addMouseListener(new MouseAdapter() {
             public void mouseEntered(MouseEvent evt) {
-                // Invert colors on hover
                 startButton.setBackground(hoverColor);
                 startButton.setForeground(accentColor);
                 startButton.repaint();
@@ -137,7 +128,6 @@ public class InstructionsView extends JPanel {
 
             @Override
             public void mouseExited(MouseEvent evt) {
-                // Restore default colors
                 startButton.setBackground(parchmentBackground);
                 startButton.setForeground(accentColor);
                 startButton.repaint();

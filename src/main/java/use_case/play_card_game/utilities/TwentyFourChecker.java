@@ -18,7 +18,7 @@ public class TwentyFourChecker {
         return solve(nums);
     }
 
-    static List<Double> cardParser(List<Card> cards) {
+    private static List<Double> cardParser(List<Card> cards) {
         List<Double> nums = new ArrayList<>();
         for (Card card : cards) {
             nums.add((double)card.getValue());
@@ -77,12 +77,5 @@ public class TwentyFourChecker {
         results.add(x * y);
         if (Math.abs(y) > EPS) results.add(x / y);
         return results;
-    }
-
-    // quick manual test
-    public static void main(String[] args) {
-        System.out.println(canMake24(6, 6, 6, 6));   // -> true
-        System.out.println(canMake24(1, 1, 1, 1));   // -> false
-        System.out.println(canMake24(3, 9, 6, 7));   // -> true
     }
 }

@@ -39,7 +39,7 @@ public class ExpressionEvaluator{
                 operators.push(c);
             } else if (c == ')') {
                 // deal with calculations wrapped in parentheses
-                while (!operators.isEmpty() && operators.peek() != '(') {
+                while (operators.peek() != '(') {
                     numbers.push(applyOperation(operators.pop(), numbers.pop(), numbers.pop()));
                 }
                 operators.pop(); // pop '('
@@ -66,8 +66,9 @@ public class ExpressionEvaluator{
         return c == '+' || c == '-' || c == '*' || c == '/';
     }
 
-    private static boolean hasPrecedence(char op1, char op2) {
-        if (op2 == '(' || op2 == ')') {
+    public static boolean hasPrecedence(char op1, char op2) {
+//        if (op2 == '(' || op2 == ')') {
+        if (op2 == '(') {
             return false;
         }
         // prioritize multiplications and divisions
@@ -77,7 +78,7 @@ public class ExpressionEvaluator{
         return true;
     }
 
-    private static double applyOperation(char op, double b, double a) {
+    public static double applyOperation(char op, double b, double a) {
         switch (op) {
             case '+':
                 return a + b;
@@ -94,38 +95,5 @@ public class ExpressionEvaluator{
                 throw new IllegalArgumentException("Unknown operator: " + op);
         }
     }
-    // Checks whether the expression contains and only contains each of the four
-    // given values once and whether the expression only contains the four
-    // allowed operations
-    public static boolean checkExprPrereq(String expression, List<Integer> nums){
-        List<Integer> remainingNums = new ArrayList<>(nums);
-        List<String> signs = Arrays.asList("+", "-", "*", "/", "(", ")");
 
-        expression = expression.replaceAll("\\s+", "");
-        String[] tokens = expression.split("(?=[+*/)(\\-])|(?<=[+*/)(\\-])");
-        for (String token: tokens) {
-            if (token.matches("\\d+")) {
-                try {
-                    int num = Integer.parseInt(token);
-                    if (!remainingNums.remove(Integer.valueOf(num))) {
-                        throw new InvalidInputException("Number " + num + " is " +
-                                "not one of the given card value or was used " +
-                                "multiple times!");
-                    } else {
-                        if (!signs.contains(token)) {
-                            throw new InvalidInputException("Please only use the four " +
-                                    "allowed operations and parentheses!");
-                        }
-                    }
-                } catch (NumberFormatException e) {
-                    throw new InvalidInputException("Invalid input!");
-                }
-            }
-            if (!remainingNums.isEmpty()) {
-                throw new InvalidInputException("There is at least one unused card!");
-            }
-        }
-        return true;
-    }
 }
-

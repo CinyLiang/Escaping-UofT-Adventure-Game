@@ -1,0 +1,21 @@
+@startuml
+class use_case.validateCardAnswer.utilities.ExpressionEvaluator {
++ {static} double evaluate(String)
+- {static} double evaluateWithStacks(String)
+- {static} boolean isOperator(char)
++ {static} boolean hasPrecedence(char,char)
++ {static} double applyOperation(char,double,double)
+}
+
+class use_case.validateCardAnswer.utilities.Expression24Verifier {
+- {static} double TARGET
+- {static} double EPS
++ {static} boolean isValidSolution(String,List<Card>)
++ {static} boolean isValidSolution(String,int)
+- {static} List<Integer> extractNumbers(String)
+- {static} double evaluate(String)
+- {static} List<String> toRPN(String)
+- {static} double evalRPN(List<String>)
+}
+
+@enduml

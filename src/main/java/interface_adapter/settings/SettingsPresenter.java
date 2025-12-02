@@ -3,7 +3,7 @@ package interface_adapter.settings;
 import interface_adapter.ViewManagerModel;
 import use_case.settings.SettingsOutputBoundary;
 import use_case.settings.SettingsOutputData;
-import view.ThemeManager;
+import view.theme.ThemeManager;
 
 public class SettingsPresenter implements SettingsOutputBoundary {
 

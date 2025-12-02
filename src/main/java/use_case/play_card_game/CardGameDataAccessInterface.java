@@ -8,5 +8,5 @@ import java.util.List;
  * The DAO interface for the Playing Card Games Use Case.
  */
 public interface CardGameDataAccessInterface {
-    List<Card> drawCards (int cardNum);
+    List<Card> drawCards ();
 }

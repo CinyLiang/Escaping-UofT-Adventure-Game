@@ -1,0 +1,75 @@
+@startuml
+interface use_case.clear_history.ClearHistoryInputBoundary {
+    +clearHistory()
+    +executeRequestClearHistory()
+}
+
+interface use_case.clear_history.ClearHistoryOutputBoundary {
+    +execute()
+    +prepareClearHistoryView()
+}
+
+class use_case.clear_history.ClearHistoryInteractor {
+    -ClearHistoryOutputBoundary presenter
+    +ClearHistoryInteractor(ClearHistoryOutputBoundary presenter)
+    +clearHistory()
+    +executeRequestClearHistory()
+}
+
+class interface_adapter.clear_history.ClearHistoryPresenter {
+    -NavigateViewModel viewModel
+    -ClearHistoryViewModel clearHistoryViewModel
+    +ClearHistoryPresenter(NavigateViewModel, ClearHistoryViewModel)
+    +execute()
+    +prepareClearHistoryView()
+}
+
+class interface_adapter.navigate.NavigateViewModel {
+}
+
+class interface_adapter.clear_history.ClearHistoryViewModel {
++ {static} String CLEAR_HISTORY_STATE;
++ ClearHistoryViewModel()
++ void fireShowRestartDialog()
+}
+
+class interface_adapter.clear_history.ClearHistoryController {
+- ClearHistoryInputBoundary interactor;
++ ClearHistoryController(ClearHistoryInputBoundary)
++ void execute()
++ void showConfirmDialog()
+}
+
+class interface_adapter.clear_history.ClearHistoryState {
+- boolean clearDialogVisible
++ ClearHistoryState()
++ void setClearDialogVisible(boolean clearDialogVisible)
++ boolean isClearDialogVisible()
+}
+
+class view.ConfirmRestartGameDialog {
+- ClearHistoryController clearHistoryController
+- ClearHistoryViewModel clearHistoryViewModel
++ ConfirmRestartGameDialog(ClearHistoryController, ClearHistoryViewModel)
++ void propertyChange(PropertyChangeEvent)
+}
+
+class interface_adapter.ViewModel {
+'+ ViewModel(String)
+'+ void addPropertyChangeListener(PropertyChangeListener)
+'+ String getViewName()
+'+ void setState(T)
+'+ void firePropertyChange(String)
+'+ void firePropertyChange()
+}
+
+ClearHistoryInteractor ..|> ClearHistoryInputBoundary : implements
+ClearHistoryPresenter ..|> ClearHistoryOutputBoundary : implements
+ClearHistoryInteractor --> ClearHistoryOutputBoundary : depends on / calls
+ClearHistoryPresenter --> NavigateViewModel : updates
+ClearHistoryPresenter --> ClearHistoryViewModel : updates
+ClearHistoryController --> ClearHistoryInputBoundary : calls
+ClearHistoryViewModel --|> ViewModel : extends
+ConfirmRestartGameDialog --> ClearHistoryController : calls
+ConfirmRestartGameDialog --> ClearHistoryViewModel : observes
+@enduml

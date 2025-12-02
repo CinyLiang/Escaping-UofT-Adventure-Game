@@ -4,6 +4,7 @@ import entity.Card;
 import use_case.play_card_game.utilities.SolutionGenerator;
 import interface_adapter.card_game_hints.CardGameHintsPresenter;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class CardGameHintsInteractor implements CardGameHintsInputDataBoundary {
     private final CardGameHintsOutputBoundary presenter;
@@ -14,7 +15,6 @@ public class CardGameHintsInteractor implements CardGameHintsInputDataBoundary {
 
     public void execute(CardGameHintsInputDataObject input) {
         try {
-//            String hint = input.getCardPuzzle().giveHint();
             List<Card> cards = input.getCardPuzzle().getCards();
             String hint = generateHint(cards);
 
@@ -37,11 +37,12 @@ public class CardGameHintsInteractor implements CardGameHintsInputDataBoundary {
         solution = solution.replaceAll("\\s+", "");
 
 
-        try {
+//        try {
             int lastOpen = solution.lastIndexOf('(');
             int firstCloseAfterLastOpen = solution.indexOf(')', lastOpen);
 
-            if (lastOpen != -1 && firstCloseAfterLastOpen != -1 && firstCloseAfterLastOpen > lastOpen) {
+            // if (lastOpen != -1 && firstCloseAfterLastOpen != -1 && firstCloseAfterLastOpen > lastOpen) {
+            if (lastOpen != -1 && firstCloseAfterLastOpen != -1) {
                 String inner = solution.substring(lastOpen + 1, firstCloseAfterLastOpen);
                 return inner;
             }
@@ -52,15 +53,28 @@ public class CardGameHintsInteractor implements CardGameHintsInputDataBoundary {
 
             return solution;
 
-        } catch (Exception e) {
-            System.err.println("Fail to get hint: " + e.getMessage());
-            return "a basic operation";
-        }
+//        } catch (Exception e) {
+//            System.err.println("Fail to get hint: " + e.getMessage());
+//            return "a basic operation";
+//        }
     }
 
     public String generateHint(List<Card> cards) {
-        String sampleSolution = getSampleSolution(cards);
-        String substring = extractInner(sampleSolution);
-        return "Maybe try "+substring+" first.";
+        try {
+            List<String> solutions = SolutionGenerator.find24Solutions(cards);
+
+            if (solutions == null || solutions.isEmpty()) {
+                List<Integer> values = cards.stream()
+                        .map(Card::getValue)
+                        .collect(Collectors.toList());
+                return "Try combining " + values + " with +, -, ×, or ÷ operations";
+            }
+
+            String sampleSolution = solutions.get(0);
+            String substring = extractInner(sampleSolution);
+            return "Maybe try " + substring + " first.";
+        } catch (Exception e) {
+            return "Try thinking independently before asking~";
+        }
     }
 }

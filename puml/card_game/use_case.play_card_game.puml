@@ -1,0 +1,60 @@
+@startuml
+class entity.Puzzle
+
+class entity.Card
+
+class entity.CardPuzzle extends entity.Puzzle
+
+
+
+class use_case.play_card_game.utilities.TwentyFourChecker {
+}
+TwentyFourChecker --> Card: uses
+
+interface use_case.play_card_game.PlayCardGameInputBoundary {
+}
+
+interface use_case.play_card_game.PlayCardGameOutputBoundary {
+}
+
+class use_case.play_card_game.PlayCardGameInteractor {
+}
+PlayCardGameInteractor --> CardPuzzle: uses
+PlayCardGameInteractor --> use_case.play_card_game.PlayCardGameOutputData: uses
+PlayCardGameInteractor --> use_case.play_card_game.PlayCardGameOutputBoundary: uses
+PlayCardGameInteractor --> use_case.play_card_game.CardGameDataAccessInterface: uses
+
+interface use_case.play_card_game.CardGameDataAccessInterface {
+}
+
+class use_case.play_card_game.utilities.SolutionGenerator {
+}
+SolutionGenerator --> entity.Card: uses
+
+class use_case.play_card_game.PlayCardGameOutputData {
+}
+
+
+class interface_adapter.play_card_game.CardGameController
+CardGameController --> PlayCardGameInputBoundary: uses
+
+class interface_adapter.play_card_game.CardGamePresenter implements use_case.play_card_game.PlayCardGameOutputBoundary
+CardGamePresenter --> PlayCardGameOutputData: uses
+
+class interface_adapter.play_card_game.CardGameState
+
+class interface_adapter.play_card_game.CardGameViewModel extends ViewModel
+
+
+
+class data_access.CardGameDataAccessObject implements use_case.play_card_game.CardGameDataAccessInterface
+CardGameDataAccessObject --> entity.Card: uses
+
+
+
+class view.CardGameView
+CardGameView --> interface_adapter.play_card_game.CardGameController
+CardGameView --> interface_adapter.play_card_game.CardGameState
+CardGameView --> interface_adapter.play_card_game.CardGameViewModel
+
+@enduml

@@ -3,21 +3,18 @@ package interface_adapter.clear_history;
 import use_case.clear_history.ClearHistoryInputBoundary;
 
 public class ClearHistoryController {
-    private Runnable showConfirmDialog;
     private ClearHistoryInputBoundary interactor;
 
     public ClearHistoryController(ClearHistoryInputBoundary interactor) {
-        this.interactor = interactor; // init in app builder?
+        this.interactor = interactor;
     }
 
-    public void setShowConfirmDialog(Runnable r) {
-        this.showConfirmDialog = r;
+    // Shows dialog
+    public void showConfirmDialog() {
+        interactor.executeRequestClearHistory();
     }
 
-    public void showConfirm() {
-        showConfirmDialog.run();
-    }
-
+    // Executes clear
     public void execute() {
         interactor.clearHistory();
     }

@@ -1,0 +1,99 @@
+@startuml
+skinparam linetype ortho
+interface use_case.quit_game.QuitGameInputBoundary {
+~ void execute()
+~ void executeRequestQuit()
+~ void exitGame()
+}
+
+interface use_case.quit_game.QuitGameOutputBoundary {
+~ void prepareQuitView()
+~ void prepareSavePromptView()
+~ void prepareExitView()
+}
+
+class use_case.quit_game.QuitGameInteractor {
++ QuitGameInteractor(QuitGameOutputBoundary)
++ execute()
++ executeRequestQuit()
+}
+
+class interface_adapter.quit_game.QuitGamePresenter {
++ QuitGamePresenter(QuitGameViewModel)
++ void prepareSavePromptView()
++ void prepareExitView()
++ void prepareQuitView()
+}
+
+class interface_adapter.quit_game.QuitGameState {
+- boolean quitDialogVisible
+- boolean isSaveDialogRequired
+- boolean shouldExitGame
++ QuitGameState()
++ QuitGameState(QuitGameState copy)
++ boolean isSaveDialogRequired()
++ void setSaveDialogRequired(boolean saveDialogRequired)
++ boolean getShouldExitGame()
++ void setShouldExitGame(boolean shouldExitGame)
++ boolean isQuitDialogVisible()
++ void setQuitDialogVisible(boolean quitDialogVisible)
+}
+
+class interface_adapter.quit_game.QuitGameViewModel {
++ QuitGameViewModel()
++ fireShowQuitDialog()
++ fireExitGame()
++ fireShowSavePrompt()
+}
+
+class interface_adapter.quit_game.QuitGameController {
++ QuitGameController(QuitGameInputBoundary)
++ executeRequestQuit()
++ execute()
+}
+
+class interface_adapter.save_progress.SaveProgressPresenter {
++ SaveProgressPresenter()
++ prepareFailView()
++ prepareSuccessView()
+}
+
+class interface_adapter.save_progress.SaveProgressController {
+'+ SaveProgressController(SaveProgressInputBoundary)
+'+ execute(String int, Set<String>)
+}
+
+class view.SaveGameDialog {
+'+ SaveGameDialog(SaveProgressController, NavigateViewModel)
+'+ propertyChange(PropertyChangeEvent)
+}
+
+class view.QuitGameDialog {
++ QuitGameDialog(QuitGameController, SaveProgressController, NavigateViewModel, QuitGameViewModel)
++ propertyChange(PropertyChangeEvent)
+}
+
+class interface_adapter.ViewModel {
+'+ ViewModel(String)
+'+ void addPropertyChangeListener(PropertyChangeListener)
+'+ String getViewName()
+'+ void setState(T)
+'+ void firePropertyChange(String)
+'+ void firePropertyChange()
+}
+
+class interface_adapter.navigate.NavigateViewModel {
+}
+
+QuitGameInteractor ..|> QuitGameInputBoundary : implements
+QuitGamePresenter ..|> QuitGameOutputBoundary : implements
+QuitGameInteractor --> QuitGameOutputBoundary : calls
+QuitGamePresenter --> QuitGameViewModel : updates
+QuitGameController --> QuitGameInputBoundary : calls
+SaveGameDialog --> SaveProgressController : calls
+SaveGameDialog --> NavigateViewModel : calls
+QuitGameDialog --> QuitGameController : calls
+QuitGameDialog --> SaveProgressController : calls
+QuitGameDialog --> NavigateViewModel : calls
+QuitGameDialog --> QuitGameViewModel : calls
+@enduml

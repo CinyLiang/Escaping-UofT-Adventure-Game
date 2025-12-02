@@ -1,0 +1,34 @@
+@startuml
+' 1. STYLE CONFIGURATION
+skinparam linetype ortho
+skinparam nodesep 100
+skinparam ranksep 80
+hide empty members
+
+' 2. RELATIONSHIPS WITH DIRECTIONAL HINTS
+
+' View -> Controller
+view.ConfirmRestartGameDialog -down-> interface_adapter.clear_history.ClearHistoryController
+
+' Controller -> Input Boundary
+interface_adapter.clear_history.ClearHistoryController -down-> use_case.clear_history.ClearHistoryInputBoundary
+
+' Interactor Implementation
+use_case.clear_history.ClearHistoryInteractor .up.|> use_case.clear_history.ClearHistoryInputBoundary
+use_case.clear_history.ClearHistoryInteractor -right-> use_case.clear_history.ClearHistoryOutputBoundary
+
+' Presenter Implementation
+interface_adapter.clear_history.ClearHistoryPresenter .up.|> use_case.clear_history.ClearHistoryOutputBoundary
+interface_adapter.clear_history.ClearHistoryPresenter -up-> interface_adapter.clear_history.ClearHistoryViewModel : updates
+interface_adapter.clear_history.ClearHistoryPresenter -up-> interface_adapter.navigate.NavigateViewModel : updates
+
+' View -> ViewModel (Observation)
+view.ConfirmRestartGameDialog .left.> interface_adapter.clear_history.ClearHistoryViewModel : observes
+
+'ViewModel -> ViewModel (Extends)
+interface_adapter.clear_history.ClearHistoryViewModel --|> interface_adapter.ViewModel : extends
+
+' State Association
+interface_adapter.clear_history.ClearHistoryViewModel -right-> interface_adapter.clear_history.ClearHistoryState
+
+@enduml

@@ -16,14 +16,26 @@ public class TriviaGameInteractor implements TriviaGameInputBoundary {
     }
 
     @Override
-    public void startNewQuestion() {
+    public void execute(TriviaGameInputData inputData) {
+        switch (inputData.getAction()) {
+            case START_NEW_QUESTION:
+                startNewQuestion();
+                break;
+            case SUBMIT_ANSWER:
+                submitAnswer(inputData.getPlayerAnswer());
+                break;
+            case EXIT_PUZZLE:
+                exitPuzzle();
+                break;
+        }
+    }
 
+    void startNewQuestion() {
         String[] questionData = dataAccess.fetchQuestion();
         String question = questionData[0];
         String correctAnswer = questionData[1];
 
         puzzle.setCurrentQuestion(question, correctAnswer);
-
 
         TriviaGameOutputData outputData = new TriviaGameOutputData(
                 question, false, puzzle.getCorrectAnswers(),
@@ -33,10 +45,8 @@ public class TriviaGameInteractor implements TriviaGameInputBoundary {
         presenter.presentQuestion(outputData);
     }
 
-    @Override
-    public void submitAnswer(TriviaGameInputData inputData) {
-
-        boolean isCorrect = puzzle.checkAnswer(inputData.getPlayerAnswer());
+    public void submitAnswer(String playerAnswer) {
+        boolean isCorrect = puzzle.checkAnswer(playerAnswer);
 
         String message;
         if (isCorrect) {
@@ -48,7 +58,6 @@ public class TriviaGameInteractor implements TriviaGameInputBoundary {
             message = "Incorrect. Try another question.";
         }
 
-
         TriviaGameOutputData outputData = new TriviaGameOutputData(
                 puzzle.getQuestion(), isCorrect,
                 puzzle.getCorrectAnswers(), puzzle.getRequiredCorrectAnswers(),
@@ -58,7 +67,6 @@ public class TriviaGameInteractor implements TriviaGameInputBoundary {
         presenter.presentResult(outputData);
     }
 
-    @Override
     public void exitPuzzle() {
         presenter.exitPuzzle();
     }

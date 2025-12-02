@@ -14,7 +14,8 @@ public class ReturnFromCardPresenter implements CardReturnOutputBoundary{
     private final CardGameViewModel cardGameViewModel;
 
     public ReturnFromCardPresenter(ViewManagerModel viewManagerModel,
-                                   NavigateViewModel navigateViewModel, CardGameViewModel cardGameViewModel) {
+                                   NavigateViewModel navigateViewModel,
+                                   CardGameViewModel cardGameViewModel) {
         this.viewManagerModel = viewManagerModel;
         this.navigateViewModel = navigateViewModel;
         this.cardGameViewModel = cardGameViewModel;
@@ -34,5 +35,9 @@ public class ReturnFromCardPresenter implements CardReturnOutputBoundary{
 
         this.viewManagerModel.setState(this.navigateViewModel.getViewName());
         this.viewManagerModel.firePropertyChange();
+    }
+
+    public NavigateViewModel getNavigateViewModel() {
+        return navigateViewModel;
     }
 }

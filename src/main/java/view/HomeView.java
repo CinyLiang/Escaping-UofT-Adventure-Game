@@ -1,7 +1,7 @@
 package view;
 
 import interface_adapter.ViewManagerModel;
-import view.ThemeManager;
+import view.theme.ThemeManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -86,7 +86,6 @@ public class HomeView extends JPanel {
     }
 
     // Apply Theme Colors to All UI
-
     private void applyTheme() {
         setBackground(ThemeManager.getBackground());
 
@@ -117,10 +116,14 @@ public class HomeView extends JPanel {
         b.setBackground(ThemeManager.getButtonBackground());
         b.setForeground(ThemeManager.getButtonForeground());
         b.setFont(new Font("Arial", Font.BOLD, ThemeManager.getFontSize(18)));
+
         b.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(ThemeManager.getButtonForeground(), 2),
+                BorderFactory.createLineBorder(ThemeManager.getTextPrimary(), 3),
                 BorderFactory.createEmptyBorder(10, 25, 10, 25)
         ));
+
+        b.setOpaque(true);
+        b.setContentAreaFilled(true);
     }
 
     private void addButton(JPanel p, JButton b) {
@@ -135,8 +138,12 @@ public class HomeView extends JPanel {
             URL url = getClass().getResource("/uoft_bg.png");
             if (url != null) {
                 backgroundImage = new ImageIcon(url).getImage();
+            } else {
+                System.err.println("Could not find background image");
             }
-        } catch (Exception ignored) {}
+        } catch (Exception e) {
+            System.err.println("Error loading background: " + e.getMessage());
+        }
     }
 
     @Override

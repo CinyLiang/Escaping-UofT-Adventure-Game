@@ -77,13 +77,13 @@ public class TriviaGameView extends JPanel implements PropertyChangeListener {
 
         trueButton.addActionListener(e -> {
             if (controller != null) {
-                controller.submitAnswer("True", "Player");
+                controller.submitAnswer("True");
             }
         });
 
         falseButton.addActionListener(e -> {
             if (controller != null) {
-                controller.submitAnswer("False", "Player");
+                controller.submitAnswer("False");
             }
         });
 
@@ -175,7 +175,7 @@ public class TriviaGameView extends JPanel implements PropertyChangeListener {
                 + state.getQuestion() + "</div></html>";
         questionLabel.setText(wrappedQuestion);
 
-        scoreLabel.setText("Keys: " + state.getCorrectAnswers() + " / " + state.getRequiredAnswers());
+        scoreLabel.setText("Correct Answers: " + state.getCorrectAnswers() + " / " + state.getRequiredAnswers());
         messageLabel.setText(state.getMessage());
 
         if (state.isPuzzleSolved()) {

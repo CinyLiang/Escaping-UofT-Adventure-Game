@@ -16,9 +16,14 @@ public class CardGameDataAccessObject implements CardGameDataAccessInterface {
      * The DAO for the Play Card Game Use Case.
      */
     private final OkHttpClient client = new OkHttpClient();
+    private int cardNum;
+    public CardGameDataAccessObject(int cardNum) {
+        this.cardNum = cardNum;
+    }
 
     @Override
-    public List<Card> drawCards(int cardNum) {
+    public List<Card> drawCards() {
+        int cardNum = this.cardNum;
         try {
             String urlString = "https://deckofcardsapi.com/api/deck/new/draw/?count=" + cardNum;
             Request request = new Request.Builder()

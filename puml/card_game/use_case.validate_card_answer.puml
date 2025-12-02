@@ -1,0 +1,51 @@
+@startuml
+interface use_case.validate_card_answer.ValidateCardAnswerInputBoundary {
+~ void execute(ValidateCardAnswerInputData)
+}
+
+class use_case.validate_card_answer.ValidateCardAnswerInputData {
+- String expression
+- List<Card> cards
+- CardPuzzle cardPuzzle
++ String getExpression()
++ List<Card> getCards()
++ CardPuzzle getCardPuzzle()
+}
+
+
+interface use_case.validate_card_answer.ValidateCardAnswerDataAccessInterface {
+~ CardValidationResult isSolution(String,List<Card>)
+}
+
+class use_case.validate_card_answer.CardValidationResult {
+- boolean validity
+- String message
++ boolean isValid()
++ String getMessage()
+}
+
+
+class use_case.validate_card_answer.ValidateCardAnswerInteractor {
+- ValidateCardAnswerOutputBoundary validatePresenter
++ void execute(ValidateCardAnswerInputData)
++ CardValidationResult isSolution(String,List<Card>)
+}
+
+
+class use_case.validate_card_answer.ValidateCardAnswerOutputData {
+- boolean pass
+- String message
++ boolean getSuccess()
++ String getMessage()
+}
+
+
+interface use_case.validate_card_answer.ValidateCardAnswerOutputBoundary {
+~ void prepareSuccessView(ValidateCardAnswerOutputData)
+~ void prepareFailView(ValidateCardAnswerOutputData)
+}
+
+
+
+use_case.validate_card_answer.ValidateCardAnswerInputBoundary <|.. use_case.validate_card_answer.ValidateCardAnswerInteractor
+@enduml

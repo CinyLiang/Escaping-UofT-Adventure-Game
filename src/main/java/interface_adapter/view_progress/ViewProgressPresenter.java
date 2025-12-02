@@ -22,6 +22,7 @@ public class ViewProgressPresenter implements ViewProgressOutputBoundary {
 
         NavigateState current = viewModel.getState();
         current.setProgressText(text);
+        current.setStoryText("Viewing progress... What's next?");
         viewModel.firePropertyChange();
     }
 }

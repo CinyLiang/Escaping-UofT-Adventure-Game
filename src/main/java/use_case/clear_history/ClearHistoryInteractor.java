@@ -7,7 +7,15 @@ public class ClearHistoryInteractor implements ClearHistoryInputBoundary {
         this.presenter = presenter;
     }
 
+    // clear history
+    @Override
     public void clearHistory() {
         presenter.execute();
+    }
+
+    // shows dialog
+    @Override
+    public void executeRequestClearHistory() {
+        presenter.prepareClearHistoryView();
     }
 }

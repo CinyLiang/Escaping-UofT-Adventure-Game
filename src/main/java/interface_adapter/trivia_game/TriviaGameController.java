@@ -11,15 +11,24 @@ public class TriviaGameController {
     }
 
     public void startNewQuestion() {
-        interactor.startNewQuestion();
+        TriviaGameInputData inputData = new TriviaGameInputData(
+                TriviaGameInputData.Action.START_NEW_QUESTION
+        );
+        interactor.execute(inputData);
     }
 
-    public void submitAnswer(String answer, String playerName) {
-        TriviaGameInputData inputData = new TriviaGameInputData(answer);
-        interactor.submitAnswer(inputData);
+    public void submitAnswer(String answer) {
+        TriviaGameInputData inputData = new TriviaGameInputData(
+                TriviaGameInputData.Action.SUBMIT_ANSWER,
+                answer
+        );
+        interactor.execute(inputData);
     }
 
     public void exitPuzzle() {
-        interactor.exitPuzzle();
+        TriviaGameInputData inputData = new TriviaGameInputData(
+                TriviaGameInputData.Action.EXIT_PUZZLE
+        );
+        interactor.execute(inputData);
     }
 }
