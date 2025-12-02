@@ -116,10 +116,14 @@ public class HomeView extends JPanel {
         b.setBackground(ThemeManager.getButtonBackground());
         b.setForeground(ThemeManager.getButtonForeground());
         b.setFont(new Font("Arial", Font.BOLD, ThemeManager.getFontSize(18)));
+
         b.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(ThemeManager.getButtonForeground(), 2),
+                BorderFactory.createLineBorder(ThemeManager.getTextPrimary(), 3),
                 BorderFactory.createEmptyBorder(10, 25, 10, 25)
         ));
+
+        b.setOpaque(true);
+        b.setContentAreaFilled(true);
     }
 
     private void addButton(JPanel p, JButton b) {

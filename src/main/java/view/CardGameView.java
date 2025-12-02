@@ -9,6 +9,7 @@ import interface_adapter.return_from_card.ReturnFromCardController;
 import interface_adapter.validate_card_answer.ValidateCardController;
 import use_case.card_game_hints.CardGameHintsInputDataObject;
 import use_case.validate_card_answer.ValidateCardAnswerInputData;
+import view.theme.ThemeManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -111,12 +112,15 @@ public class CardGameView extends JPanel implements PropertyChangeListener {
         this.validateButton = new JButton("Check My Answer");
         this.returnButton = new JButton("Return to Map");
 
+        ThemeManager.addThemeChangeListener(evt -> applyTheme());
+        applyTheme();
         layoutBuilder();
         eventHandler();
-        applyTheme();
 
         // Initial state reset
         resetInputState();
+        ThemeManager.addThemeChangeListener(evt -> applyTheme());
+
     }
 
     private void appendInput(String text) {

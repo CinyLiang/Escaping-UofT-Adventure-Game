@@ -4,6 +4,7 @@ import interface_adapter.ViewManagerModel;
 import interface_adapter.settings.SettingsController;
 import interface_adapter.settings.SettingsViewModel;
 import view.components.OptionSelector;
+import view.theme.ThemeManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,25 +13,23 @@ public class SettingsView extends JPanel {
 
     public static final String VIEW_NAME = "settings_view";
 
-    // UofT colour palette
-    private final Color UOFT_BLUE = new Color(0, 33, 71);
-    private final Color UOFT_GOLD = new Color(255, 203, 5);
-
     public SettingsView(SettingsController controller,
                         SettingsViewModel settingsViewModel,
                         ViewManagerModel viewManagerModel) {
 
         setLayout(new BorderLayout());
-        setBackground(UOFT_BLUE);
+        //  Main Background
+        setBackground(ThemeManager.getBackground());
 
         // view.ThemeManager
         JLabel title = new JLabel("SETTINGS", SwingConstants.CENTER);
-        title.setFont(new Font("Serif", Font.BOLD, 38));
-        title.setForeground(UOFT_GOLD);
+        // Font Size Scaling
+        title.setFont(new Font("Serif", Font.BOLD, ThemeManager.getFontSize(38)));
+        // Title Text Color
+        title.setForeground(ThemeManager.getTextPrimary());
         title.setBorder(BorderFactory.createEmptyBorder(30, 0, 20, 0));
         add(title, BorderLayout.NORTH);
 
-        // █████ MAIN OPTIONS PANEL █████
         JPanel optionsPanel = new JPanel();
         optionsPanel.setOpaque(false);
         optionsPanel.setLayout(new GridLayout(3, 1, 25, 25));
@@ -69,7 +68,7 @@ public class SettingsView extends JPanel {
 
         add(optionsPanel, BorderLayout.CENTER);
 
-        // █████ BOTTOM BUTTONS █████
+        // BOTTOM BUTTONS
         JPanel buttonsPanel = new JPanel();
         buttonsPanel.setOpaque(false);
         buttonsPanel.setBorder(BorderFactory.createEmptyBorder(10, 0, 25, 0));
@@ -82,7 +81,6 @@ public class SettingsView extends JPanel {
 
         add(buttonsPanel, BorderLayout.SOUTH);
 
-        // █████ BUTTON ACTIONS █████
         saveButton.addActionListener(e -> {
             controller.save(
                     themeSelector.getValue().toLowerCase(),
@@ -102,21 +100,39 @@ public class SettingsView extends JPanel {
     }
 
     /**
-     * Styles a UofT-themed button.
+     * Styles a themed button using ThemeManager colors and font scaling.
      */
     private JButton makeButton(String text) {
         JButton button = new JButton(text);
 
-        button.setFont(new Font("Serif", Font.BOLD, 20));
-        button.setBackground(UOFT_GOLD);
-        button.setForeground(UOFT_BLUE);
+        button.setFont(new Font("Serif", Font.BOLD, ThemeManager.getFontSize(20)));
+        button.setBackground(ThemeManager.getButtonBackground());
+        button.setForeground(ThemeManager.getButtonForeground());
 
         button.setFocusPainted(false);
         button.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(Color.WHITE, 2),
+                BorderFactory.createLineBorder(ThemeManager.getTextPrimary(), 2),
                 BorderFactory.createEmptyBorder(10, 25, 10, 25)
         ));
 
+        button.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                Color bg = ThemeManager.getButtonBackground();
+                Color fg = ThemeManager.getButtonForeground();
+
+                // Swap for hover effect
+                button.setBackground(fg);
+                button.setForeground(bg);
+            }
+
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                // Reset to current themed colors
+                button.setBackground(ThemeManager.getButtonBackground());
+                button.setForeground(ThemeManager.getButtonForeground());
+            }
+        });
+
         return button;
     }
+
 }

@@ -12,6 +12,8 @@ import interface_adapter.view_progress.ViewProgressController;
 import interface_adapter.quit_game.QuitGameController;
 import interface_adapter.win_game.WinGameController;
 import view.UISettings;
+import view.theme.ThemeManager;
+
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -205,6 +207,12 @@ public class NavigateView extends JPanel {
                 navigateController.execute((String) directionSelector.getSelectedItem());
             }
         });
+        applyTheme();
+
+        if (navigateViewModel != null) {
+            navigateViewModel.addPropertyChangeListener(evt -> applyTheme());
+        }
+
     }
 
     private JButton makeButton(String text) {
@@ -274,6 +282,79 @@ public class NavigateView extends JPanel {
     public void setNavigateController(NavigateController navigateController) {
         this.navigateController = navigateController;
     }
+
+    private void applyTheme() {
+
+        this.setBackground(UISettings.PARCHMENT_BACKGROUND);
+
+        storyArea.setBackground(UISettings.PARCHMENT_BACKGROUND);
+        storyArea.setForeground(ThemeManager.getTextPrimary());  // red or white depending on theme
+
+        keysLabel.setForeground(ThemeManager.getTextPrimary());
+
+        // Direction selector
+        directionSelector.setBackground(ThemeManager.getButtonBackground());
+        directionSelector.setForeground(ThemeManager.getButtonForeground());
+
+        // Theme the four buttons
+        styleButton(restartButton);
+        styleButton(progressButton);
+        styleButton(saveButton);
+        styleButton(quitButton);
+
+        repaint();
+    }
+
+    private void styleButton(JButton b) {
+
+        b.setFont(UISettings.quintessential.deriveFont(Font.BOLD, ThemeManager.getFontSize(20)));
+        b.setFocusPainted(false);
+        b.setOpaque(true);
+
+        // Light mode buttons (white with red border)
+        if (ThemeManager.getCurrentTheme().equals("light")) {
+
+            b.setBackground(Color.WHITE);
+            b.setForeground(new Color(198, 40, 40)); // deep red
+            b.setBorder(BorderFactory.createCompoundBorder(
+                    BorderFactory.createLineBorder(new Color(198, 40, 40), 2, true),
+                    BorderFactory.createEmptyBorder(12, 25, 12, 25)
+            ));
+
+            b.addMouseListener(new MouseAdapter() {
+                public void mouseEntered(MouseEvent e) {
+                    b.setBackground(new Color(255, 245, 245)); // soft pink tint
+                }
+                public void mouseExited(MouseEvent e) {
+                    b.setBackground(Color.WHITE);
+                }
+            });
+        }
+
+        // Dark mode buttons (transparent + white text)
+        else {
+
+            b.setBackground(new Color(0, 0, 0, 100)); // dark translucent
+            b.setForeground(Color.WHITE);
+
+            b.setBorder(BorderFactory.createCompoundBorder(
+                    BorderFactory.createLineBorder(new Color(255, 82, 82), 2, true),
+                    BorderFactory.createEmptyBorder(12, 25, 12, 25)
+            ));
+
+            b.addMouseListener(new MouseAdapter() {
+                public void mouseEntered(MouseEvent e) {
+                    b.setBackground(new Color(255, 82, 82, 80)); // red glow
+                    b.setForeground(Color.BLACK); // makes hover feel dramatic
+                }
+                public void mouseExited(MouseEvent e) {
+                    b.setBackground(new Color(0, 0, 0, 100));
+                    b.setForeground(Color.WHITE);
+                }
+            });
+        }
+    }
+
 
 //    public void setClearHistoryViewModel(ClearHistoryViewModel vm) {
 //        this.clearHistoryViewModel = vm;
