@@ -6,7 +6,7 @@ import java.beans.PropertyChangeSupport;
 
 public class ThemeManager {
 
-    private static String currentTheme = "dark";  // default
+    private static String currentTheme = "dark";
     private static String currentFontSize = "medium";
     private static boolean accessibility = false;
 
