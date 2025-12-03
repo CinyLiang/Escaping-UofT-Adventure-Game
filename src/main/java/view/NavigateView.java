@@ -268,8 +268,6 @@ public class NavigateView extends JPanel {
         Color bg = new Color(255, 245, 240);        // soft warm parchment
         Color border = new Color(127, 0, 0);        // deep red
         Color text = new Color(80, 20, 20);         // dark red-brown
-        Color hoverBg = new Color(255, 230, 230);   // soft pink
-        Color hoverText = new Color(40, 0, 0);      // darker red
 
         b.setBackground(bg);
         b.setForeground(text);
@@ -282,22 +280,6 @@ public class NavigateView extends JPanel {
         b.setFocusPainted(false);
         b.setOpaque(true);
 
-        for (MouseListener ml : b.getMouseListeners()) {
-            b.removeMouseListener(ml);
-        }
-
-        // Hover behavior
-        b.addMouseListener(new MouseAdapter() {
-            public void mouseEntered(MouseEvent e) {
-                b.setBackground(hoverBg);
-                b.setForeground(hoverText);
-            }
-
-            public void mouseExited(MouseEvent e) {
-                b.setBackground(bg);
-                b.setForeground(text);
-            }
-        });
     }
 }
 

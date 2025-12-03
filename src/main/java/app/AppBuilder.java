@@ -295,6 +295,7 @@ public class AppBuilder {
         // Register views
         addView(homeView, HomeView.VIEW_NAME);
         addView(navigateView, NavigateView.VIEW_NAME);
+        addView(instructionsView, InstructionsView.VIEW_NAME);
       
       
 //         QuitGameController quitController = new QuitGameController();
@@ -305,13 +306,14 @@ public class AppBuilder {
 //         quitController.setShowSaveDialog(saveDialog::show);
 //         navigateView.setQuitGameController(quitController, saveController);
 
+        // Add use cases
         addClearHistoryUseCase();
-
-        // FileGameDataAccessObject dao = new FileGameDataAccessObject("game_data.json");
-        // addSaveProgressUseCase(dao);
-        // addViewProgressUseCase(dao);
-
-        addView(instructionsView, InstructionsView.VIEW_NAME);
+        addCardGameUseCase();
+        addTriviaGameUseCase();
+        addWinGameUseCase();
+        addSaveProgressUseCase();
+        addViewProgressUseCase();
+        addNavigateUseCase();
 
         // Settings
         SettingsOutputBoundary settingsPresenter =
@@ -322,15 +324,6 @@ public class AppBuilder {
                 new SettingsController(settingsInteractor);
         settingsView = new SettingsView(settingsController, settingsViewModel, viewManagerModel);
         addView(settingsView, SettingsView.VIEW_NAME);
-
-        // Add use cases
-        addClearHistoryUseCase();
-        addCardGameUseCase();
-        addTriviaGameUseCase();
-        addWinGameUseCase();
-        addSaveProgressUseCase();
-        addViewProgressUseCase();
-        addNavigateUseCase();
 
         // Build window
         JFrame window = new JFrame("UofT Adventure Game");
