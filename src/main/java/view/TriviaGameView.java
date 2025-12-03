@@ -9,7 +9,7 @@ import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import view.UISettings;
+import view.theme.UISettings;
 
 public class TriviaGameView extends JPanel implements PropertyChangeListener {
     private final String viewName = "trivia game";

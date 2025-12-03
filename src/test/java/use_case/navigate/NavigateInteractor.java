@@ -14,7 +14,7 @@ class NavigateInteractorTest {
         interactor.execute(new NavigateInputData("north"));
 
         assertTrue(presenter.successCalled);
-        assertEquals("Card game", presenter.targetView);
+        assertEquals("UC exterior", presenter.targetView);
 
         assertFalse(presenter.failCalled);
         assertFalse(presenter.updateCalled);
@@ -28,7 +28,7 @@ class NavigateInteractorTest {
         interactor.execute(new NavigateInputData("south"));
 
         assertTrue(presenter.successCalled);
-        assertEquals("Win game", presenter.targetView);
+        assertEquals("con hall exterior", presenter.targetView);
 
         assertFalse(presenter.failCalled);
         assertFalse(presenter.updateCalled);
@@ -42,8 +42,7 @@ class NavigateInteractorTest {
         interactor.execute(new NavigateInputData("east"));
 
         assertTrue(presenter.successCalled);
-        assertEquals("Trivia game", presenter.targetView);
-
+        assertEquals("Gerstein exterior", presenter.targetView);
         assertFalse(presenter.failCalled);
         assertFalse(presenter.updateCalled);
     }
@@ -56,7 +55,105 @@ class NavigateInteractorTest {
         interactor.execute(new NavigateInputData("west"));
 
         assertTrue(presenter.successCalled);
+        assertEquals("Knox exterior", presenter.targetView);
+
+        assertFalse(presenter.failCalled);
+        assertFalse(presenter.updateCalled);
+    }
+
+    @Test
+    void testNavigateKnoxInt() {
+        NavigatePresenterStub presenter = new NavigatePresenterStub();
+        NavigateInteractor interactor = new NavigateInteractor(presenter);
+
+        interactor.execute(new NavigateInputData("knox interior"));
+
+        assertTrue(presenter.successCalled);
+        assertEquals("Knox interior", presenter.targetView);
+
+        assertFalse(presenter.failCalled);
+        assertFalse(presenter.updateCalled);
+    }
+
+    @Test
+    void testNavigateGersteinInt() {
+        NavigatePresenterStub presenter = new NavigatePresenterStub();
+        NavigateInteractor interactor = new NavigateInteractor(presenter);
+
+        interactor.execute(new NavigateInputData("gerstein interior"));
+
+        assertTrue(presenter.successCalled);
+        assertEquals("Gerstein interior", presenter.targetView);
+
+        assertFalse(presenter.failCalled);
+        assertFalse(presenter.updateCalled);
+    }
+
+    @Test
+    void testNavigateUCInt() {
+        NavigatePresenterStub presenter = new NavigatePresenterStub();
+        NavigateInteractor interactor = new NavigateInteractor(presenter);
+
+        interactor.execute(new NavigateInputData("uc interior"));
+
+        assertTrue(presenter.successCalled);
+        assertEquals("UC interior", presenter.targetView);
+
+        assertFalse(presenter.failCalled);
+        assertFalse(presenter.updateCalled);
+    }
+
+    @Test
+    void testNavigateConHallInt() {
+        NavigatePresenterStub presenter = new NavigatePresenterStub();
+        NavigateInteractor interactor = new NavigateInteractor(presenter);
+
+        interactor.execute(new NavigateInputData("con hall interior"));
+
+        assertTrue(presenter.successCalled);
+        assertEquals("Con Hall interior", presenter.targetView);
+
+        assertFalse(presenter.failCalled);
+        assertFalse(presenter.updateCalled);
+    }
+
+    @Test
+    void testNavigateCardGame() {
+        NavigatePresenterStub presenter = new NavigatePresenterStub();
+        NavigateInteractor interactor = new NavigateInteractor(presenter);
+
+        interactor.execute(new NavigateInputData("card game"));
+
+        assertTrue(presenter.successCalled);
         assertEquals("Card game", presenter.targetView);
+
+        assertFalse(presenter.failCalled);
+        assertFalse(presenter.updateCalled);
+    }
+
+    @Test
+    void testNavigateTriviaGame() {
+        NavigatePresenterStub presenter = new NavigatePresenterStub();
+        NavigateInteractor interactor = new NavigateInteractor(presenter);
+
+        interactor.execute(new NavigateInputData("trivia game"));
+
+        assertTrue(presenter.successCalled);
+        assertEquals("Trivia game", presenter.targetView);
+
+        assertFalse(presenter.failCalled);
+        assertFalse(presenter.updateCalled);
+    }
+
+    @Test
+    void testNavigateWinGame() {
+        NavigatePresenterStub presenter = new NavigatePresenterStub();
+        NavigateInteractor interactor = new NavigateInteractor(presenter);
+
+        interactor.execute(new NavigateInputData("win game"));
+
+        assertTrue(presenter.successCalled);
+        assertEquals("win game", presenter.targetView);
 
         assertFalse(presenter.failCalled);
         assertFalse(presenter.updateCalled);

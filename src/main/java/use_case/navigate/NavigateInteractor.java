@@ -18,14 +18,22 @@ public class NavigateInteractor implements NavigateInputBoundary {
         String direction = inputData.getDirection();
         navigatePresenter.prepareSuccessView(new NavigateOutputData(getTargetView(direction)));
     }
-
     @NotNull
     private static String getTargetView(String direction) {
         return switch (direction.toLowerCase()) {
-            case "north" -> "Card game";
-            case "south" -> "Win game";
-            case "east" -> "Trivia game";
-            case "west" -> "Card game";
+            case "north" -> "UC exterior"; // UC exterior > interior > card game
+            case "south" -> "con hall exterior";
+            case "east" -> "Gerstein exterior"; // gerstein exterior > interior > trivia game
+            case "west" -> "Knox exterior"; // knox exterior > interior > card game
+
+            case "knox interior" -> "Knox interior";
+            case "gerstein interior" -> "Gerstein interior";
+            case "uc interior" -> "UC interior";
+            case "con hall interior" -> "Con Hall interior";
+
+            case "card game" -> "Card game";
+            case "trivia game" -> "Trivia game";
+            case "win game" -> "win game";
             default -> "";
         };
     }

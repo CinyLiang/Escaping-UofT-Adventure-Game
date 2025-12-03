@@ -6,6 +6,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import interface_adapter.ViewManagerModel;
+import view.theme.UISettings;
 
 public class InstructionsView extends JPanel {
 

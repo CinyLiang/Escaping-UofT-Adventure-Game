@@ -1,23 +1,31 @@
 package view;
 
-import javax.swing.*;
-import javax.swing.plaf.basic.BasicScrollBarUI;
-import interface_adapter.navigate.NavigateController;
-import interface_adapter.clear_history.ClearHistoryViewModel;
 import interface_adapter.clear_history.ClearHistoryController;
+import interface_adapter.clear_history.ClearHistoryViewModel;
+import interface_adapter.navigate.NavigateController;
 import interface_adapter.navigate.NavigateState;
 import interface_adapter.navigate.NavigateViewModel;
+import interface_adapter.quit_game.QuitGameController;
 import interface_adapter.save_progress.SaveProgressController;
 import interface_adapter.view_progress.ViewProgressController;
-import interface_adapter.quit_game.QuitGameController;
 import interface_adapter.win_game.WinGameController;
-import view.UISettings;
+import view.theme.UISettings;
 import view.theme.ThemeManager;
 
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.File;
 import java.io.IOException;
 
 public class NavigateView extends JPanel {
@@ -355,9 +363,4 @@ public class NavigateView extends JPanel {
         }
     }
 
-
-//    public void setClearHistoryViewModel(ClearHistoryViewModel vm) {
-//        this.clearHistoryViewModel = vm;
-//        vm.addPropertyChangeListener(evt -> JOptionPane.showMessageDialog(this, vm.getMessage()));
-//    }
 }

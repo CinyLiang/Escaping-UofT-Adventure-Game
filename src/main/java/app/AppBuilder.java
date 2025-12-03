@@ -12,6 +12,19 @@ import interface_adapter.card_game_hints.CardGameHintsController;
 import interface_adapter.card_game_hints.CardGameHintsPresenter;
 import interface_adapter.clear_history.ClearHistoryController;
 import interface_adapter.clear_history.ClearHistoryPresenter;
+// gerstein
+import interface_adapter.navigate.Buildings.Gerstein.GersteinExterior.GersteinExtViewModel;
+import interface_adapter.navigate.Buildings.Gerstein.GersteinInterior.GersteinIntViewModel;
+// knox
+import interface_adapter.navigate.Buildings.Knox.KnoxExterior.KnoxExtViewModel;
+import interface_adapter.navigate.Buildings.Knox.KnoxInterior.KnoxIntViewModel;
+// uc
+import interface_adapter.navigate.Buildings.UC.UCExterior.UCExtViewModel;
+import interface_adapter.navigate.Buildings.UC.UCInterior.UCIntViewModel;
+// con hall
+import interface_adapter.navigate.Buildings.ConHall.ConHallExterior.ConHallExtViewModel;
+import interface_adapter.navigate.Buildings.ConHall.ConHallInterior.ConHallIntViewModel;
+
 import interface_adapter.clear_history.ClearHistoryViewModel;
 import interface_adapter.navigate.NavigateController;
 import interface_adapter.navigate.NavigatePresenter;
@@ -68,6 +81,21 @@ import use_case.settings.SettingsOutputBoundary;
 import use_case.settings.SettingsInteractor;
 
 import view.*;
+// knox
+import view.Buildings.KnoxExteriorView;
+import view.Buildings.KnoxInteriorView;
+// gerstein
+import view.Buildings.GersteinExteriorView;
+import view.Buildings.GersteinInteriorView;
+// uc
+import view.Buildings.UCExteriorView;
+import view.Buildings.UCInteriorView;
+// con hall
+import view.Buildings.ConHallExteriorView;
+import view.Buildings.ConHallInteriorView;
+
+import view.Buildings.*;
+import view.SettingsView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -108,6 +136,18 @@ public class AppBuilder {
     private SettingsViewModel settingsViewModel;
     private QuitGameViewModel quitGameViewModel;
     private ClearHistoryViewModel clearHistoryViewModel;
+        // knox
+    private KnoxExtViewModel knoxExtViewModel;
+    private KnoxIntViewModel knoxIntViewModel;
+        // gerstein
+    private GersteinExtViewModel gersteinExtViewModel;
+    private GersteinIntViewModel gersteinIntViewModel;
+        // uc
+    private UCExtViewModel ucExtViewModel;
+    private UCIntViewModel ucIntViewModel;
+        // con hall
+    private ConHallExtViewModel conHallExtViewModel;
+    private ConHallIntViewModel conHallIntViewModel;
 
     // Views
     private HomeView homeView;
@@ -121,6 +161,18 @@ public class AppBuilder {
     private ConfirmRestartGameDialog confirmRestartGameDialog;
     private QuitGameDialog quitGameDialog;
     private SaveGameDialog saveGameDialog;
+    // knox
+    private KnoxExteriorView knoxExteriorView;
+    private KnoxInteriorView knoxInteriorView;
+    // gerstein
+    private GersteinExteriorView gersteinExteriorView;
+    private GersteinInteriorView gersteinInteriorView;
+    // uc
+    private UCExteriorView ucExteriorView;
+    private UCInteriorView ucInteriorView;
+    // con hall
+    private ConHallExteriorView conHallExteriorView;
+    private ConHallInteriorView conHallInteriorView;
 
     Player player;
 
@@ -160,10 +212,26 @@ public class AppBuilder {
                 viewManagerModel,
                 winGameViewModel,
                 cardGameViewModel,
-                triviaGameViewModel
+                triviaGameViewModel,
+                knoxExtViewModel,
+                knoxIntViewModel,
+                gersteinExtViewModel,
+                gersteinIntViewModel,
+                ucExtViewModel,
+                ucIntViewModel,
+                conHallExtViewModel,
+                conHallIntViewModel
         );
         NavigateInputBoundary interactor = new NavigateInteractor(presenter);
         NavigateController controller = new NavigateController(interactor);
+        knoxExteriorView.setNavigateController(controller); // knox
+        knoxInteriorView.setNavigateController(controller);
+        gersteinExteriorView.setNavigateController(controller); // gerstein
+        gersteinInteriorView.setNavigateController(controller);
+        ucExteriorView.setNavigateController(controller); // uc
+        ucInteriorView.setNavigateController(controller);
+        conHallExteriorView.setNavigateController(controller); // con hall
+        conHallInteriorView.setNavigateController(controller);
 
         navigateView.setNavigateController(controller);
         return this;
@@ -283,6 +351,14 @@ public class AppBuilder {
         settingsViewModel = new SettingsViewModel();
         quitGameViewModel = new QuitGameViewModel();
         clearHistoryViewModel = new ClearHistoryViewModel();
+        knoxExtViewModel = new KnoxExtViewModel(); // knox
+        knoxIntViewModel = new KnoxIntViewModel();
+        gersteinExtViewModel = new GersteinExtViewModel(); // gerstein
+        gersteinIntViewModel = new GersteinIntViewModel();
+        ucExtViewModel = new UCExtViewModel(); // uc
+        ucIntViewModel = new UCIntViewModel();
+        conHallExtViewModel = new ConHallExtViewModel(); // con hall
+        conHallIntViewModel = new ConHallIntViewModel();
 
         // Create Views
         homeView = new HomeView(viewManagerModel);
@@ -291,27 +367,27 @@ public class AppBuilder {
         cardGameView = new CardGameView(cardGameViewModel);
         triviaGameView = new TriviaGameView(triviaGameViewModel);
         winGameView = new WinGameView(winGameViewModel);
+        knoxExteriorView = new KnoxExteriorView(knoxExtViewModel); // knox
+        knoxInteriorView = new KnoxInteriorView(knoxIntViewModel);
+        gersteinExteriorView = new GersteinExteriorView(gersteinExtViewModel); // gerstein
+        gersteinInteriorView = new GersteinInteriorView(gersteinIntViewModel);
+        ucExteriorView = new UCExteriorView(ucExtViewModel); // uc
+        ucInteriorView = new UCInteriorView(ucIntViewModel);
+        conHallExteriorView = new ConHallExteriorView(conHallExtViewModel); // con hall
+        conHallInteriorView = new ConHallInteriorView(conHallIntViewModel);
 
         // Register views
         addView(homeView, HomeView.VIEW_NAME);
         addView(navigateView, NavigateView.VIEW_NAME);
-      
-      
-//         QuitGameController quitController = new QuitGameController();
-//         SaveProgressController saveController = new SaveProgressController(null);
-//         QuitGameDialog quitDialog = new QuitGameDialog(quitController, saveController);
-//         SaveGameDialog saveDialog = new SaveGameDialog(saveController);
-//         quitController.setShowQuitDialog(quitDialog::show);
-//         quitController.setShowSaveDialog(saveDialog::show);
-//         navigateView.setQuitGameController(quitController, saveController);
-
-        addClearHistoryUseCase();
-
-        // FileGameDataAccessObject dao = new FileGameDataAccessObject("game_data.json");
-        // addSaveProgressUseCase(dao);
-        // addViewProgressUseCase(dao);
-
         addView(instructionsView, InstructionsView.VIEW_NAME);
+        addView(knoxExteriorView, KnoxExteriorView.VIEW_NAME); // knox
+        addView(knoxInteriorView, KnoxInteriorView.VIEW_NAME);
+        addView(gersteinExteriorView, GersteinExteriorView.VIEW_NAME); // gerstein
+        addView(gersteinInteriorView, GersteinInteriorView.VIEW_NAME);
+        addView(ucExteriorView, UCExteriorView.VIEW_NAME);
+        addView(ucInteriorView, UCInteriorView.VIEW_NAME);
+        addView(conHallExteriorView, ConHallExteriorView.VIEW_NAME); // con hall
+        addView(conHallInteriorView, ConHallInteriorView.VIEW_NAME);
 
         // Settings
         SettingsOutputBoundary settingsPresenter =
